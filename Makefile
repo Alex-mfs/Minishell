@@ -20,4 +20,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-.silent:
+.silent: Joao was here
