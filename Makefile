@@ -1,23 +1,50 @@
 NAME = minishell
-
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-SRC = src/main.c src/commands.c src/builtins.c src/utils.c
-OBJ = $(SRC:.c=.o)
-INCLUDE = -Iinclude
+#BONUS_NAME = minishell_bonus
+CC = cc
+FLAGS = -Wall -Wextra -Werror
+LFT_FLAGS = -lft
+RM = rm -fr
+MAIN = minishell.c
+#BONUS = minishell_bonus.c
+SRC = Utils/*.c
+SRC_LFT = libft
+OBJ = obj/*.o
+#BONUS_SRC = libft/*.c Bonus/*.c
+#BONUS_OBJ = obj_bonus/*.o
 
 all: $(NAME)
 
+bonus: $(BONUS_NAME)
+
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) -L $(SRC_LFT) $(LFT_FLAGS) -o $(NAME)
+
+#$(BONUS_NAME): $(BONUS_OBJ)
+#	@$(CC) $(FLAGS) $(BONUS_OBJ) -L $(SRC_LFT) $(LFT_FLAGS) -o $(BONUS_NAME)
+
+$(OBJ): $(MAIN) $(SRC)
+	@git clone git@github.com:joao-rib/JP_libft.git libft
+	@make -C $(SRC_LFT) -s
+	@mkdir -p obj
+	@$(CC) $(FLAGS) -c $(SRC) $(MAIN)
+	@mv *.o obj/
+
+#$(BONUS_OBJ): $(BONUS) $(BONUS_SRC)
+#	@git clone git@github.com:joao-rib/JP_libft.git libft
+#	@make -C $(SRC_LFT) -s
+#	@mkdir -p obj_bonus
+#	@$(CC) $(FLAGS) -c $(BONUS_SRC) $(BONUS)
+#	@mv *.o obj_bonus/
 
 clean:
-	rm -f $(OBJ)
+	@$(RM) $(OBJ) $(BONUS_OBJ) obj obj_bonus
+	@make clean -C $(SRC_LFT) -s
 
-fclean: clean
-	rm -f $(NAME)
+fclean:
+	@$(RM) $(OBJ) $(BONUS_OBJ) $(NAME) $(BONUS_NAME) obj obj_bonus
+	@make fclean -C $(SRC_LFT) -s
+	@$(RM) libft
 
 re: fclean all
 
-.PHONY: all clean fclean re
-.silent: Joao was here
+bonus_re: fclean bonus
