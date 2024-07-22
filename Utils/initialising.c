@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handling.c                                   :+:      :+:    :+:   */
+/*   initialising.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/22 14:29:33 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:32:32 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	error_msg(char *msg)
+void	init_ms(t_minish *ms, char **envp)
 {
-	ft_printf("Error: %s\n", msg);
-	return (1);
+	ms->env_list = ft_strarrdup(envp);
 }

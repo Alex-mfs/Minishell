@@ -23,7 +23,7 @@ $(NAME): $(OBJ)
 #	@$(CC) $(FLAGS) $(BONUS_OBJ) -L $(SRC_LFT) $(LFT_FLAGS) -o $(BONUS_NAME)
 
 $(OBJ): $(MAIN) $(SRC)
-	@git clone git@github.com:joao-rib/JP_libft.git libft
+#	@git clone git@github.com:joao-rib/JP_libft.git libft
 	@make -C $(SRC_LFT) -s
 	@mkdir -p obj
 	@$(CC) $(FLAGS) -c $(SRC) $(MAIN)
@@ -43,7 +43,7 @@ clean:
 fclean:
 	@$(RM) $(OBJ) $(BONUS_OBJ) $(NAME) $(BONUS_NAME) obj obj_bonus
 	@make fclean -C $(SRC_LFT) -s
-	@$(RM) libft
+#	@$(RM) libft
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/07/22 13:31:33 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:31:59 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,13 @@
 //# include <readline/history.h>
 # include "../libft/libft.h"
 
-int		error_msg(char *msg);
+typedef struct s_minish
+{
+	char	**env_list;
+}			t_minish;
+
+//Utils - Error Initialising
+void	init_ms(t_minish *ms, char **envp);
 
 /*typedef struct s_point
 {
