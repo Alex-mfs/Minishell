@@ -6,16 +6,16 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/07/22 17:31:59 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:00:24 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
+# include <fcntl.h>
+# include <signal.h>
+# include <time.h>
 //# include <readline/readline.h>
 //# include <readline/history.h>
 # include "../libft/libft.h"
@@ -25,8 +25,12 @@ typedef struct s_minish
 	char	**env_list;
 }			t_minish;
 
-//Utils - Error Initialising
+//Utils - Initialising
 void	init_ms(t_minish *ms, char **envp);
+//Utils - Signaling
+void	set_signals(void);
+//Utils - Handling
+void	handle_interrupt(int signum);
 
 /*typedef struct s_point
 {
