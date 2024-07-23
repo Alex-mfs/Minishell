@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/22 18:00:30 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:23:09 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ void	set_signals(void)
 	//sigemptyset(&signal_action.sa_mask);
 	//sigaction(SIGINT, &signal_action, NULL)
 	signal(SIGINT, handle_interrupt);
-	signal(SIGQUIT, SIG_IGN); //Ignora sinal de saida
+	signal(SIGQUIT, SIG_IGN); //Ignora sinal de saida?
 }

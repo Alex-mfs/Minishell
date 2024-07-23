@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/22 17:47:53 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:27:03 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main(int argc, char **argv, char **envp)
 	ft_bzero(&ms, sizeof(t_minish));
     init_ms(&ms, envp);
     set_signals();
-    //read_inputs();
+    //read_inputs(); WIP
     i = 0;
     while (ms.env_list[i])
     {
