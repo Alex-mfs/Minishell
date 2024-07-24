@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/23 14:27:03 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:04:13 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int main(int argc, char **argv, char **envp)
         ft_printf("No.%d: %s\n", i, ms.env_list[i]);
         i++;
     }
+    ft_free_matrix(ms.env_list);
     return (0);
 }
 
