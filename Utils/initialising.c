@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/24 15:05:29 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/25 19:07:49 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ void	init_ms(t_minish *ms, char **envp)
 		ms->env_list[i] = trim_name(ms->env_list[i]);
 		i++;
 	}
+	ms->cwd = getcwd(NULL, 4096);
 }

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/07/24 15:23:20 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/25 19:04:19 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 typedef struct s_minish
 {
 	char	**env_list;
+	char	*cwd;
 }			t_minish;
 
 //Utils - Initialising

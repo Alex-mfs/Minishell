@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wip_reading.c                                      :+:      :+:    :+:   */
+/*   reading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/24 16:35:39 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/25 19:16:23 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/*char	*maintain_prompt(void)
+static char	*maintain_prompt(t_minish *ms)
 {
-	char	*tmp;
+	//# define PROMPT_UPPER	"┎─── "
+	//# define PROMPT_LOWER	"┖─ minishell ❯ "
+	/*char	*tmp;
 	char	*prompt;
 	char	*prefix;
 	char	*suffix;
@@ -24,15 +26,24 @@
 	tmp = ft_strjoin(prefix, ms()->cwd); //current working directory
 	prompt = ft_strjoin(tmp, suffix);
 	free(tmp);
+	return (prompt);*/
+	char	*prompt;
+	char	*suffix;
+
+	prompt = /*Formatacao prefixo*/ "Curr.Directory:" /*Formatacao cwd*/;
+	suffix = /*Reset a formatacao cwd*//*Formatacao sufixo*/ "Input minishell:" /*Reset formatacao*/;
+	prompt = ft_strbuild(prompt, ms->cwd); //Potential memory issue? Test with valgrind
+	prompt = ft_strbuild(prompt, suffix);
 	return (prompt);
 	//prefix + cwd + suffix
-}*/
+	//definir formatacao do prompt
+}
 
-void	read_inputs(void)
+void	read_inputs(t_minish *ms)
 {
 	while (1)
 	{
-		//maintain prompt;
+		maintain_prompt(ms);
 		//handle input
 		//(error handling)
 		//register input in history
