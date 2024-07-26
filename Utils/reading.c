@@ -6,11 +6,28 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/26 18:43:00 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/26 19:15:47 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static void	compute(void)
+{
+	/*
+	if (!lexical_analysis())
+		return (0);
+	lexer();
+	if (!syntatic_analysis())
+		return (0);
+	expander();
+	parser();
+	if (!is_assignment(ms()->lexemes->content))
+		execute(ms()->ast);
+	update_envs();
+	unlink(HEREDOC);
+	return (0);*/
+}
 
 static char	*maintain_prompt(t_minish *ms)
 {
@@ -41,23 +58,6 @@ static char	*maintain_prompt(t_minish *ms)
 
 void	read_inputs(t_minish *ms)
 {
-	char	*prompt;
-	char	*input;
-
-	while (1)
-	{
-		prompt = maintain_prompt(ms);
-		input = readline(prompt); //WIP confirmar os efeitos de readline
-		if (!input)
-		{
-			printf("Input allocation error.\nExiting minishell\n");
-			//sanitize(ms); //with exit
-		}
-		add_history(input);
-		//execute/compute input
-		//sanitize(ms); //without exit
-	}
-	rl_clear_history();
 	/*	while (1)
 	{
 		(ms()->prompt) = _update_prompt();
@@ -72,4 +72,21 @@ void	read_inputs(t_minish *ms)
 		sanitize(false);
 	}
 	rl_clear_history();*/
+	char	*prompt;
+	char	*input;
+
+	while (1)
+	{
+		prompt = maintain_prompt(ms);
+		input = readline(prompt); //WIP confirmar os efeitos de readline
+		if (!input)
+		{
+			printf("Input allocation error.\nExiting minishell\n");
+			//sanitize(ms); //with exit
+		}
+		add_history(input);
+		//compute(); //WIP execute/compute input
+		//sanitize(ms); //without exit
+	}
+	rl_clear_history();
 }
