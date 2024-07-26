@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/25 19:16:23 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/26 18:43:00 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,21 @@ static char	*maintain_prompt(t_minish *ms)
 
 void	read_inputs(t_minish *ms)
 {
+	char	*prompt;
+	char	*input;
+
 	while (1)
 	{
-		maintain_prompt(ms);
-		//handle input
-		//(error handling)
-		//register input in history
+		prompt = maintain_prompt(ms);
+		input = readline(prompt); //WIP confirmar os efeitos de readline
+		if (!input)
+		{
+			printf("Input allocation error.\nExiting minishell\n");
+			//sanitize(ms); //with exit
+		}
+		add_history(input);
 		//execute/compute input
-		//sanitize the structure
+		//sanitize(ms); //without exit
 	}
 	rl_clear_history();
 	/*	while (1)
