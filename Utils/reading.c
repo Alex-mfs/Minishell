@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/29 15:29:14 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:43:52 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static void	compute(char *input)
 	return (0);*/
 	if (!validate_quotes(input))
 		return ;
-	//WIP lexer: handle pipes, redirections, quotes
-	//validate pipes&redirect syntax
+	//WIP lexer: handle pipes, redirections, quotes... save each command on a t_token struct (nodes)
+	//validate pipes&redirect syntax (from tokens)
 	//WIP expand
 	//WIP parse
 	//WIP if "lexemes content" (input?) is valid command, execute

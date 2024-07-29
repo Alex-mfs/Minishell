@@ -6,13 +6,44 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/29 17:34:24 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:43:33 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/*bool	_is_mergeable(char *str, char *match, int jump)
+/*t_token	*token_new(char *str, t_lexeme type, bool is_joinable)
+{
+	t_token	*token;
+
+	token = ft_calloc(1, sizeof(t_token));
+	if (!token)
+		return (NULL);
+	token->str = str;
+	token->type = type;
+	token->can_merge = is_joinable;
+	return (token);
+}
+
+t_token	*token_copy(t_token *token)
+{
+	t_token	*dup;
+
+	dup = token_new(ft_strdup(token->str), token->type, token->can_merge);
+	if (!dup)
+		return (NULL);
+	return (dup);
+}
+
+void	token_destroy(t_token *token)
+{
+	if (!token)
+		return ;
+	ft_free(token->str);
+	ft_free(token);
+}
+
+bool	_is_mergeable(char *str, char *match, int jump)
 {
 	if (!str[jump])
 		return (false);
@@ -84,7 +115,7 @@ void	lexer(char *input)
 	i = 0;
 	while(input[i])
 	{
-		;
+		//WIP
 		i++;
 	}
 }
