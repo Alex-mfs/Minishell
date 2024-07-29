@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/25 19:07:49 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/29 11:31:41 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 static char	*trim_name(char *to_trim)
 {
-	int		i;
 	char	*trimmed;
 
-	i = 0;
 	trimmed = ft_strdup(ft_strchr(to_trim, '=') + 1);
 	free(to_trim);
 	return (trimmed);

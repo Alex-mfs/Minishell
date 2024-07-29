@@ -6,16 +6,15 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/26 19:15:47 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/29 15:29:14 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	compute(void)
+static void	compute(char *input)
 {
-	/*
-	if (!lexical_analysis())
+	/*if (!lexical_analysis())
 		return (0);
 	lexer();
 	if (!syntatic_analysis())
@@ -27,6 +26,15 @@ static void	compute(void)
 	update_envs();
 	unlink(HEREDOC);
 	return (0);*/
+	if (!validate_quotes(input))
+		return ;
+	//WIP lexer: handle pipes, redirections, quotes
+	//validate pipes&redirect syntax
+	//WIP expand
+	//WIP parse
+	//WIP if "lexemes content" (input?) is valid command, execute
+	//sanitize envp & path
+	//delete any heredoc file
 }
 
 static char	*maintain_prompt(t_minish *ms)
@@ -85,7 +93,7 @@ void	read_inputs(t_minish *ms)
 			//sanitize(ms); //with exit
 		}
 		add_history(input);
-		//compute(); //WIP execute/compute input
+		//compute(input); //WIP execute/compute input
 		//sanitize(ms); //without exit
 	}
 	rl_clear_history();
