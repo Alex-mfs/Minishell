@@ -22,7 +22,7 @@ int main(int argc, char **argv, char **envp)
 	ft_bzero(&ms, sizeof(t_minish));
     init_ms(&ms, envp);
     set_signals();
-    //read_inputs(&ms); WIP
+    read_inputs(&ms); //WIP
     i = 0;
     while (ms.env_list[i])
     {

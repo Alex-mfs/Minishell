@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-static void	compute(char *input)
+static void	compute(t_minish *ms, char *input)
 {
 	/*if (!lexical_analysis())
 		return (0);
@@ -28,6 +28,7 @@ static void	compute(char *input)
 	return (0);*/
 	if (!validate_quotes(input))
 		return ;
+	lexer(ms, input);
 	//WIP lexer: handle pipes, redirections, quotes... save each command on a t_token struct (nodes)
 	//validate pipes&redirect syntax (from tokens)
 	//WIP expand
@@ -93,7 +94,7 @@ void	read_inputs(t_minish *ms)
 			//sanitize(ms); //with exit
 		}
 		add_history(input);
-		//compute(input); //WIP execute/compute input
+		compute(ms, input); //WIP execute/compute input
 		//sanitize(ms); //without exit
 	}
 	rl_clear_history();

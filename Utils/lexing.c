@@ -83,9 +83,20 @@ int	_lexer_find_match(char *match, char *input)
 	return (jump);
 }*/
 
-void	lexer(char *input)
+static int	save_token(t_minish *ms, char *cmd, t_lexer type)
 {
+	t_token	*token;
 
+	token = ft_calloc(1, sizeof(t_token));
+	if (!token)
+		ft_error_msg("Error while creating token");
+	token->cmd = cmd;
+	token->type = type;
+	return ((int)ft_strlen(cmd));
+}
+
+void	lexer(t_minish *ms, char *input)
+{
 	/*int	i;
 
 	i = 0;
@@ -113,10 +124,26 @@ void	lexer(char *input)
 	int	i;
 
 	i = 0;
-	while(input[i])
+	while (input[i])
 	{
-		//WIP
-		i++;
+		if (input[i] == ' ')
+			i++;
+		else if (input[i] == '|')
+			i += save_token(ms, input[i], PIPE);
+		else if (input[i] == '<' && input[i + 1] == '<')
+			i += save_token(ms, input[i], REDIR_INPUT_2);
+		else if (input[i] == '>' && input[i + 1] == '>')
+			i += save_token(ms, input[i], REDIR_OUTPUT_2);
+		else if (input[i] == '<')
+			i += save_token(ms, input[i], REDIR_INPUT_1);
+		else if (input[i] == '>')
+			i += save_token(ms, input[i], REDIR_OUTPUT_1);
+		else if (input[i] == '"')
+			//i += save_token;
+		else if (input[i] == '\'')
+			//i += save_token;
+		else
+			//i += save_token;
 	}
 }
 
