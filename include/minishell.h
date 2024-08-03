@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/07/29 15:40:24 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/07/30 16:24:54 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_minish
 
 typedef enum e_lexer
 {
+	REGULAR,
 	REDIR_INPUT_1,
 	REDIR_OUTPUT_1,
 	REDIR_INPUT_2,
