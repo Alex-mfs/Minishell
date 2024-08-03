@@ -36,7 +36,6 @@ typedef struct s_minish
 
 typedef enum e_lexer
 {
-	REGULAR,
 	REDIR_INPUT_1,
 	REDIR_OUTPUT_1,
 	REDIR_INPUT_2,
