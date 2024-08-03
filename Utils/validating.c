@@ -12,9 +12,9 @@
 
 #include "../include/minishell.h"
 
-/*bool	lexical_analysis(void)
+bool	validate_quotes(char *input)
 {
-	int		i;
+	/*int		i;
 	char	quote;
 	bool	in_quotes;
 
@@ -35,11 +35,7 @@
 	}
 	if (in_quotes)
 		return (error(ANSI_RED, ERROR_UNCLOSED_QUOTES, NULL, 2));
-	return (true);
-}*/
-
-bool	validate_quotes(char *input)
-{
+	return (true);*/
 	int	i;
 	int	sq_count;
 	int	dq_count;
@@ -49,7 +45,7 @@ bool	validate_quotes(char *input)
 	dq_count = 0;
 	while (input[i])
 	{
-		if (input[i] == '"')
+		if (input[i] == '\"')
 			dq_count++;
 		else if (input[i] == '\'')
 			sq_count++;
@@ -61,34 +57,9 @@ bool	validate_quotes(char *input)
 		return (true);
 }
 
-/*t_token	*scanner(t_operation op)
+bool	validate_tokens(t_minish *ms)
 {
-	static t_list	*current = NULL;
-
-	if (op == READ && current)
-		return (current->content);
-	else if (op == RESET)
-		current = ms()->lexemes;
-	else if (op == NEXT)
-		current = current->next;
-	else if (op == LOOKAHEAD && current->next)
-		return (current->next->content);
-	return (NULL);
-}
-
-bool	is_redirection(t_token *token)
-{
-	return (token->type >= LEX_IN_1 && token->type <= LEX_OUT_2);
-}
-
-bool	is_redir_or_pipe(t_token *token)
-{
-	return (token->type >= LEX_IN_1 && token->type <= LEX_PIPE);
-}
-
-bool	syntatic_analysis(void)
-{
-	t_token	*next;
+	/*t_token	*next;
 	int		num_pipes;
 	int		num_commands;
 
@@ -112,15 +83,40 @@ bool	syntatic_analysis(void)
 	}
 	if (num_pipes >= num_commands)
 		return (error(ANSI_RED, ERROR_UNCLOSED_PIPES, NULL, 2));
-	return (true);
-}*/
+	return (true);*/
+	t_token	*curr;
+	int		n_symbols;
+	int		n_commands;
 
-bool	validate_pipes(void)
-{
-	int	n_pipes;
-	int	n_commands;
-
-	n_pipes = 0;
+	n_symbols = 0;
 	n_commands = 1;
-	//WIP
+	curr = ms->tk_list;
+	while (curr)
+	{
+		if (curr->type >= REDIR_INPUT_1 && curr->type <= PIPE)
+		{
+			n_symbols++;
+			if (curr->next && curr->next->type > PIPE)
+				n_commands++;
+		}
+		curr = curr->next;
+	}
+	if (n_symbols >= n_commands)
+		return (false);
+	return (true);
 }
+
+/*t_token	*scanner(t_operation op)
+{
+	static t_list	*current = NULL;
+
+	if (op == READ && current)
+		return (current->content);
+	else if (op == RESET)
+		current = ms()->lexemes;
+	else if (op == NEXT)
+		current = current->next;
+	else if (op == LOOKAHEAD && current->next)
+		return (current->next->content);
+	return (NULL);
+}*/

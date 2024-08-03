@@ -28,9 +28,9 @@ static void	compute(t_minish *ms, char *input)
 	return (0);*/
 	if (!validate_quotes(input))
 		return ;
-	lexer(ms, input);
-	//WIP lexer: handle pipes, redirections, quotes... save each command on a t_token struct (nodes)
-	//validate pipes&redirect syntax (from tokens)
+	lexer(ms, input); //WIP mergeable? what is merge?
+	if (!validate_tokens(ms))
+		return ;
 	//WIP expand
 	//WIP parse
 	//WIP if "lexemes content" (input?) is valid command, execute

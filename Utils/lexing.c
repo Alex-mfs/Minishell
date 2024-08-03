@@ -41,33 +41,31 @@ void	token_destroy(t_token *token)
 		return ;
 	ft_free(token->str);
 	ft_free(token);
-}
+}*/
 
-bool	_is_mergeable(char *str, char *match, int jump)
+static int	save_token(t_minish *ms, char *symbol, t_lexer type)
 {
-	if (!str[jump])
-		return (false);
-	if (!ft_strcmp(SYMBOLS, match) && ft_strchr(QUOTES, str[jump]))
-		return (true);
-	if (ft_strchr(QUOTES, match[0]) && !ft_strchr(SPECIAL, str[jump + 1]))
-		return (true);
-	return (false);
-}
-
-int	_lexer_push_token(char *str, t_lexeme lexeme, bool can_merge)
-{
-	t_token	*token;
+	/*t_token	*token;
 
 	token = token_new(str, lexeme, can_merge);
 	if (!token || !str)
 		return (0);
 	ft_lstadd_back(&ms()->lexemes, ft_lstnew(token));
-	return (ft_strlen(str));
+	return (ft_strlen(str));*/
+	t_token	*token;
+
+	token = ft_calloc(1, sizeof(t_token));
+	if (!token)
+		ft_error_msg("Error while creating token");
+	token->token = symbol;
+	token->type = type;
+	ft_lstadd_back(&ms->tk_list, token); //WIP reescrever estrutura como lista
+	return ((int)ft_strlen(symbol));
 }
 
-int	_lexer_find_match(char *match, char *input)
+static int	save_cmd(t_minish *ms, char *cmd, char limit)
 {
-	int		jump;
+	/*int		jump;
 	char	*token;
 	bool	can_merge;
 
@@ -80,19 +78,25 @@ int	_lexer_find_match(char *match, char *input)
 		_lexer_push_token(token, LEX_SINGLE_QUOTES, can_merge);
 	else
 		_lexer_push_token(token, LEX_TERM, can_merge);
-	return (jump);
-}*/
+	return (jump);*/
+	int		i;
+	char	*content;
 
-static int	save_token(t_minish *ms, char *cmd, t_lexer type)
-{
-	t_token	*token;
-
-	token = ft_calloc(1, sizeof(t_token));
-	if (!token)
-		ft_error_msg("Error while creating token");
-	token->cmd = cmd;
-	token->type = type;
-	return ((int)ft_strlen(cmd));
+	i = 0;
+	while (cmd[i] && cmd[i] != limit)
+		i++;
+	if (cmd[i] == '\0')
+		return (-1);
+	//WIP mergeable? what is merge? quotes are mergeable
+	content = ft_substr(cmd, 0, i);
+	if (limit == '\"')
+		save_token(ms, content, DOUBLE_QUOTES);
+	else if (limit == '\'')
+		save_token(ms, content, SINGLE_QUOTES);
+	else
+		save_token(ms, content, OTHER);
+	free(content);
+	return (i);
 }
 
 void	lexer(t_minish *ms, char *input)
@@ -126,25 +130,35 @@ void	lexer(t_minish *ms, char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == ' ')
+		if (ft_isdelim(input[i]))
 			i++;
 		else if (input[i] == '|')
-			i += save_token(ms, input[i], PIPE);
+			i += save_token(ms, "|", PIPE);
 		else if (input[i] == '<' && input[i + 1] == '<')
-			i += save_token(ms, input[i], REDIR_INPUT_2);
+			i += save_token(ms, "<<", REDIR_INPUT_2);
 		else if (input[i] == '>' && input[i + 1] == '>')
-			i += save_token(ms, input[i], REDIR_OUTPUT_2);
+			i += save_token(ms, ">>", REDIR_OUTPUT_2);
 		else if (input[i] == '<')
-			i += save_token(ms, input[i], REDIR_INPUT_1);
+			i += save_token(ms, "<", REDIR_INPUT_1);
 		else if (input[i] == '>')
-			i += save_token(ms, input[i], REDIR_OUTPUT_1);
-		else if (input[i] == '"')
-			//i += save_token;
+			i += save_token(ms, ">", REDIR_OUTPUT_1);
+		else if (input[i] == '\"')
+			i += 2 + save_cmd(ms, input[i + 1], '\"');
 		else if (input[i] == '\'')
-			//i += save_token;
+			i += 2 + save_cmd(ms, input[i + 1], '\'');
 		else
-			//i += save_token;
+			i += 1 + save_cmd(ms, input[i], ' ');
 	}
+	//WIP mergeable? what is merge? quotes are mergeable
 }
-
-
+/*bool	_is_mergeable(char *str, char *match, int jump)
+{
+//[bool]can_merge = _is_mergeable(input, match, jump);
+	if (!str[jump])
+		return (false);
+	if (!ft_strcmp(SYMBOLS, match) && ft_strchr(QUOTES, str[jump]))
+		return (true);
+	if (ft_strchr(QUOTES, match[0]) && !ft_strchr(SPECIAL, str[jump + 1]))
+		return (true);
+	return (false);
+}*/

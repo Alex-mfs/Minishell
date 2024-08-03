@@ -22,15 +22,16 @@
 
 typedef struct s_token
 {
-	char	*cmd;
+	char	*token;
 	t_lexer	type;
 	t_token	*next;
 }			t_token;
 
 typedef struct s_minish
 {
-	char	**env_list;
-	char	*cwd;
+	char			**env_list;
+	char			*cwd;
+	struct s_token	*tk_list;
 }			t_minish;
 
 typedef enum e_lexer
@@ -40,6 +41,9 @@ typedef enum e_lexer
 	REDIR_INPUT_2,
 	REDIR_OUTPUT_2,
 	PIPE,
+	SINGLE_QUOTES,
+	DOUBLE_QUOTES,
+	OTHER,
 }	t_lexer;
 
 //Utils - Initialising
@@ -50,6 +54,7 @@ void	set_signals(void);
 void	handle_interrupt(int signum);
 //Utils - Validating
 bool	validate_quotes(char *input);
+bool	validate_tokens(t_minish *ms);
 //Utils - Reading
 void	read_inputs(t_minish *ms);
 //Utils - Lexing
