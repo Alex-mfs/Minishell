@@ -99,7 +99,7 @@ static int	save_cmd(t_minish *ms, char *cmd, char limit)
 	return (i);
 }
 
-void	lexer(t_minish *ms, char *input)
+void	get_tokens(t_minish *ms, char *input)
 {
 	/*int	i;
 

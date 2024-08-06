@@ -86,7 +86,8 @@ char	*ft_strbuild(char *s1, const char *s2);
 char	*ft_substr(const char *str, unsigned int start, size_t len);
 // Strings - Complex Operations
 char	*ft_strtrim(const char *s1, const char *set);
-char	**ft_strarrdup(char **src);
+char	**ft_matrix_dup(char **src);
+char	**ft_matrix_add_line(char **src, char *newline);
 void	ft_striteri(char *str, void (*f)(unsigned int, char *));
 char	*ft_strmapi(const char *str, char (*f)(unsigned int, char));
 char	**ft_split(const char *s, char c);

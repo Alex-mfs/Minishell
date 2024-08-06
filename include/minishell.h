@@ -20,6 +20,13 @@
 //# include <readline/history.h>
 # include "../libft/libft.h"
 
+typedef struct s_ast
+{
+	int		index;
+	char	*cmd;
+	char	**args;
+}			t_ast;
+
 typedef struct s_token
 {
 	char	*token;
@@ -32,6 +39,7 @@ typedef struct s_minish
 	char			**env_list;
 	char			*cwd;
 	struct s_token	*tk_list;
+	struct s_ast	*cmd_list;
 }			t_minish;
 
 typedef enum e_lexer
@@ -57,7 +65,11 @@ bool	validate_quotes(char *input);
 bool	validate_tokens(t_minish *ms);
 //Utils - Reading
 void	read_inputs(t_minish *ms);
-//Utils - Lexing
-void	lexer(t_minish *ms, char *input);
+//Utils - Tokening
+void	get_tokens(t_minish *ms, char *input);
+//Utils - Expanding
+void	expand(t_minish *ms);
+//Utils - Parsing
+void	parse(t_minish *ms);
 
 #endif

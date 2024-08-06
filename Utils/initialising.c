@@ -12,6 +12,18 @@
 
 #include "../include/minishell.h"
 
+/*void	_ms_init(char **envp)
+{
+	ft_bzero(ms(), sizeof(t_ms));
+	(ms()->envlist) = envlist(envp);
+	update_envs();
+	(ms()->exit_status) = 0;
+	(ms()->cwd) = getcwd(NULL, 4096);
+	(ms()->in_fd) = STDIN_FILENO;
+	(ms()->out_fd) = STDOUT_FILENO;
+	return ;
+}*/
+
 static char	*trim_name(char *to_trim)
 {
 	char	*trimmed;

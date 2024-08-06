@@ -12,6 +12,31 @@
 
 #include "../include/minishell.h"
 
+/*bool	is_assignment(t_token *token)
+{
+	int	i;
+
+	i = -1;
+	if (token->str[0])
+	{
+		if (token->str[0] == '='
+			|| token->str[ft_strlen(token->str) - 1] == '=')
+		{
+			error(ANSI_RED, ERROR_BAD_ASSIGNMENT, NULL, 1);
+			return (false);
+		}
+	}
+	while (token->str[++i])
+	{
+		if (token->str[i] == '=')
+		{
+			export_directly(&ms()->envtmp, token->str);
+			return (true);
+		}
+	}
+	return (false);
+}*/
+
 static void	compute(t_minish *ms, char *input)
 {
 	/*if (!lexical_analysis())
@@ -28,11 +53,11 @@ static void	compute(t_minish *ms, char *input)
 	return (0);*/
 	if (!validate_quotes(input))
 		return ;
-	lexer(ms, input); //WIP mergeable? what is merge?
+	get_tokens(ms, input); //WIP mergeable? what is merge?
 	if (!validate_tokens(ms))
 		return ;
-	//WIP expand
-	//WIP parse
+	expand(ms); //WIP Lida com inputs tipo $. Incompleto.
+	parse(ms); //WIP Distingue comandos de argumentos. Define pipes. Incompleto.
 	//WIP if "lexemes content" (input?) is valid command, execute
 	//sanitize envp & path
 	//delete any heredoc file

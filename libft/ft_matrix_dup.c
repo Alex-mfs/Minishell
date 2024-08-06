@@ -14,19 +14,19 @@
 
 static char	**free_all(char **tab, int w)
 {
-	while (w >= 0)
+	while (tab[w])
 	{
 		free(tab[w]);
-		w--;
+		w++;
 	}
+	free(tab[w]);
 	free(tab);
 	return (NULL);
 }
 
-char	**ft_strarrdup(char **src)
+char	**ft_matrix_dup(char **src)
 {
 	char	**dest;
-	int		i;
 	int		w;
 
 	w = 0;
@@ -39,10 +39,9 @@ char	**ft_strarrdup(char **src)
 	w--;
 	while (w >= 0)
 	{
-		i = 0;
 		dest[w] = ft_strdup(src[w]);
 		if (!dest[w])
-			return (free_all(dest, w - 1));
+			return (free_all(dest, w + 1));
 		w--;
 	}
 	return (dest);
