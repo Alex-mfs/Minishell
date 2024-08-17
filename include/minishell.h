@@ -18,6 +18,8 @@
 # include <time.h>
 //# include <readline/readline.h>
 //# include <readline/history.h>
+//# include <sys/types.h>
+//# include <sys/wait.h>
 # include "../libft/libft.h"
 
 typedef struct s_ast
@@ -71,5 +73,7 @@ void	get_tokens(t_minish *ms, char *input);
 void	expand(t_minish *ms);
 //Utils - Parsing
 void	parse(t_minish *ms);
+//Utils - Executing
+void	execute(t_minish *ms);
 
 #endif

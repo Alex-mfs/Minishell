@@ -12,9 +12,9 @@
 
 #include "../include/minishell.h"
 
-/*bool	is_assignment(t_token *token)
+static bool	assign_var(t_minish *ms)
 {
-	int	i;
+	/*int	i;
 
 	i = -1;
 	if (token->str[0])
@@ -34,8 +34,8 @@
 			return (true);
 		}
 	}
-	return (false);
-}*/
+	return (false);*/
+}
 
 static void	compute(t_minish *ms, char *input)
 {
@@ -57,10 +57,11 @@ static void	compute(t_minish *ms, char *input)
 	if (!validate_tokens(ms))
 		return ;
 	expand(ms); //WIP Lida com inputs tipo $. Incompleto.
-	parse(ms); //WIP Distingue comandos de argumentos. Define pipes. Incompleto.
-	//WIP if "lexemes content" (input?) is valid command, execute
-	//sanitize envp & path
-	//delete any heredoc file
+	parse(ms); //WIP Distingue comandos de argumentos. Define pipes. Muito incompleto.
+	//WIP if(!assign_var(ms)) Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar
+	//WIP execute(ms);//WIP Executar cada um dos comandos
+	//WIP sanitize envp & path
+	//WIP unlink() delete any heredoc file
 }
 
 static char	*maintain_prompt(t_minish *ms)
@@ -87,7 +88,7 @@ static char	*maintain_prompt(t_minish *ms)
 	prompt = ft_strbuild(prompt, suffix);
 	return (prompt);
 	//prefix + cwd + suffix
-	//definir formatacao do prompt
+	//WIP definir formatacao do prompt
 }
 
 void	read_inputs(t_minish *ms)
@@ -116,11 +117,11 @@ void	read_inputs(t_minish *ms)
 		if (!input)
 		{
 			printf("Input allocation error.\nExiting minishell\n");
-			//sanitize(ms); //with exit
+			//WIP sanitize(ms); //with exit
 		}
 		add_history(input);
 		compute(ms, input); //WIP execute/compute input
-		//sanitize(ms); //without exit
+		//WIP sanitize(ms); //without exit
 	}
 	rl_clear_history();
 }
