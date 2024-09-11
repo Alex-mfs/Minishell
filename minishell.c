@@ -21,14 +21,14 @@ int main(int argc, char **argv, char **envp)
     (void)argv;
 	ft_bzero(&ms, sizeof(t_minish));
     init_ms(&ms, envp);
-    set_signals();
+    set_signals(); //WIP - Preciso estudo
     read_inputs(&ms); //WIP
-    i = 0;
+    /*i = 0;
     while (ms.env_list[i])
     {
         ft_printf("No.%d: %s\n", i, ms.env_list[i]);
         i++;
-    }
+    }*/
     ft_free_matrix(ms.env_list);
     return (0);
 }

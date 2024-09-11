@@ -38,7 +38,7 @@ void	init_ms(t_minish *ms, char **envp)
 	int	i;
 
 	i = 0;
-	ms->env_list = ft_strarrdup(envp);
+	ms->env_list = ft_matrix_dup(envp);
 	while (i < 50)
 	{
 		ms->env_list[i] = trim_name(ms->env_list[i]);

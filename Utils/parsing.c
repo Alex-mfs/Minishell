@@ -142,7 +142,7 @@ static t_token	*redir_command(t_ast *cmd, t_token *tk)
 	if (!redir)
 		return (NULL);
 	redir->cmd = tk->token;
-	redir->args = ft_matrix_add_line(redir->args, ft_strdup(tk->next->token)); //WIP escrever função. E também confirmar se esta operação faz sequer sentido
+	redir->args = ft_matrix_add_line(redir->args, ft_strdup(tk->next->token)); //WIP confirmar se esta operação faz sequer sentido
 	redir->left = NULL; //WIP determinar o que é left e right
 	cmd->left = redir; //WIP determinar o que é left e right
 	return (tk->next);

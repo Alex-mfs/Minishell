@@ -54,7 +54,7 @@ static void	compute(t_minish *ms, char *input)
 	if (!validate_quotes(input))
 		return ;
 	get_tokens(ms, input); //WIP mergeable? what is merge?
-	if (!validate_tokens(ms))
+	if (!validate_tokens(ms)) //WIP na verdade, é permitido terminar num pipe. Corrigir.
 		return ;
 	expand(ms); //WIP Lida com inputs tipo $. Incompleto.
 	parse(ms); //WIP Distingue comandos de argumentos. Define pipes. Muito incompleto.

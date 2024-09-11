@@ -85,7 +85,7 @@ static int	save_cmd(t_minish *ms, char *cmd, char limit)
 	i = 0;
 	while (cmd[i] && cmd[i] != limit)
 		i++;
-	if (cmd[i] == '\0')
+	if (cmd[i] == '\0') // WIP rever
 		return (-1);
 	//WIP mergeable? what is merge? quotes are mergeable
 	content = ft_substr(cmd, 0, i);
@@ -147,7 +147,7 @@ void	get_tokens(t_minish *ms, char *input)
 		else if (input[i] == '\'')
 			i += 2 + save_cmd(ms, input[i + 1], '\'');
 		else
-			i += 1 + save_cmd(ms, input[i], ' ');
+			i += 1 + save_cmd(ms, input[i], ' '); //WIP se encontrar <, >, ou |, isso sao limites tambem. Tambem, mudar para isdelim
 	}
 	//WIP mergeable? what is merge? quotes are mergeable
 }
