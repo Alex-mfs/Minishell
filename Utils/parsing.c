@@ -155,17 +155,18 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 	cmd = ft_calloc(1, sizeof(t_ast));
 	if (!cmd)
 		return (NULL);
-	cmd->cmd = ms->tk_list->token;
+	cmd->cmd = buff->token;
 	if (!ft_lstlast(ms->cmd_list)) //WIP reescrever estrutura como lista
 		cmd->index = 1;
 	else
 		cmd->index = ft_lstlast(ms->cmd_list)->index + 1; //WIP reescrever estrutura como lista
+	buff = buff->next;
 	while (buff && buff->type != PIPE)
 	{
 		if (buff->type >= REDIR_INPUT_1 && buff->type <= REDIR_OUTPUT_2)
-			buff = redir_command(cmd, buff);
+			buff = redir_command(cmd, buff); //WIP Redireções. Incompleto. Rever.
 		else
-			cmd->args = ft_matrix_add_line(cmd->args, ft_strdup(buff->token)); //WIP escrever função
+			cmd->args = ft_matrix_add_line(cmd->args, ft_strdup(buff->token));
 		buff = buff->next;
 	}
 	ft_lstadd_back(&ms->cmd_list, cmd); //WIP reescrever estrutura como lista.
@@ -175,20 +176,25 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 void	parse(t_minish *ms)
 {
 	t_token	*buff;
-	//t_ast	*ast;
-	//t_ast	*command;
 
-	//scanner(RESET);
-	//command = NULL;
-	buff = parse_command(ms, ms->tk_list); //parse_command usa scanner, sem RESET.
+	buff = parse_command(ms, ms->tk_list); //parse_command original usa scanner, sem RESET.
 	if (!buff)
 		return ;
-	//WIP Esta parte lida com pipes. Temos de saber onde vamos na tk_list
-	/*while (scanner(READ) && scanner(READ)->type == LEX_PIPE)
+	while (buff && buff->type == PIPE)
 	{
-		scanner(NEXT);
-		command = parse_command(ms);
-		ast = _extend_pipeline(ast, command);
-	}*/
+		buff = buff->next;
+		buff = parse_command(ms, buff); //Potenciais problemas de memória com buff. Ter atenção ao testar.
+		//WIP ast = _extend_pipeline(ast, command);
+	}
+	/*t_ast	*_extend_pipeline(t_ast *ast, t_ast *command)
+{
+	t_ast	*root;
 
+	root = ast_new(token_new(ft_strdup("|"), LEX_PIPE, false));
+	if (!root)
+		return (NULL);
+	ast_insert(&root, ast, true);
+	ast_insert(&root, command, false);
+	return (root);
+}*/
 }
