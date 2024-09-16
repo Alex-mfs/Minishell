@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/09/16 19:14:55 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/09/16 23:33:20 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,34 @@ void	parser(void)
 	ms()->ast = _parse_pipeline();
 }*/
 
+static t_ast	*parse_pipeline(t_ast *prev, t_ast *curr)
+{
+	t_ast	*pip;
+
+	pip = ft_calloc(1, sizeof(t_ast));
+	if (!pip)
+		return (NULL);
+	pip->cmd = "|"; //tentative (alocar memoria?)
+	pip->index = 0; //tentative
+	pip->left = prev;
+	pip->right = curr;
+	return (pip);
+}
+
+/*t_ast	*_extend_command(t_ast *command)
+{
+	t_ast	*redir;
+
+	redir = ast_new(token_copy(scanner(READ)));
+	if (!redir)
+		return (NULL);
+	scanner(NEXT);
+	redir->args = matrix_append(redir->args, ft_strdup(scanner(READ)->str));
+	redir->left = command->left;
+	command->left = redir;
+	return (command);
+}*/
+
 static t_token	*redir_command(t_ast *cmd, t_token *tk)
 {
 	t_ast	*redir;
@@ -190,6 +218,8 @@ void	parse(t_minish *ms)
 	}
 	return (ast);*/
 	t_token	*buff;
+	t_ast	*ast;
+	t_ast	*tmp;
 
 	buff = parse_command(ms, ms->tk_list); //parse_command original usa scanner, sem RESET.
 	if (!buff)
@@ -198,27 +228,6 @@ void	parse(t_minish *ms)
 	{
 		buff = buff->next;
 		buff = parse_command(ms, buff); //Potenciais problemas de memória com buff. Ter atenção ao testar.
-		//WIP ast = _extend_pipeline(ast, command); //WIP determinar o que é left e right
+		//WIP ast = parse_pipeline(prev, curr); //WIP determinar o que é left e right
 	}
-	/*t_ast	*_extend_pipeline(t_ast *ast, t_ast *command) //ast is previous command, command is current command
-{
-	t_ast	*root;
-
-	root = ast_new(token_new(ft_strdup("|"), LEX_PIPE, false));
-	if (!root)
-		return (NULL);
-	ast_insert(&root, ast, true); //ast is previous command, put it to the left
-	ast_insert(&root, command, false); //command is current command, put it to the right
-	return (root);
-}
-
-void	ast_insert(t_ast **ast, t_ast *node, bool left)
-{
-	if (*ast && left)
-		(*ast)->left = node;
-	else if (*ast && !left)
-		(*ast)->right = node;
-	else
-		*ast = node;
-}*/
 }

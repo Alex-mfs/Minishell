@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/29 17:43:52 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/09/16 22:48:19 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ static void	compute(t_minish *ms, char *input)
 	if (!validate_tokens(ms)) //WIP na verdade, é permitido terminar num pipe. Corrigir.
 		return ;
 	expand(ms); //WIP Lida com inputs tipo $. Incompleto.
-	parse(ms); //WIP Distingue comandos de argumentos. Define pipes. Muito incompleto.
+	//WIP parse(ms); //WIP Distingue comandos de argumentos. Define pipes. Muito incompleto.
 	//WIP if(!assign_var(ms)) Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar
 	//WIP execute(ms);//WIP Executar cada um dos comandos
 	//WIP sanitize envp & path
-	//WIP unlink() delete any heredoc file
+	//WIP unlink(HEREDOC) delete any heredoc file
 }
 
 static char	*maintain_prompt(t_minish *ms)
@@ -113,7 +113,7 @@ void	read_inputs(t_minish *ms)
 	while (1)
 	{
 		prompt = maintain_prompt(ms);
-		input = readline(prompt); //WIP confirmar os efeitos de readline
+		input = readline(prompt); //WIP confirmar os efeitos de readline; gera memoryleaks, mas valgrind pode ignorar, investigar
 		if (!input)
 		{
 			printf("Input allocation error.\nExiting minishell\n");
