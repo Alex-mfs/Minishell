@@ -50,70 +50,7 @@ void	ast_clear(t_ast *ast, void (*del)(t_ast *))
 	ft_free(ast);
 }*/
 
-/*t_ast	*_extend_command(t_ast *command)
-{
-	t_ast	*redir;
-
-	redir = ast_new(token_copy(scanner(READ)));
-	if (!redir)
-		return (NULL);
-	scanner(NEXT);
-	redir->args = matrix_append(redir->args, ft_strdup(scanner(READ)->str));
-	redir->left = command->left;
-	command->left = redir;
-	return (command);
-}
-
-t_ast	*_extend_pipeline(t_ast *ast, t_ast *command)
-{
-	t_ast	*root;
-
-	root = ast_new(token_new(ft_strdup("|"), LEX_PIPE, false));
-	if (!root)
-		return (NULL);
-	ast_insert(&root, ast, true);
-	ast_insert(&root, command, false);
-	return (root);
-}
-
-t_ast	*_parse_command(void)
-{
-	t_ast	*cmd;
-
-	cmd = ast_new(token_copy(scanner(READ)));
-	if (!cmd)
-		return (NULL);
-	cmd->index = ms()->num_commands++;
-	while (scanner(READ) && scanner(READ)->type != LEX_PIPE)
-	{
-		if (scanner(READ)->type >= LEX_IN_1 && scanner(READ)->type <= LEX_OUT_2)
-			cmd = _extend_command(cmd);
-		else
-			cmd->args = matrix_append(cmd->args, ft_strdup(scanner(READ)->str));
-		scanner(NEXT);
-	}
-	return (cmd);
-}
-
-t_ast	*_parse_pipeline(void)
-{
-	t_ast	*ast;
-	t_ast	*command;
-
-	command = NULL;
-	ast = _parse_command();
-	if (!ast)
-		return (NULL);
-	while (scanner(READ) && scanner(READ)->type == LEX_PIPE)
-	{
-		scanner(NEXT);
-		command = _parse_command();
-		ast = _extend_pipeline(ast, command);
-	}
-	return (ast);
-}
-
-t_token	*scanner(t_operation op)
+/*t_token	*scanner(t_operation op)
 {
 	static t_list	*current = NULL;
 
@@ -134,8 +71,27 @@ void	parser(void)
 	ms()->ast = _parse_pipeline();
 }*/
 
-static t_ast	*parse_pipeline(t_ast *prev, t_ast *curr)
+static t_ast	*parse_pipe(t_ast *prev, t_ast *curr)
 {
+	/*	t_ast	*root;
+
+	root = ast_new(token_new(ft_strdup("|"), LEX_PIPE, false));
+	if (!root)
+		return (NULL);
+	ast_insert(&root, ast, true);
+	ast_insert(&root, command, false);
+
+void	ast_insert(t_ast **ast, t_ast *node, bool left)
+{
+	if (*ast && left)
+		(*ast)->left = node;
+	else if (*ast && !left)
+		(*ast)->right = node;
+	else
+		*ast = node;
+}
+
+	return (root);*/
 	t_ast	*pip;
 
 	pip = ft_calloc(1, sizeof(t_ast));
@@ -145,12 +101,14 @@ static t_ast	*parse_pipeline(t_ast *prev, t_ast *curr)
 	pip->index = 0; //tentative
 	pip->left = prev;
 	pip->right = curr;
+	prev->right = pip; //tentative
+	curr->left = pip; //tentative
 	return (pip);
 }
 
-/*t_ast	*_extend_command(t_ast *command)
+static t_token	*parse_redir(t_ast *cmd, t_token *tk)
 {
-	t_ast	*redir;
+	/*	t_ast	*redir;
 
 	redir = ast_new(token_copy(scanner(READ)));
 	if (!redir)
@@ -159,25 +117,38 @@ static t_ast	*parse_pipeline(t_ast *prev, t_ast *curr)
 	redir->args = matrix_append(redir->args, ft_strdup(scanner(READ)->str));
 	redir->left = command->left;
 	command->left = redir;
-	return (command);
-}*/
-
-static t_token	*redir_command(t_ast *cmd, t_token *tk)
-{
+	return (command);*/
 	t_ast	*redir;
 
 	redir = ft_calloc(1, sizeof(t_ast));
 	if (!redir)
 		return (NULL);
-	redir->cmd = tk->token;
+	redir->cmd = tk->token; //WIP confirmar se esta operação faz sequer sentido
 	redir->args = ft_matrix_add_line(redir->args, ft_strdup(tk->next->token)); //WIP confirmar se esta operação faz sequer sentido
-	redir->left = NULL; //WIP determinar o que é left e right
-	cmd->left = redir; //WIP determinar o que é left e right
-	return (tk->next);
+	redir->left = cmd->left;
+	cmd->left = redir;
+	redir->right = cmd; //tentative
+	return (tk->next); //WIP confirmar se esta operação faz sequer sentido
 }
 
 static t_token	*parse_command(t_minish *ms, t_token *buff)
 {
+	/*
+	t_ast	*cmd;
+
+	cmd = ast_new(token_copy(scanner(READ)));
+	if (!cmd)
+		return (NULL);
+	cmd->index = ms()->num_commands++;
+	while (scanner(READ) && scanner(READ)->type != LEX_PIPE)
+	{
+		if (scanner(READ)->type >= LEX_IN_1 && scanner(READ)->type <= LEX_OUT_2)
+			cmd = _extend_command(cmd);
+		else
+			cmd->args = matrix_append(cmd->args, ft_strdup(scanner(READ)->str));
+		scanner(NEXT);
+	}
+	return (cmd);*/
 	t_ast	*cmd;
 
 	cmd = ft_calloc(1, sizeof(t_ast));
@@ -192,7 +163,7 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 	while (buff && buff->type != PIPE)
 	{
 		if (buff->type >= REDIR_INPUT_1 && buff->type <= REDIR_OUTPUT_2)
-			buff = redir_command(cmd, buff); //WIP Redireções. Incompleto. Rever.
+			buff = parse_redir(cmd, buff); //WIP Redireções. Incompleto. Rever.
 		else
 			cmd->args = ft_matrix_add_line(cmd->args, ft_strdup(buff->token));
 		buff = buff->next;
@@ -228,6 +199,6 @@ void	parse(t_minish *ms)
 	{
 		buff = buff->next;
 		buff = parse_command(ms, buff); //Potenciais problemas de memória com buff. Ter atenção ao testar.
-		//WIP ast = parse_pipeline(prev, curr); //WIP determinar o que é left e right
+		ast = parse_pipe(prev, curr); //WIP determinar o que é left e right
 	}
 }
