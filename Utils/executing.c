@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reading.c                                          :+:      :+:    :+:   */
+/*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/29 17:43:52 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/09/16 22:13:44 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,30 @@
 		(ms()->pipes[i]) = ft_calloc(2, sizeof(int));
 		pipe(ms()->pipes[i]);
 	}
+}*/
+
+// 	-> Gera uma nova matriz de pipes. A matriz é uma matriz 2D de inteiros, onde cada linha representa um pipe.
+//	-> A primeira coluna é o descritor do ficheiro de entrada e a segunda coluna o descritor do ficheiro de saída;
+
+void	pipeline_matrix(t_minish *ms)
+{
+	int	i;
+
+	i = 0;
+	ms->pipes = ft_calloc(ms->cmd_list, sizeof(int *)); // colocar um list_size dos cmds -1 
+	if (!ms->pipes)
+		return ;
+	while (i < ms->cmd_list - 1) // list_size -1
+	{
+		ms->pipes[i] = ft_calloc(2, sizeof(int));
+		if (!ms->pipes[i])
+			return ;
+		pipe(ms->pipes[i]);
+		i++;
+	}
 }
 
+/*
 void	pipeline_apply(int command_index)
 {
 	if (ms()->num_commands < 2)
@@ -145,7 +167,18 @@ pid_t	_execute_pipeline(t_ast *node)
 	return (last);
 }*/
 
-void	execute(t_minish *ms)
+pid_t	pipeline_exec(t_ast	*ast_node)
+{
+	pid_t	child_pid;
+
+	child_pid = 0;
+	if (!ast_node)
+		return (child_pid);
+	//child_pid = pipeline_exec(ast_node->left);
+	//child_pid = pipeline_exec(ast_node->right);
+}
+
+void	execute(t_minish *ms, t_ast	*ast)
 {
 /*	int		status;
 	pid_t	last;
@@ -163,8 +196,11 @@ void	execute(t_minish *ms)
 	int		status;
 	pid_t	child_pid;
 
-	//status = 0x7F; "=127"
-	//criar um int** onde regista comandos, de alguma forma
+	status = 0x7F; // = 127 -> numero usado para erro antes de executar os processos = erro ao exec comando
+	pipeline_matrix(ms);
+	child_pid = pipeline_exec(ast);
+	
+	//feito - criar um int** onde regista comandos, de alguma forma
 	//WIP executar pipeline, gravar pid (criado com fork()?) respectivo em "child_pid"
 	//WIP child_pid = waitpid(child_pid, &status, 0);
 	//WIP esperar até terminarem todos os child processes antes de continuar o programa

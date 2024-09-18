@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/25 19:10:24 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/09/16 21:53:48 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ int main(int argc, char **argv, char **envp)
         i++;
     }*/
     ft_free_matrix(ms.env_list);
-    return (0);
+    return (ms.exit_status); // finalizar o programa na main.
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/07/30 16:24:54 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/09/16 19:33:16 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@
 
 typedef struct s_ast
 {
-	int		index;
-	char	*cmd;
-	char	**args;
+	int				index;
+	char			*cmd;
+	char			**args;
+	struct s_ast	*left;
+	struct s_ast	*right;
 }			t_ast;
 
 typedef struct s_token
@@ -38,6 +40,7 @@ typedef struct s_token
 
 typedef struct s_minish
 {
+	int				**pipes;
 	char			**env_list;
 	char			*cwd;
 	struct s_token	*tk_list;
