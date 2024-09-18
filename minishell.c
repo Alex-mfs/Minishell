@@ -6,11 +6,12 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/09/16 21:53:48 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:43:21 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minishell.h"
+
 
 int main(int argc, char **argv, char **envp)
 {
