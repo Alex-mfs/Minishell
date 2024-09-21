@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/09/16 23:33:20 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/09/21 13:15:42 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,29 +80,23 @@ static t_ast	*parse_pipe(t_ast *prev, t_ast *curr)
 		return (NULL);
 	ast_insert(&root, ast, true);
 	ast_insert(&root, command, false);
-
-void	ast_insert(t_ast **ast, t_ast *node, bool left)
-{
-	if (*ast && left)
-		(*ast)->left = node;
-	else if (*ast && !left)
-		(*ast)->right = node;
-	else
-		*ast = node;
-}
-
+		void	ast_insert(t_ast **ast, t_ast *node, bool left)
+			if (*ast && left)
+				(*ast)->left = node;
+			else if (*ast && !left)
+				(*ast)->right = node;
+			else
+				*ast = node;
 	return (root);*/
 	t_ast	*pip;
 
 	pip = ft_calloc(1, sizeof(t_ast));
 	if (!pip)
 		return (NULL);
-	pip->cmd = "|"; //tentative (alocar memoria?)
-	pip->index = 0; //tentative
+	pip->cmd = "|"; //WIP pode ser necessario alocar memoria
+	pip->index = 0;
 	pip->left = prev;
 	pip->right = curr;
-	prev->right = pip; //tentative
-	curr->left = pip; //tentative
 	return (pip);
 }
 
@@ -189,16 +183,17 @@ void	parse(t_minish *ms)
 	}
 	return (ast);*/
 	t_token	*buff;
-	t_ast	*ast;
-	t_ast	*tmp;
+	t_ast	*prev_cmd;
+	t_ast	*curr_cmd;
 
-	buff = parse_command(ms, ms->tk_list); //parse_command original usa scanner, sem RESET.
+	buff = parse_command(ms, ms->tk_list); //WIP parse_command original usa scanner, sem RESET. Confirmar que esta forma funciona
 	if (!buff)
 		return ;
+	prev_cmd = ms->cmd_list;
 	while (buff && buff->type == PIPE)
 	{
-		buff = buff->next;
-		buff = parse_command(ms, buff); //Potenciais problemas de memória com buff. Ter atenção ao testar.
-		ast = parse_pipe(prev, curr); //WIP determinar o que é left e right
+		buff = parse_command(ms, buff->next); //Potenciais problemas de memória com buff. Ter atenção ao testar.
+		curr_cmd = ft_lstlast(ms->cmd_list); //WIP reescrever estrutura como lista.
+		prev_cmd = parse_pipe(prev_cmd, curr_cmd);
 	}
 }
