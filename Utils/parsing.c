@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/09/21 13:15:42 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/09/24 20:09:09 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,13 @@ static t_token	*parse_redir(t_ast *cmd, t_token *tk)
 	redir = ft_calloc(1, sizeof(t_ast));
 	if (!redir)
 		return (NULL);
-	redir->cmd = tk->token; //WIP confirmar se esta operação faz sequer sentido
-	redir->args = ft_matrix_add_line(redir->args, ft_strdup(tk->next->token)); //WIP confirmar se esta operação faz sequer sentido
-	redir->left = cmd->left;
-	cmd->left = redir;
-	redir->right = cmd; //tentative
-	return (tk->next); //WIP confirmar se esta operação faz sequer sentido
+	redir->cmd = tk->token;
+	redir->args = ft_matrix_add_line(redir->args, ft_strdup(tk->next->token));
+	if (tk->type == REDIR_INPUT_1 || tk->type == REDIR_INPUT_2) //WIP confirmar tudo!
+		cmd->left = redir;
+	else
+		cmd->right = redir;
+	return (tk->next);
 }
 
 static t_token	*parse_command(t_minish *ms, t_token *buff)
