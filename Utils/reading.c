@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/09/16 22:48:19 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:18:01 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,11 @@ void	read_inputs(t_minish *ms)
 	{
 		prompt = maintain_prompt(ms);
 		input = readline(prompt); //WIP confirmar os efeitos de readline; gera memoryleaks, mas valgrind pode ignorar, investigar
-		if (!input)
+		if (!input) // em caso de ctrl+d
 		{
 			printf("Input allocation error.\nExiting minishell\n");
-			//WIP sanitize(ms); //with exit
+			//WIP sanitize(ms); //with exit // fazer algo parecido mas retornar para o main para finalizar;
+			break;
 		}
 		add_history(input);
 		compute(ms, input); //WIP execute/compute input

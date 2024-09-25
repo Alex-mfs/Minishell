@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/09/16 23:23:52 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:16:49 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@
 
 typedef struct s_ast
 {
-	int		index;
-	char	*cmd;
-	char	**args;
-	t_ast	*left;
-	t_ast	*right;
+	int				index;
+	char			*cmd;
+	char			**args;
+	struct s_ast	*left;
+	struct s_ast	*right;
 }			t_ast;
 
 typedef struct s_token
@@ -40,10 +40,13 @@ typedef struct s_token
 
 typedef struct s_minish
 {
+	int				**pipes;
 	char			**env_list;
 	char			*cwd;
 	struct s_token	*tk_list;
 	struct s_ast	*cmd_list;
+	int				fd_in;
+	int				fd_out;
 }			t_minish;
 
 typedef enum e_lexer
@@ -77,5 +80,9 @@ void	expand(t_minish *ms);
 void	parse(t_minish *ms);
 //Utils - Executing
 void	execute(t_minish *ms);
+
+//minishell.c - exit_status
+void	set_exit_status(int status);
+int		get_exit_status(void);
 
 #endif

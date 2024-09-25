@@ -6,11 +6,23 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/09/16 21:57:04 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:14:53 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minishell.h"
+
+static int	g_exit_status = 0;
+
+void	set_exit_status(int status)
+{
+	g_exit_status = status;
+}
+
+int	get_exit_status(void)
+{
+	return (g_exit_status);
+}
 
 int main(int argc, char **argv, char **envp)
 {
@@ -30,6 +42,6 @@ int main(int argc, char **argv, char **envp)
         i++;
     }*/
     ft_free_matrix(ms.env_list);
-    return (0);
+    return (g_exit_status); // finalizar o programa na main.
 }
 

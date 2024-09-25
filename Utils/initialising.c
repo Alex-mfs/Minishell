@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialising.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/29 11:31:41 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:03:10 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,6 @@ void	init_ms(t_minish *ms, char **envp)
 		i++;
 	}
 	ms->cwd = getcwd(NULL, 4096);
+	ms->fd_in = 0;
+	ms->fd_out = 1;
 }

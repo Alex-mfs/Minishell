@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/23 18:27:50 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:20:05 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ void	handle_interrupt(int signum)
 	printf("\n");
 	rl_on_new_line();
 	rl_redisplay();
-	// WIP escrever "exit status" (130?) no minish
+	set_exit_status(130);
 }
