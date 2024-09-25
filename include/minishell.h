@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/09/16 19:33:16 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:20:52 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct s_minish
 	char			*cwd;
 	struct s_token	*tk_list;
 	struct s_ast	*cmd_list;
+	int				fd_in;
+	int				fd_out;
 }			t_minish;
 
 typedef enum e_lexer
@@ -78,5 +80,9 @@ void	expand(t_minish *ms);
 void	parse(t_minish *ms);
 //Utils - Executing
 void	execute(t_minish *ms);
+
+//minishel.c - exit_status
+void	set_exit_status(int status);
+int		get_exit_status(void);
 
 #endif
