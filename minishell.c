@@ -32,7 +32,7 @@ int main(int argc, char **argv, char **envp)
     (void)argc;
     (void)argv;
 	ft_bzero(&ms, sizeof(t_minish));
-    init_ms(&ms, envp); //WIP inicializar EXIT_STATUS
+    init_ms(&ms, envp);
     set_signals(); //WIP - Preciso estudo
     read_inputs(&ms); //WIP
     /*i = 0;
