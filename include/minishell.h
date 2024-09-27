@@ -29,6 +29,7 @@ typedef struct s_ast
 	char			**args;
 	struct s_ast	*left;
 	struct s_ast	*right;
+	struct s_ast	*next;
 }			t_ast;
 
 typedef struct s_token
@@ -84,5 +85,9 @@ void	execute(t_minish *ms);
 //minishell.c - exit_status
 void	set_exit_status(int status);
 int		get_exit_status(void);
+
+t_ast	*ft_cmdlst_last(t_ast *lst);
+void	ft_cmdlst_addback(t_ast **lst, t_ast *new);
+int		lastpipe_index(t_ast *lst);
 
 #endif

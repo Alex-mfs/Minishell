@@ -93,11 +93,14 @@ static t_ast	*parse_pipe(t_ast *prev, t_ast *curr, t_minish *ms)
 	pip = ft_calloc(1, sizeof(t_ast));
 	if (!pip)
 		return (NULL);
-	pip->cmd = "|"; //WIP pode ser necessario alocar memoria
-	if (lastpipe_index(ms->cmd_list) >= 0) //WIP reescrever estrutura como lista. Escrever funcao
+	pip->cmd = ft_calloc(2, sizeof(char *));
+	if (!pip->cmd)
+		return (NULL);
+	pip->cmd = "|";
+	if (lastpipe_index(ms->cmd_list) >= 0)
 		pip->index = -1;
 	else
-		pip->index = lastpipe_index(ms->cmd_list) - 1; //WIP reescrever estrutura como lista. Escrever funcao
+		pip->index = lastpipe_index(ms->cmd_list) - 1;
 	pip->left = prev;
 	pip->right = curr;
 	return (pip);
@@ -153,12 +156,8 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 	if (!cmd)
 		return (NULL);
 	cmd->cmd = buff->token;
-	if (!ft_lstlast(ms->cmd_list)) //WIP reescrever estrutura como lista
-		cmd->index = 0;
-	else if (ft_lstlast(ms->cmd_list)->index < 0)
-		cmd->index = ft_lst_penult(ms->cmd_list)->index + 1; //WIP reescrever estrutura como lista. Escrever funcao
-	else
-		cmd->index = ft_lstlast(ms->cmd_list)->index + 1; //WIP reescrever estrutura como lista
+	cmd->next = NULL;
+	ft_cmdlst_addback(&ms->cmd_list, cmd);
 	buff = buff->next;
 	while (buff && buff->type != PIPE)
 	{
@@ -168,7 +167,6 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 			cmd->args = ft_matrix_add_line(cmd->args, ft_strdup(buff->token));
 		buff = buff->next;
 	}
-	ft_lstadd_back(&ms->cmd_list, cmd); //WIP reescrever estrutura como lista.
 	return (buff);
 }
 
@@ -198,8 +196,8 @@ void	parse(t_minish *ms)
 	prev_cmd = ms->cmd_list;
 	while (buff && buff->type == PIPE)
 	{
-		buff = parse_command(ms, buff->next); //Potenciais problemas de memória com buff. Ter atenção ao testar.
-		curr_cmd = ft_lstlast(ms->cmd_list); //WIP reescrever estrutura como lista.
+		buff = parse_command(ms, buff->next); //Potenciais problemas de memória com buff. Ter atenção ao testar. WIP Redireções
+		curr_cmd = ft_cmdlst_last(ms->cmd_list);
 		prev_cmd = parse_pipe(prev_cmd, curr_cmd, ms);
 	}
 }
