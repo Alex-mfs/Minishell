@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/09/25 20:13:20 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:47:52 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 		return (NULL);
 	cmd->cmd = buff->token;
 	cmd->next = NULL;
-	ft_cmdlst_addback(&ms->cmd_list, cmd);
+	cmdlst_addback(&ms->cmd_list, cmd);
 	buff = buff->next;
 	while (buff && buff->type != PIPE)
 	{
@@ -197,7 +197,7 @@ void	parse(t_minish *ms)
 	while (buff && buff->type == PIPE)
 	{
 		buff = parse_command(ms, buff->next); //Potenciais problemas de memória com buff. Ter atenção ao testar. WIP Redireções
-		curr_cmd = ft_cmdlst_last(ms->cmd_list);
+		curr_cmd = cmdlst_last(ms->cmd_list);
 		prev_cmd = parse_pipe(prev_cmd, curr_cmd, ms);
 	}
 }

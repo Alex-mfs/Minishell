@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/09/25 19:03:41 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/09/30 20:16:14 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ void	handle_child_interrupt(int signal)
 void	treat_child_signal(void)
 {
 	signal(SIGQUIT, handle_child_quit); //lida com o uso de ctrl + \ durante um processo child, testar sleep 10 e ctrl '\'
-	signal(SIGINT, handle_child_interrupt)
+	signal(SIGINT, handle_child_interrupt);
 }
 
 void	pipe_data_flow(int cmd_index, t_minish *ms)
@@ -278,8 +278,8 @@ pid_t	pipeline_exec(t_ast	*node, t_minish *ms)
 	last_child_pid = 0;
 	if (!node)
 		return (last_child_pid);
-	last_child_pid = pipeline_exec(node->left); // verifica ate a ultima leaf a esquerda.
-	last_child_pid = pipeline_exec(node->right); // verifica ate a ultima leaf da direita.
+	last_child_pid = pipeline_exec(node->left, ms); // verifica ate a ultima leaf a esquerda.
+	last_child_pid = pipeline_exec(node->right, ms); // verifica ate a ultima leaf da direita.
 	if (!is_redir_or_pipe(node->token)) // verifica se o token atual nao eh um pipe ou redirect.
 	{
 		if (need2be_parent(node->cmd[0], node->cmd[1])) // envia o nome do comando e no caso export tbm verifica se é o export de alterar variaveis

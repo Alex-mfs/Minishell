@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/09/25 19:16:49 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:53:31 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,9 @@ void	execute(t_minish *ms);
 void	set_exit_status(int status);
 int		get_exit_status(void);
 
-t_ast	*ft_cmdlst_last(t_ast *lst);
-void	ft_cmdlst_addback(t_ast **lst, t_ast *new);
+int		cmdlst_size(t_ast *lst, bool total);
+t_ast	*cmdlst_last(t_ast *lst);
+void	cmdlst_addback(t_ast **lst, t_ast *new);
 int		lastpipe_index(t_ast *lst);
 
 #endif
