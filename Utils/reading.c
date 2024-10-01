@@ -82,13 +82,15 @@ static char	*maintain_prompt(t_minish *ms)
 	char	*prompt;
 	char	*suffix;
 
-	prompt = /*Formatacao prefixo*/ "Curr.Directory:" /*Formatacao cwd*/;
-	suffix = /*Reset a formatacao cwd*//*Formatacao sufixo*/ "Input minishell:" /*Reset formatacao*/;
+	//prompt = /*Formatacao prefixo*/"Curr.Directory:"/*Formatacao cwd*/;
+	prompt = "\033[1m""\033[32m""Curr.Directory:""\033[0m""\033[32m"; //Bold Green, then regular green
+	//suffix = /*Reset a formatacao cwd*//*Formatacao sufixo*/ "Input minishell:" /*Reset formatacao*/;
+	suffix = "\033[0m""\n""\033[4m""\033[97m""Input minishell:""\033[0m";
 	prompt = ft_strbuild(prompt, ms->cwd); //Potential memory issue? Test with valgrind
 	prompt = ft_strbuild(prompt, suffix);
 	return (prompt);
 	//prefix + cwd + suffix
-	//WIP definir formatacao do prompt
+	//formatacao do prompt está aberta para discussão
 }
 
 void	read_inputs(t_minish *ms)
@@ -113,6 +115,8 @@ void	read_inputs(t_minish *ms)
 	while (1)
 	{
 		prompt = maintain_prompt(ms);
+		printf("Prompt in progress:%s\n", prompt);
+		exit(1);
 		input = readline(prompt); //WIP confirmar os efeitos de readline; gera memoryleaks, mas valgrind pode ignorar, investigar
 		if (!input) // em caso de ctrl+d
 		{

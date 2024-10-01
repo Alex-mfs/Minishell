@@ -10,31 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/minishell.h"
+# include <stdio.h>
+# include <unistd.h>
 
-static int	g_exit_status = 0;
-
-void	set_exit_status(int status)
+int main(void)
 {
-	g_exit_status = status;
-}
+	char	*prompt;
+	char	*suffix;
 
-int	get_exit_status(void)
-{
-	return (g_exit_status);
-}
-
-int main(int argc, char **argv, char **envp)
-{
-    t_minish    ms;
-
-    (void)argc;
-    (void)argv;
-	ft_bzero(&ms, sizeof(t_minish));
-    init_ms(&ms, envp);
-    set_signals(); //WIP - Preciso estudo
-    read_inputs(&ms); //WIP
-    ft_free_matrix(ms.env_list);
-    return (g_exit_status); // finalizar o programa na main.
+    prompt = "\033[1m""\033[32m""Curr.Directory:""\033[0m""\033[32m";
+    suffix = "\033[0m""\n""|""\033[4m""\033[97m""Input your command:""\033[0m";
+    printf("%s~%s%s\n", prompt, getcwd(NULL, 4096), suffix);
+    return (1);
 }
 
