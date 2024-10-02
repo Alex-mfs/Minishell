@@ -82,11 +82,14 @@ void	expand(t_minish *ms);
 void	parse(t_minish *ms);
 //Utils - Executing
 void	execute(t_minish *ms);
+//Utils - Sanitizing
+void	sanitize(t_minish *ms, bool sair);
 
 //minishell.c - exit_status
 void	set_exit_status(int status);
 int		get_exit_status(void);
 
+//Utils(?) - cmd_listing
 int		cmdlst_size(t_ast *lst, bool total);
 t_ast	*cmdlst_last(t_ast *lst);
 void	cmdlst_addback(t_ast **lst, t_ast *new);

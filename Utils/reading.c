@@ -64,7 +64,7 @@ static void	compute(t_minish *ms, char *input)
 	//WIP unlink(HEREDOC) delete any heredoc file
 }
 
-static char	*maintain_prompt(t_minish *ms)
+static char	*maintain_prompt(char *cwd)
 {
 	//# define PROMPT_UPPER	"┎─── "
 	//# define PROMPT_LOWER	"┖─ minishell ❯ "
@@ -86,7 +86,7 @@ static char	*maintain_prompt(t_minish *ms)
 	prompt = "\033[1m""\033[32m""Curr.Directory:""\033[0m""\033[32m"; //Bold Green, then regular green
 	//suffix = /*Reset a formatacao cwd*//*Formatacao sufixo*/ "Input minishell:" /*Reset formatacao*/;
 	suffix = "\033[0m""\n""\033[4m""\033[97m""Input minishell:""\033[0m";
-	prompt = ft_strbuild(prompt, ms->cwd); //Potential memory issue? Test with valgrind
+	prompt = ft_strbuild(prompt, cwd); //Potential memory issue? Test with valgrind
 	prompt = ft_strbuild(prompt, suffix);
 	return (prompt);
 	//prefix + cwd + suffix
@@ -114,19 +114,19 @@ void	read_inputs(t_minish *ms)
 
 	while (1)
 	{
-		prompt = maintain_prompt(ms);
-		printf("Prompt in progress:%s\n", prompt);
-		exit(1);
+		prompt = maintain_prompt(ms->cwd);
 		input = readline(prompt); //WIP confirmar os efeitos de readline; gera memoryleaks, mas valgrind pode ignorar, investigar
 		if (!input) // em caso de ctrl+d
 		{
 			printf("Input allocation error.\nExiting minishell\n");
-			//WIP sanitize(ms); //with exit // fazer algo parecido mas retornar para o main para finalizar;
-			break;
+			sanitize(ms, true); //with exit // fazer algo parecido mas retornar para o main para finalizar;
+			break ;
 		}
 		add_history(input);
 		compute(ms, input); //WIP execute/compute input
-		//WIP sanitize(ms); //without exit
+		free(input);
+		free(prompt);
+		sanitize(ms, false); //without exit
 	}
 	rl_clear_history();
 }

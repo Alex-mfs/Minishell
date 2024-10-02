@@ -30,10 +30,44 @@ void	update_envs(void)
 	(ms()->envp) = envlist_to_matrix(ms()->envlist);
 	free(tmp);
 }
+*/
 
-void	sanitize(bool end)
+static void	tk_clear(t_token **lst)
 {
-	ft_free(ms()->input);
+	t_token	*buff;
+
+	if (lst)
+	{
+		while (*lst)
+		{
+			buff = (*lst)->next;
+			free((*lst)->token);
+			free(*lst);
+			*lst = buff;
+		}
+	}
+}
+
+static void	ast_clear(t_ast **lst)
+{
+	t_ast	*buff;
+
+	if (lst)
+	{
+		while (*lst)
+		{
+			buff = (*lst)->next;
+			free((*lst)->cmd);
+			ft_free_matrix((*lst)->args);
+			free(*lst);
+			*lst = buff;
+		}
+	}
+}
+
+void	sanitize(t_minish *ms, bool sair)
+{
+	/*ft_free(ms()->input);
 	ft_free(ms()->prompt);
 	ast_clear(ms()->ast, ast_destroy_node);
 	matrix_destroy(ms()->pipes);
@@ -51,11 +85,17 @@ void	sanitize(bool end)
 		ft_lstclear(&ms()->envlist, (void (*)(void *))env_destroy);
 		ft_lstclear(&ms()->envtmp, (void (*)(void *))env_destroy);
 		exit(ms()->exit_status);
+	}*/
+	ast_clear(&(ms->cmd_list));
+	//WIP free ms->pipes INTMATRIX
+	tk_clear(&(ms->tk_list));
+	ms->cmd_list = NULL;
+	ms->pipes = NULL;
+	ms->tk_list = NULL;
+	//fazer algo quanto a fd_in e fd_out? Dá para ignorar?
+	if (sair)
+	{
+		free(ms->cwd);
+		ft_free_matrix(ms->env_list);
 	}
-}
-*/
-
-void	sanitize(t_minish *ms)
-{
-
 }
