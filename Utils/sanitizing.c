@@ -32,6 +32,11 @@ void	update_envs(void)
 }
 */
 
+void	sanitize_envp(t_minish *ms)
+{
+
+}
+
 static void	tk_clear(t_token **lst)
 {
 	t_token	*buff;
@@ -65,7 +70,7 @@ static void	ast_clear(t_ast **lst)
 	}
 }
 
-void	sanitize(t_minish *ms, bool sair)
+void	sanitize_ms(t_minish *ms, bool sair)
 {
 	/*ft_free(ms()->input);
 	ft_free(ms()->prompt);

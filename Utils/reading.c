@@ -57,10 +57,10 @@ static void	compute(t_minish *ms, char *input)
 	if (!validate_tokens(ms)) //WIP na verdade, é permitido terminar num pipe. Corrigir.
 		return ;
 	expand(ms); //WIP Lida com inputs tipo $. Incompleto.
-	//WIP parse(ms); //WIP Distingue comandos de argumentos. Define pipes. Muito incompleto.
+	parse(ms); //WIP Distingue comandos de argumentos. Falta confirmar redirs
 	//WIP if(!assign_var(ms)) Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar
-	//WIP execute(ms);//WIP Executar cada um dos comandos
-	//WIP sanitize envp & path
+	//WIP execute(ms); //WIP Executar cada um dos comandos
+	//WIP sanitize_envp(ms); //WIP actualizar env_list e...path?
 	//WIP unlink(HEREDOC) delete any heredoc file
 }
 
@@ -119,14 +119,14 @@ void	read_inputs(t_minish *ms)
 		if (!input) // em caso de ctrl+d
 		{
 			printf("Input allocation error.\nExiting minishell\n");
-			sanitize(ms, true); //with exit // fazer algo parecido mas retornar para o main para finalizar;
+			sanitize_ms(ms, true); //with exit // fazer algo parecido mas retornar para o main para finalizar;
 			break ;
 		}
 		add_history(input);
 		compute(ms, input); //WIP execute/compute input
 		free(input);
 		free(prompt);
-		sanitize(ms, false); //without exit
+		sanitize_ms(ms, false); //without exit
 	}
 	rl_clear_history();
 }

@@ -83,7 +83,8 @@ void	parse(t_minish *ms);
 //Utils - Executing
 void	execute(t_minish *ms);
 //Utils - Sanitizing
-void	sanitize(t_minish *ms, bool sair);
+void	sanitize_ms(t_minish *ms, bool sair);
+void	sanitize_envp(t_minish *ms);
 
 //minishell.c - exit_status
 void	set_exit_status(int status);
