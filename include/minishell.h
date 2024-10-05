@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/05 17:49:00 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/05 18:23:56 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int		cmdlst_size(t_ast *lst, bool total);
 t_ast	*cmdlst_last(t_ast *lst);
 void	cmdlst_addback(t_ast **lst, t_ast *new);
 int		lastpipe_index(t_ast *lst);
+//Utils(?) - tk_listing
+void	tklst_addback(t_token **lst, t_token *new);
 
 #endif
 

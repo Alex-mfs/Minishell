@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/05 17:55:24 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/05 18:58:52 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ void	token_destroy(t_token *token)
 	ft_free(token);
 }*/
 
+static bool	is_tk_delim(int c)
+{
+	if (c == ' ' || c == '<' || c == '>'
+		|| c == '|' || c == '\t' || c == '\n'
+		|| c == '\v' || c == '\f' || c == '\r')
+		return (true);
+	else
+		return (false);
+}
+
 static int	save_token(t_minish *ms, char *symbol, t_lexer type)
 {
 	/*t_token	*token;
@@ -59,7 +69,7 @@ static int	save_token(t_minish *ms, char *symbol, t_lexer type)
 		ft_error_msg("Error while creating token");
 	token->token = symbol;
 	token->type = type;
-	ft_lstadd_back(&ms->tk_list, token); //WIP reescrever estrutura como lista
+	tklst_addback(&ms->tk_list, token);
 	return ((int)ft_strlen(symbol));
 }
 
@@ -83,8 +93,16 @@ static int	save_cmd(t_minish *ms, char *cmd, char limit)
 	char	*content;
 
 	i = 0;
-	while (cmd[i] && cmd[i] != limit)
-		i++;
+	if (limit == ' ')
+	{
+		while (cmd[i] && !is_tk_delim(limit))
+			i++;
+	}
+	else
+	{
+		while (cmd[i] && cmd[i] != limit)
+			i++;
+	}
 	if (cmd[i] == '\0') // WIP rever
 		return (-1);
 	//WIP mergeable? what is merge? quotes are mergeable
@@ -143,11 +161,11 @@ void	get_tokens(t_minish *ms, char *input)
 		else if (input[i] == '>')
 			i += save_token(ms, ">", REDIR_OUTPUT_1);
 		else if (input[i] == '\"')
-			i += 2 + save_cmd(ms, input[i + 1], '\"'); //WIP sintaxe errada para input!
+			i += 2 + save_cmd(ms, &input[i + 1], '\"');
 		else if (input[i] == '\'')
-			i += 2 + save_cmd(ms, input[i + 1], '\''); //WIP sintaxe errada para input!
+			i += 2 + save_cmd(ms, &input[i + 1], '\'');
 		else
-			i += 1 + save_cmd(ms, input[i], ' '); //WIP sintaxe errada para input! //WIP se encontrar <, >, ou |, isso sao limites tambem. Tambem, mudar para isdelim
+			i += 1 + save_cmd(ms, &input[i], ' ');
 	}
 	//WIP mergeable? what is merge? quotes are mergeable
 }

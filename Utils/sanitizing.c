@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/05 17:37:52 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/05 18:28:31 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	sanitize_envp(t_minish *ms)
 	//libertar env_list
 	//buscar linha PATH, dar split de acordo com ':'
 	//voltar a guardar a informacao actualizada em env_list
+	(void)ms;
 }
 
 static void	tk_clear(t_token **lst)
