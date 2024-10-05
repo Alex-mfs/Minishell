@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/05 17:51:34 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/05 19:23:36 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,23 @@ static bool	assign_var(t_minish *ms)
 		}
 	}
 	return (false);*/
-	(void)ms;
+	int	i;
+
+	i = 0;
+	if (ms->tk_list->token[0] == '=' || ft_str_lastchar(ms->tk_list->token) == '=') //WIP escrever funcao!!
+	{
+		ft_error_msg("Bad variable syntax");
+		return (false);
+	}
+	while (ms->tk_list->token[i])
+	{
+		if (ms->tk_list->token[i] == '=')
+		{
+			assign_the_var(ms->env_list, ms->tk_list->token, i); //WIP Substitui variavel em envp? Estudar mais
+			return (true);
+		}
+		i++;
+	}
 	return (true);
 }
 
@@ -60,8 +76,8 @@ static void	compute(t_minish *ms, char *input)
 		return ;
 	expand(ms); //WIP Lida com inputs tipo $. Incompleto.
 	parse(ms); //WIP Distingue comandos de argumentos. Falta confirmar redirs
-	//WIP if(!assign_var(ms)) Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar
-	//WIP execute(ms); //WIP Executar cada um dos comandos
+	if(assign_var(ms)) //WIP Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
+		execute(ms); //WIP Executar cada um dos comandos
 	//WIP sanitize_envp(ms); //WIP actualizar env_list e...path? Porque actualizar env_list?
 	//WIP unlink(HEREDOC) delete any heredoc file
 }
