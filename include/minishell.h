@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/09/30 19:53:31 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/05 17:49:00 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,6 @@
 //# include <sys/wait.h>
 # include "../libft/libft.h"
 
-typedef struct s_ast
-{
-	int				index;
-	char			*cmd;
-	char			**args;
-	struct s_ast	*left;
-	struct s_ast	*right;
-	struct s_ast	*next;
-}			t_ast;
-
-typedef struct s_token
-{
-	char	*token;
-	t_lexer	type;
-	t_token	*next;
-}			t_token;
-
-typedef struct s_minish
-{
-	int				**pipes;
-	char			**env_list;
-	char			*cwd;
-	struct s_token	*tk_list;
-	struct s_ast	*cmd_list;
-	int				fd_in;
-	int				fd_out;
-}			t_minish;
-
 typedef enum e_lexer
 {
 	REDIR_INPUT_1,
@@ -62,6 +34,34 @@ typedef enum e_lexer
 	DOUBLE_QUOTES,
 	OTHER,
 }	t_lexer;
+
+typedef struct s_token
+{
+	char			*token;
+	t_lexer			type;
+	struct s_token	*next;
+}			t_token;
+
+typedef struct s_ast
+{
+	int				index;
+	char			*cmd;
+	char			**args;
+	struct s_ast	*left;
+	struct s_ast	*right;
+	struct s_ast	*next;
+}			t_ast;
+
+typedef struct s_minish
+{
+	int				**pipes;
+	char			**env_list;
+	char			*cwd;
+	struct s_token	*tk_list;
+	struct s_ast	*cmd_list;
+	int				fd_in;
+	int				fd_out;
+}			t_minish;
 
 //Utils - Initialising
 void	init_ms(t_minish *ms, char **envp);

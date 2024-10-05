@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/09/25 19:18:01 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/05 17:51:34 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static bool	assign_var(t_minish *ms)
 		}
 	}
 	return (false);*/
+	(void)ms;
+	return (true);
 }
 
 static void	compute(t_minish *ms, char *input)
@@ -60,7 +62,7 @@ static void	compute(t_minish *ms, char *input)
 	parse(ms); //WIP Distingue comandos de argumentos. Falta confirmar redirs
 	//WIP if(!assign_var(ms)) Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar
 	//WIP execute(ms); //WIP Executar cada um dos comandos
-	//WIP sanitize_envp(ms); //WIP actualizar env_list e...path?
+	//WIP sanitize_envp(ms); //WIP actualizar env_list e...path? Porque actualizar env_list?
 	//WIP unlink(HEREDOC) delete any heredoc file
 }
 

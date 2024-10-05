@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexing.c                                           :+:      :+:    :+:   */
+/*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/30 16:25:20 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/05 17:55:24 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,11 +143,11 @@ void	get_tokens(t_minish *ms, char *input)
 		else if (input[i] == '>')
 			i += save_token(ms, ">", REDIR_OUTPUT_1);
 		else if (input[i] == '\"')
-			i += 2 + save_cmd(ms, input[i + 1], '\"');
+			i += 2 + save_cmd(ms, input[i + 1], '\"'); //WIP sintaxe errada para input!
 		else if (input[i] == '\'')
-			i += 2 + save_cmd(ms, input[i + 1], '\'');
+			i += 2 + save_cmd(ms, input[i + 1], '\''); //WIP sintaxe errada para input!
 		else
-			i += 1 + save_cmd(ms, input[i], ' '); //WIP se encontrar <, >, ou |, isso sao limites tambem. Tambem, mudar para isdelim
+			i += 1 + save_cmd(ms, input[i], ' '); //WIP sintaxe errada para input! //WIP se encontrar <, >, ou |, isso sao limites tambem. Tambem, mudar para isdelim
 	}
 	//WIP mergeable? what is merge? quotes are mergeable
 }

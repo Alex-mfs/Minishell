@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reading.c                                          :+:      :+:    :+:   */
+/*   sanitizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/09/25 19:18:01 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/05 17:37:52 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,24 @@
 	if (p)
 		free(p);
 	p = NULL;
+}
+
+char	*get_env(char *key)
+{
+	t_env	*tmp;
+	t_list	*curr;
+
+	if (key[0] == '$')
+		key++;
+	curr = ms()->envlist;
+	while (curr)
+	{
+		tmp = (t_env *)curr->content;
+		if (!ft_strcmp(tmp->key, key))
+			return (ft_strdup(tmp->value));
+		curr = curr->next;
+	}
+	return (ft_strdup(""));
 }
 
 void	update_envs(void)
@@ -34,7 +52,10 @@ void	update_envs(void)
 
 void	sanitize_envp(t_minish *ms)
 {
-
+	//libertar path?
+	//libertar env_list
+	//buscar linha PATH, dar split de acordo com ':'
+	//voltar a guardar a informacao actualizada em env_list
 }
 
 static void	tk_clear(t_token **lst)
