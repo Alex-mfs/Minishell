@@ -38,7 +38,8 @@ static bool	assign_var(t_minish *ms)
 	int	i;
 
 	i = 0;
-	if (ms->tk_list->token[0] == '=' || ft_str_lastchar(ms->tk_list->token) == '=') //WIP escrever funcao!!
+	if (ms->tk_list->token[0] == '='
+		|| ms->tk_list->token[ft_strlen(ms->tk_list->token) - 1] == '=')
 	{
 		ft_error_msg("Bad variable syntax");
 		return (false);
@@ -47,7 +48,7 @@ static bool	assign_var(t_minish *ms)
 	{
 		if (ms->tk_list->token[i] == '=')
 		{
-			assign_the_var(ms->env_list, ms->tk_list->token, i); //WIP Substitui variavel em envp? Estudar mais
+			//WIP export_var(ms->env_list, ms->tk_list->token, i); //WIP Substitui variavel em envp? Estudar mais
 			return (true);
 		}
 		i++;
