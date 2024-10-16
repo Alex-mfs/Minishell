@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/09/25 19:18:01 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:36:51 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,30 @@
 
 static bool	assign_var(t_minish *ms)
 {
-	/*int	i;
+	int		i;
+	char	*str;
+	char	*key;
 
 	i = -1;
-	if (token->str[0])
+	if (ms->tk_list->token && ms->tk_list->token[0])
 	{
-		if (token->str[0] == '='
-			|| token->str[ft_strlen(token->str) - 1] == '=')
+		str = ms->tk_list->token;
+		if (str[0] == '='
+			|| str[ft_strlen(str) - 1] == '=')
 		{
-			error(ANSI_RED, ERROR_BAD_ASSIGNMENT, NULL, 1);
+			error("minishell: bad assignment \n", 1);
 			return (false);
 		}
-	}
-	while (token->str[++i])
-	{
-		if (token->str[i] == '=')
+		while (str[++i])
 		{
-			export_directly(&ms()->envtmp, token->str);
-			return (true);
+			if (str[i] == '=')
+			{
+				add_or_update_env(&ms->env_tmp, str);
+				return (true);
+			}
 		}
 	}
-	return (false);*/
+	return (false);
 }
 
 static void	compute(t_minish *ms, char *input)

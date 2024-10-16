@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/09/25 19:03:41 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:01:15 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,13 +186,33 @@ bool	need2be_parent(char *command, char *arg)
 	return (is_parent);
 }
 
+bool	is_valid(char *word)
+{
+	int	j;
+
+	j = 1;
+	while (word[j])
+	{
+		if (word[j] != 'n')
+			return (false);
+		j++;
+	}
+	return (true);
+}
+
 void	echo(char	**words)
 {
-	int	i;
+	int		i;
+	bool	only_n;
 
 	i = 0;
-	if (words[0] && words[0] == "-n")
-		i++;
+	only_n = true;
+	while (words[i] && words[i][0] == '-')
+	{
+		if (!is_valid(words[i]))
+			break ;
+		only_n = true;
+	}
 	while (words[i])
 	{
 		printf("%s", words[i]);
@@ -200,8 +220,319 @@ void	echo(char	**words)
 		if (words[i])
 			printf(" ");
 	}
-	if (!words[0] || words[0] != '-n')
+	if (only_n)
 		printf("\n");
+}
+
+void	error(char *str, int status)
+{
+	printf("%s", str);
+	set_exit_status(status);
+}
+
+char	*skip_whitespace(char *str)
+{
+	while ((*str >= 9 && *str <= 13) || (*str == ' '))
+		str++;
+	return (str);
+}
+
+long long	ft_atoll(char *str)
+{
+	unsigned long long	num;
+	int					sign;
+
+	num = 0;
+	sign = 1;
+	str = skip_whitespace(str);// nao usei a do atoi por ser static
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	if (*str < '0' || *str > '9')
+		return (255);
+	while (*str >= '0' && *str <= '9')
+	{
+		num = num * 10 + (*str++ - '0');
+		if ((sign > 0 && num > (unsigned long long)LLONG_MAX) || \
+			(sign < 0 && num > (unsigned long long)-(LLONG_MIN)))
+			return (255);
+	}
+	if (*str)
+		return (255);
+	return ((long long)(num * sign));
+}
+
+long long	validate_and_convert_arg(char *arg)
+{
+	long long	num;
+
+	num = ft_atoll(arg);
+	if (num == 255)
+	{
+		error("exit: numeric argument required\n", 255);
+		sanitize(true);
+	}
+	return (num);
+}
+
+long long	calculate_exit_code(long long num)
+{
+	num = num % 256;
+	if (num < 0)
+		num += 256;
+	return (num);
+}
+
+void	exit_bash(char **exit_args)
+{
+	size_t		arg_num;
+	long long	num;
+
+	arg_num = 0;
+	num = 0;
+	while (exit_args[arg_num])
+		arg_num++;
+	if (arg_num > 1)
+	{
+		error("exit: too many arguments\n", 1);
+		return ;
+	}
+	if (arg_num == 1)
+	{
+		num = validate_and_convert_arg(exit_args[0]);
+		num = calculate_exit_code(num);
+		set_exit_status(num);
+	}
+	sanitize(true);
+}
+
+void	env(char **env_arg, char **env_list)
+{
+	int	i;
+
+	i = 0;
+	if (env_arg[1] != NULL)
+	{
+		error("env: no such file or directory: \n", 127);
+		return ;
+	}
+	while (env_list[i])
+	{
+		printf("%s\n", env_list[i]);
+		i++;
+	}
+}
+
+void print_export(t_minish *ms)
+{
+	int		i;
+	char	*equals_sign;
+
+	i = 0;
+	while (ms->env_list[i])
+	{
+		equals_sign = ft_strchr(ms->env_list[i], '=');
+		if (equals_sign)
+			printf("declare -x %s\n", ms->env_list[i]);
+		else
+			printf("declare -x %s=\"\"\n", ms->env_list[i]);  // Variável sem valor
+		i++;
+	}
+}
+
+void	add_new_env(char ***target_env, const char *assignment)
+{
+	int		i;
+	char	**new_env_list;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while ((*target_env)[i])
+		i++;
+	new_env_list = malloc(sizeof(char *) * (i + 2));
+	if (!new_env_list)
+		return ;
+	while (j < i)
+	{
+		new_env_list[j] = target_env[j];
+		j++;
+	}
+	new_env_list[i] = ft_strdup(assignment);
+	new_env_list[i + 1] = NULL;
+	free(*target_env);
+	*target_env = new_env_list;
+}
+
+int	ft_strlen_sep(const char *s, char *seps)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && !ft_strchr(seps, s[i]))
+		i++;
+	return (i);
+}
+
+int	find_env_index(char **target_env, const char *assigment)
+{
+	int		i;
+	size_t	len;
+	char	*key;
+
+	key = ft_substr(assigment, 0, ft_strlen_sep(assigment, '='));
+	len = ft_strlen(key);
+	i = 0;
+	while (target_env[i])
+	{
+		// Verifica se o nome da variável corresponde até o '='
+		if (ft_strncmp(target_env[i], key, len) == 0 && \
+		target_env[i][len] == '=')
+		{
+			free(key);
+			return (i);
+		}
+		i++;
+	}
+	free(key);
+	return (-1);//se não for encontrada
+}
+
+void	add_or_update_env(char ***target_env, const char *assignment)
+{
+	int		index;
+
+	index = find_env_index(*target_env, assignment);
+	if (index != -1)
+	{
+		free((*target_env)[index]);
+		(*target_env)[index] = ft_strdup(assignment);
+	}
+	else
+		add_new_env(target_env, assignment);
+}
+
+void	handle_no_assignment(t_minish *ms, char *arg)
+{
+	char	*empty_assign;
+
+	if (find_env_in_tmp(ms, arg))
+		add_or_update_env(ms->env_tmp, arg);
+	else
+	{
+		// Cria a string "key="
+		empty_assign = malloc(ft_strlen(arg) + 2);
+		if (!empty_assign)
+			return ;
+		//copiar o conteúdo de arg para empty_assign
+		ft_strlcpy(empty_assign, arg, ft_strlen(arg) + 1);
+		//concatenar "=" no final de empty_assign
+		ft_strlcat(empty_assign, "=", ft_strlen(arg) + 2);
+		// Adiciona ao env_list
+		add_or_update_env(&ms->env_list, empty_assign);
+		free(empty_assign);
+	}
+}
+
+int	find_env_in_tmp(t_minish *ms, const char *name)
+{
+	int		i;
+	size_t	len;
+
+	i = 0;
+	len = ft_strlen(name);
+	while (ms->env_tmp[i])
+	{
+		// Verifica se a var em env_tmp começa com name seguido por '='
+		if (!ft_strncmp(ms->env_tmp[i], name, len) && \
+		ms->env_tmp[i][len] == '=')
+			return (1);  // encontrada em env_tmp
+		i++;
+	}
+    return (0);  // não encontrada em env_tmp
+}
+
+char	*extract_key(const char *assignment)
+{
+	size_t	len;
+	char	*key;
+
+	len = ft_strlen_sep(assignment, '=');
+	key = ft_substr(assignment, 0, len);
+	return (key);
+}
+
+void	copy_env_except_key(char **src, char **dest, const char *key, int len)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (src[i])
+	{
+		if (!(ft_strncmp(src[i], key, len) == 0 && src[i][len] == '='))
+		{
+			dest[j] = src[i];
+			j++;
+		}
+		else
+		{
+			free(src[i]);
+		}
+		i++;
+	}
+	dest[j] = NULL;
+}
+
+void	remove_from_tmp(t_minish *ms, const char *key)
+{
+	int		i;
+	int		len;
+	char	**new_env_tmp;
+
+	len = ft_strlen(key);
+	i = 0;
+	while (ms->env_tmp[i])
+		i++;
+	new_env_tmp = malloc(sizeof(char *) * i);
+	if (!new_env_tmp)
+		return ;
+	copy_env_except_key(ms->env_tmp, new_env_tmp, key, len);
+	free(ms->env_tmp);
+	ms->env_tmp = new_env_tmp;
+}
+
+void	handle_assignment(t_minish *ms, char *arg)
+{
+	char	*key;
+
+	key = extract_key(arg);
+	// Verificar se está em env_tmp antes de adicionar diretamente a env_list
+	if (find_env_in_tmp(ms, key))
+		remove_from_tmp(ms, key);
+	free(key);
+	add_or_update_env(&ms->env_list, arg);
+}
+
+void	export(char **exp_args, t_minish *ms)
+{
+	int	i;
+
+	i = 0;
+	if (!exp_args[0])
+		print_export(ms);
+	while (exp_args[i])
+	{
+		if (ft_strchr(exp_args[i], '='))
+			handle_assigment(ms, exp_args[i]);
+		else
+			handle_no_assigment(ms, exp_args[i]);
+		i++;
+	}
 }
 
 void	do_command(char	**cmd, t_minish *ms)
@@ -210,8 +541,14 @@ void	do_command(char	**cmd, t_minish *ms)
 	//fazer uma verificacacao se eh builtin ou eh caminho. WIP
 	if (ft_str_cmp(cmd[0], "pwd"))
 		printf("%s\n", ms->cwd);
-	if (ft_str_cmp(cmd[0],"echo"))
+	if (ft_str_cmp(cmd[0], "echo"))
 		echo(cmd + 1);
+	if (ft_str_cmp(cmd[0], "exit"))
+		exit_bash(cmd + 1);
+	if (ft_str_cmp(cmd[0], "env"))
+		env(cmd + 1, ms->env_list);
+	if (ft_str_cmp(cmd[0], "export"))
+		export(cmd + 1, *ms);
 }
 
 void	handle_child_quit(int signal)
@@ -233,7 +570,7 @@ void	handle_child_interrupt(int signal)
 void	treat_child_signal(void)
 {
 	signal(SIGQUIT, handle_child_quit); //lida com o uso de ctrl + \ durante um processo child, testar sleep 10 e ctrl '\'
-	signal(SIGINT, handle_child_interrupt)
+	signal(SIGINT, handle_child_interrupt);
 }
 
 void	pipe_data_flow(int cmd_index, t_minish *ms)
@@ -287,6 +624,7 @@ pid_t	pipeline_exec(t_ast	*node, t_minish *ms)
 		else
 			last_child_pid = child_exec(node, ms);
 	}
+	return (last_child_pid);
 }
 
 void	execute(t_minish *ms, t_ast	*ast)
