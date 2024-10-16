@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/09/24 20:09:09 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/09/25 20:13:20 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	parser(void)
 	ms()->ast = _parse_pipeline();
 }*/
 
-static t_ast	*parse_pipe(t_ast *prev, t_ast *curr)
+static t_ast	*parse_pipe(t_ast *prev, t_ast *curr, t_minish *ms)
 {
 	/*	t_ast	*root;
 
@@ -94,7 +94,10 @@ static t_ast	*parse_pipe(t_ast *prev, t_ast *curr)
 	if (!pip)
 		return (NULL);
 	pip->cmd = "|"; //WIP pode ser necessario alocar memoria
-	pip->index = 0;
+	if (lastpipe_index(ms->cmd_list) >= 0) //WIP reescrever estrutura como lista. Escrever funcao
+		pip->index = -1;
+	else
+		pip->index = lastpipe_index(ms->cmd_list) - 1; //WIP reescrever estrutura como lista. Escrever funcao
 	pip->left = prev;
 	pip->right = curr;
 	return (pip);
@@ -151,7 +154,9 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 		return (NULL);
 	cmd->cmd = buff->token;
 	if (!ft_lstlast(ms->cmd_list)) //WIP reescrever estrutura como lista
-		cmd->index = 1;
+		cmd->index = 0;
+	else if (ft_lstlast(ms->cmd_list)->index < 0)
+		cmd->index = ft_lst_penult(ms->cmd_list)->index + 1; //WIP reescrever estrutura como lista. Escrever funcao
 	else
 		cmd->index = ft_lstlast(ms->cmd_list)->index + 1; //WIP reescrever estrutura como lista
 	buff = buff->next;
@@ -195,6 +200,6 @@ void	parse(t_minish *ms)
 	{
 		buff = parse_command(ms, buff->next); //Potenciais problemas de memória com buff. Ter atenção ao testar.
 		curr_cmd = ft_lstlast(ms->cmd_list); //WIP reescrever estrutura como lista.
-		prev_cmd = parse_pipe(prev_cmd, curr_cmd);
+		prev_cmd = parse_pipe(prev_cmd, curr_cmd, ms);
 	}
 }
