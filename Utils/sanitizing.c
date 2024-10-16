@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/05 18:28:31 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:24:27 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,8 @@ void	sanitize_ms(t_minish *ms, bool sair)
 	ms->cmd_list = NULL;
 	ms->pipes = NULL;
 	ms->tk_list = NULL;
-	//fazer algo quanto a fd_in e fd_out? Dá para ignorar?
+	ms->fd_in = 0;
+	ms->fd_out = 1;
 	if (sair)
 	{
 		free(ms->cwd);
