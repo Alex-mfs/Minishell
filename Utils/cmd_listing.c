@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/16 16:19:11 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:59:33 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int	cmdlst_size(t_ast *lst, bool total)
 	blist = lst;
 	while (blist != NULL)
 	{
-		if (total) //inclui commands, pipes, redirects
+		if (total) //inclui commands e pipes, mas nao redirects
 			i++;
-		else if (blist->index >= 0) //inclui commands e redirects //WIP NAO INCLUIR REDIRECTS
+		else if (blist->index >= 0) //inclui apenas commands
 			i++;
 		blist = blist->next;
 	}
