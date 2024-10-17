@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/05 18:23:56 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:57:27 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_minish
 {
 	int				**pipes;
 	char			**env_list;
+	char			**env_tmp;
 	char			*cwd;
 	struct s_token	*tk_list;
 	struct s_ast	*cmd_list;
