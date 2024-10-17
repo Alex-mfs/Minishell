@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strarrdup.c                                     :+:      :+:    :+:   */
+/*   ft_matrix_add_line.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/01 15:31:10 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:50:12 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char	**ft_matrix_add_line(char **src, char *newline)
 {
 	char	**dest;
 	int		w;
-
 
 	w = 0;
 	if (src)
@@ -52,6 +51,7 @@ char	**ft_matrix_add_line(char **src, char *newline)
 			return (free_all(dest, w + 1));
 		w--;
 	}
-	free_all(src, 0);
+	if (src)
+		free_all(src, 0);
 	return (dest);
 }

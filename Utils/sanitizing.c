@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/16 16:24:27 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:19:12 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,8 @@ void	sanitize_ms(t_minish *ms, bool sair)
 	ms->cmd_list = NULL;
 	ms->pipes = NULL;
 	ms->tk_list = NULL;
-	ms->fd_in = 0;
-	ms->fd_out = 1;
+	ms->fd_in = 0; //WIP Usar dup2? Eh sequer necessario ter isto aqui?
+	ms->fd_out = 1; //WIP Usar dup2? Eh sequer necessario ter isto aqui?
 	if (sair)
 	{
 		free(ms->cwd);

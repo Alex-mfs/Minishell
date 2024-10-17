@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/09/30 19:47:52 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:54:23 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,8 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 		return (NULL);
 	cmd->cmd = buff->token;
 	cmd->next = NULL;
+	cmd->left = NULL;
+	cmd->right = NULL;
 	cmdlst_addback(&ms->cmd_list, cmd);
 	buff = buff->next;
 	while (buff && buff->type != PIPE)
