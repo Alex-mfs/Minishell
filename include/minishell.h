@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/09 14:00:27 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/17 02:01:27 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <time.h>
+# include <sys/stat.h>
 //# include <readline/readline.h>
 //# include <readline/history.h>
 //# include <sys/types.h>
@@ -29,18 +30,20 @@ typedef struct s_ast
 	char			**args;
 	struct s_ast	*left;
 	struct s_ast	*right;
+	t_token			*token;
 }			t_ast;
 
 typedef struct s_token
 {
-	char	*token;
-	t_lexer	type;
-	t_token	*next;
+	t_lexer				type;
+	char				*token;
+	struct s_token		*next;
 }			t_token;
 
 typedef struct s_minish
 {
 	int				**pipes;
+	char			**path;
 	char			**env_list;
 	char			**env_tmp;
 	char			*cwd;
@@ -66,8 +69,15 @@ typedef enum e_lexer
 void	init_ms(t_minish *ms, char **envp);
 //Utils - Signaling
 void	set_signals(void);
+void	set_signals_heredoc(void);
+void	treat_child_signal(void);
+
 //Utils - Handling
 void	handle_interrupt(int signum);
+void	handle_child_interrupt(int signal);
+void	handle_child_quit(int signal);
+void	handle_heredoc_interrupt(int signum);
+
 //Utils - Validating
 bool	validate_quotes(char *input);
 bool	validate_tokens(t_minish *ms);
@@ -82,8 +92,44 @@ void	parse(t_minish *ms);
 //Utils - Executing
 void	execute(t_minish *ms);
 
+//executing_aux
+void	error(char *str, int status);
+bool	is_redir_or_pipe(t_token *token);
+bool	is_redirection(t_token *token);
+bool	need2be_parent(char *command, char *arg);
+
+//pipeline
+void	pipeline_matrix(t_minish *ms);
+void	close_in_out(int index, t_minish *ms);
+void	relinking_in_out(t_minish *ms);
+void	pipe_data_flow(int cmd_index, t_minish *ms);
+
+
 //minishell.c - exit_status
 void	set_exit_status(int status);
 int		get_exit_status(void);
+
+
+//commands
+void	exit_bash(char **exit_args);
+void	export(char **exp_args, t_minish *ms);
+void	env(char **env_arg, char **env_list);
+char	*get_env(const char *key, char **env_list);
+void	echo(char **words);
+void	unset(char **vars, t_minish *ms);
+void	cd(char **tokens, t_minish *ms);
+
+//export_aux
+char	*extract_key(const char *assignment);
+void	copy_env_except_key(char **src, char **dest, const char *key, int len);
+void	remove_from_tmp(t_minish *ms, const char *key);
+int		find_env_in_tmp(t_minish *ms, const char *name);
+int		find_env_index(char **target_env, const char *assigment);
+void	add_new_env(char ***target_env, const char *assignment);
+void	add_or_update_env(char ***target_env, const char *assignment);
+
+//path
+char	*get_executable_path(char *cmd, t_minish *ms);
+
 
 #endif
