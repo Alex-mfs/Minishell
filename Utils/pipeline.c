@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:44:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/17 01:52:31 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/19 19:19:47 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	pipeline_matrix(t_minish *ms)
 {
 	int	i;
 
+	//WIP substituir "cmd_num" por "int	cmdlst_size(t_ast *lst, bool total)"
 	i = 0;
 	ms->pipes = ft_calloc(ms->cmd_num, sizeof(int *));
 	if (!ms->pipes)
