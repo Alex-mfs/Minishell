@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/19 19:10:07 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/19 19:11:43 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <time.h>
-# include <sys/stat.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/stat.h>
 //# include <sys/types.h>
 //# include <sys/wait.h>
 # include "../libft/libft.h"
@@ -51,7 +51,7 @@ typedef struct s_ast
 	struct s_ast	*left;
 	struct s_ast	*right;
 	struct s_ast	*next;
-	t_token			*token;
+	t_token			*token; //WIP Onde usado, substituir por cmd[0]
 }			t_ast;
 
 typedef struct s_minish
