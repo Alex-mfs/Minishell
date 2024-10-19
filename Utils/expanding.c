@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/19 17:28:54 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/19 17:47:07 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static char	*find_name(char *token)
 	return (ft_substr(token, pos, end - pos + 1));
 }
 
-static void	expand_token(t_minish *ms, t_token *tk)
+static void	expand_token(t_token *tk)
 {
 	/*char	*value;
 	char	*key;
@@ -90,8 +90,12 @@ static void	expand_token(t_minish *ms, t_token *tk)
 	{
 		name = find_name(tk->token);
 		if (ft_str_cmp(name, "$?"))
-			value = ft_itoa(ms.);
+			value = ft_itoa(/*get_exit_status()*/);
+		//else
+		//	value = get_env(name);
+		tk->token = ft_str_repl_chr(tk->token, name, value, 1);
 		free(name);
+		free(value);
 	}
 }
 
@@ -117,7 +121,7 @@ void	expand(t_minish *ms)
 	while (curr)
 	{
 		if (curr->type == DOUBLE_QUOTES || curr->type == OTHER)
-			expand_token(ms, curr); //WIP rewrites $ in inputs
+			expand_token(curr); //WIP rewrites $ in inputs
 		curr = curr->next;
 	}
 	//merge(ms); WIP what is merge? quotes are mergeable.

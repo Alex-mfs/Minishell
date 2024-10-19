@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/29 12:10:05 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/19 17:46:29 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ char	*ft_strbuild(char *s1, const char *s2);
 char	*ft_substr(const char *str, unsigned int start, size_t len);
 // Strings - Complex Operations
 char	*ft_strtrim(const char *s1, const char *set);
+char	*ft_str_repl_chr(char *str, char old, char new, int times);
 char	**ft_matrix_dup(char **src);
 char	**ft_matrix_add_line(char **src, char *newline);
 void	ft_striteri(char *str, void (*f)(unsigned int, char *));
