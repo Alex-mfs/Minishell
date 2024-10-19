@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/17 17:54:23 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/19 15:56:37 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ static t_token	*parse_redir(t_ast *cmd, t_token *tk)
 		return (NULL);
 	redir->cmd = tk->token;
 	redir->args = ft_matrix_add_line(redir->args, ft_strdup(tk->next->token));
-	if (tk->type == REDIR_INPUT_1 || tk->type == REDIR_INPUT_2) //WIP confirmar tudo!
+	if (tk->type == REDIR_INPUT_1 || tk->type == REDIR_INPUT_2)
 		cmd->left = redir;
 	else
 		cmd->right = redir;
@@ -155,16 +155,18 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 	cmd = ft_calloc(1, sizeof(t_ast));
 	if (!cmd)
 		return (NULL);
-	cmd->cmd = buff->token;
-	cmd->next = NULL;
-	cmd->left = NULL;
-	cmd->right = NULL;
-	cmdlst_addback(&ms->cmd_list, cmd);
-	buff = buff->next;
 	while (buff && buff->type != PIPE)
 	{
 		if (buff->type >= REDIR_INPUT_1 && buff->type <= REDIR_OUTPUT_2)
-			buff = parse_redir(cmd, buff); //WIP Redireções. Incompleto. Rever.
+			buff = parse_redir(cmd, buff);
+		else if (!cmd->cmd)
+		{
+			cmd->cmd = buff->token;
+			cmd->next = NULL;
+			cmd->left = NULL;
+			cmd->right = NULL;
+			cmdlst_addback(&ms->cmd_list, cmd);
+		}
 		else
 			cmd->args = ft_matrix_add_line(cmd->args, ft_strdup(buff->token));
 		buff = buff->next;

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/05 18:58:52 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/19 16:12:28 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static int	save_cmd(t_minish *ms, char *cmd, char limit)
 	i = 0;
 	if (limit == ' ')
 	{
-		while (cmd[i] && !is_tk_delim(limit))
+		while (cmd[i] && !is_tk_delim(cmd[i]))
 			i++;
 	}
 	else
@@ -103,9 +103,8 @@ static int	save_cmd(t_minish *ms, char *cmd, char limit)
 		while (cmd[i] && cmd[i] != limit)
 			i++;
 	}
-	if (cmd[i] == '\0') // WIP rever
+	if (cmd[i] == '\0' && (limit == '\'' || limit == '\"'))
 		return (-1);
-	//WIP mergeable? what is merge? quotes are mergeable
 	content = ft_substr(cmd, 0, i);
 	if (limit == '\"')
 		save_token(ms, content, DOUBLE_QUOTES);
@@ -169,9 +168,9 @@ void	get_tokens(t_minish *ms, char *input)
 	}
 	//WIP mergeable? what is merge? quotes are mergeable
 }
+//[bool]can_merge = _is_mergeable(input, match, jump);
 /*bool	_is_mergeable(char *str, char *match, int jump)
 {
-//[bool]can_merge = _is_mergeable(input, match, jump);
 	if (!str[jump])
 		return (false);
 	if (!ft_strcmp(SYMBOLS, match) && ft_strchr(QUOTES, str[jump]))
