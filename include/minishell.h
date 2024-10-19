@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/17 02:01:27 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/19 18:14:55 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,25 @@
 //# include <sys/wait.h>
 # include "../libft/libft.h"
 
+typedef enum e_lexer
+{
+	REDIR_INPUT_1,
+	REDIR_OUTPUT_1,
+	REDIR_INPUT_2,
+	REDIR_OUTPUT_2,
+	PIPE,
+	SINGLE_QUOTES,
+	DOUBLE_QUOTES,
+	OTHER,
+}	t_lexer;
+
+typedef struct s_token
+{
+	t_lexer				type;
+	char				*token;
+	struct s_token		*next;
+}			t_token;
+
 typedef struct s_ast
 {
 	int				index;
@@ -32,13 +51,6 @@ typedef struct s_ast
 	struct s_ast	*right;
 	t_token			*token;
 }			t_ast;
-
-typedef struct s_token
-{
-	t_lexer				type;
-	char				*token;
-	struct s_token		*next;
-}			t_token;
 
 typedef struct s_minish
 {
@@ -52,18 +64,6 @@ typedef struct s_minish
 	int				fd_in;
 	int				fd_out;
 }			t_minish;
-
-typedef enum e_lexer
-{
-	REDIR_INPUT_1,
-	REDIR_OUTPUT_1,
-	REDIR_INPUT_2,
-	REDIR_OUTPUT_2,
-	PIPE,
-	SINGLE_QUOTES,
-	DOUBLE_QUOTES,
-	OTHER,
-}	t_lexer;
 
 //Utils - Initialising
 void	init_ms(t_minish *ms, char **envp);
