@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexing.c                                           :+:      :+:    :+:   */
+/*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/30 16:25:20 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/19 18:02:51 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@
 		lexemes->next = lexemes->next->next;
 		ft_lstdelone(aux, (void *)token_destroy);
 	}
-}
+}*/
 
-char	*_find_key(char *str)
+static char	*find_name(char *token)
 {
-	char	*tmp;
+	/*char	*tmp;
 	int		len;
 
 	len = 0;
@@ -51,12 +51,22 @@ char	*_find_key(char *str)
 		return (ft_strdup("$?"));
 	while (ft_isalnum(tmp[len + 1]) || tmp[len + 1] == '_')
 		len++;
-	return (ft_substr(tmp, 0, len + 1));
+	return (ft_substr(tmp, 0, len + 1));*/
+	int	pos;
+	int	end;
+
+	pos = ft_strchr_pos(token, '$');
+	end = pos;
+	if (token[pos + 1] == '?')
+		return (ft_strdup("$?"));
+	while (token[pos] && !ft_isdelim(token[pos]))
+		end++;
+	return (ft_substr(token, pos, end - pos + 1));
 }
 
-void	_expand_variable(t_token *token)
+static void	expand_token(t_token *tk)
 {
-	char	*value;
+	/*char	*value;
 	char	*key;
 	char	*tmp;
 
@@ -72,8 +82,22 @@ void	_expand_variable(t_token *token)
 		ft_free(tmp);
 		ft_free(value);
 		ft_free(key);
+	}*/
+	char	*name;
+	char	*value;
+
+	while (ft_strchr(tk->token, '$'))
+	{
+		name = find_name(tk->token);
+		if (ft_str_cmp(name, "$?"))
+			value = ft_itoa(/*get_exit_status()*/);
+		//else
+		//	value = get_env(name);
+		tk->token = ft_str_repl_seg(tk->token, name, value); //WIP INCORRECTO!!
+		free(name);
+		free(value);
 	}
-}*/
+}
 
 void	expand(t_minish *ms)
 {
@@ -97,7 +121,7 @@ void	expand(t_minish *ms)
 	while (curr)
 	{
 		if (curr->type == DOUBLE_QUOTES || curr->type == OTHER)
-			//expand_token(curr); //WIP rewrites $ in inputs
+			expand_token(curr); //WIP rewrites $ in inputs
 		curr = curr->next;
 	}
 	//merge(ms); WIP what is merge? quotes are mergeable.

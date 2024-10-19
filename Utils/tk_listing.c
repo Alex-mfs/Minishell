@@ -1,57 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_matrix_add_line.c                               :+:      :+:    :+:   */
+/*   tk_listing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/17 17:50:12 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/05 18:27:30 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-static char	**free_all(char **tab, int w)
+static t_token	*tklst_last(t_token *lst)
 {
-	while (tab[w])
-	{
-		free(tab[w]);
-		w++;
-	}
-	free(tab[w]);
-	free(tab);
-	return (NULL);
+	t_token	*ult;
+
+	if (!lst)
+		return (NULL);
+	ult = lst;
+	while (ult->next != NULL)
+		ult = ult->next;
+	return (ult);
 }
 
-char	**ft_matrix_add_line(char **src, char *newline)
+void	tklst_addback(t_token **lst, t_token *new)
 {
-	char	**dest;
-	int		w;
+	t_token	*ultima;
 
-	w = 0;
-	if (src)
+	if (lst && new)
 	{
-		while (src[w])
-			w++;
+		if (*lst)
+		{
+			ultima = tklst_last(*lst);
+			ultima->next = new;
+		}
+		else
+			*lst = new;
 	}
-	w++;
-	dest = ft_calloc(w + 1, sizeof(char *));
-	if (!dest)
-		return (NULL);
-	dest[w] = 0;
-	w--;
-	dest[w] = ft_strdup(newline);
-	free(newline);
-	w--;
-	while (w >= 0)
-	{
-		dest[w] = ft_strdup(src[w]);
-		if (!dest[w])
-			return (free_all(dest, w + 1));
-		w--;
-	}
-	if (src)
-		free_all(src, 0);
-	return (dest);
 }

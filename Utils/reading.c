@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/16 13:36:51 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/19 19:08:13 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ static void	compute(t_minish *ms, char *input)
 	if (!validate_tokens(ms)) //WIP na verdade, é permitido terminar num pipe. Corrigir.
 		return ;
 	expand(ms); //WIP Lida com inputs tipo $. Incompleto.
-	//WIP parse(ms); //WIP Distingue comandos de argumentos. Define pipes. Muito incompleto.
-	//WIP if(!assign_var(ms)) Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar
-	//WIP execute(ms);//WIP Executar cada um dos comandos
-	//WIP sanitize envp & path
+	parse(ms);
+	if(assign_var(ms)) //WIP Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
+		execute(ms); //WIP Executar cada um dos comandos
+	//WIP sanitize_envp(ms); //WIP actualizar env_list e...path? Porque actualizar env_list?
 	//WIP unlink(HEREDOC) delete any heredoc file
 }
 
-static char	*maintain_prompt(t_minish *ms)
+static char	*maintain_prompt(char *cwd)
 {
 	//# define PROMPT_UPPER	"┎─── "
 	//# define PROMPT_LOWER	"┖─ minishell ❯ "
@@ -85,13 +85,15 @@ static char	*maintain_prompt(t_minish *ms)
 	char	*prompt;
 	char	*suffix;
 
-	prompt = /*Formatacao prefixo*/ "Curr.Directory:" /*Formatacao cwd*/;
-	suffix = /*Reset a formatacao cwd*//*Formatacao sufixo*/ "Input minishell:" /*Reset formatacao*/;
-	prompt = ft_strbuild(prompt, ms->cwd); //Potential memory issue? Test with valgrind
+	//prompt = /*Formatacao prefixo*/"Curr.Directory:"/*Formatacao cwd*/;
+	prompt = "\033[1m""\033[32m""Curr.Directory:""\033[0m""\033[32m"; //Bold Green, then regular green
+	//suffix = /*Reset a formatacao cwd*//*Formatacao sufixo*/ "Input minishell:" /*Reset formatacao*/;
+	suffix = "\033[0m""\n""\033[4m""\033[97m""Input minishell:""\033[0m";
+	prompt = ft_strbuild(prompt, cwd); //Potential memory issue? Test with valgrind
 	prompt = ft_strbuild(prompt, suffix);
 	return (prompt);
 	//prefix + cwd + suffix
-	//WIP definir formatacao do prompt
+	//formatacao do prompt está aberta para discussão
 }
 
 void	read_inputs(t_minish *ms)
@@ -115,17 +117,19 @@ void	read_inputs(t_minish *ms)
 
 	while (1)
 	{
-		prompt = maintain_prompt(ms);
+		prompt = maintain_prompt(ms->cwd);
 		input = readline(prompt); //WIP confirmar os efeitos de readline; gera memoryleaks, mas valgrind pode ignorar, investigar
 		if (!input) // em caso de ctrl+d
 		{
 			printf("Input allocation error.\nExiting minishell\n");
-			//WIP sanitize(ms); //with exit // fazer algo parecido mas retornar para o main para finalizar;
-			break;
+			sanitize_ms(ms, true); //with exit // fazer algo parecido mas retornar para o main para finalizar;
+			break ;
 		}
 		add_history(input);
 		compute(ms, input); //WIP execute/compute input
-		//WIP sanitize(ms); //without exit
+		free(input);
+		free(prompt);
+		sanitize_ms(ms, false); //without exit
 	}
 	rl_clear_history();
 }

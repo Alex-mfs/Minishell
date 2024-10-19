@@ -1,57 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_matrix_add_line.c                               :+:      :+:    :+:   */
+/*   ft_str_repl_chr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/17 17:50:12 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/19 17:52:36 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	**free_all(char **tab, int w)
+char	*ft_str_repl_chr(char *str, char old, char new, int times)
 {
-	while (tab[w])
-	{
-		free(tab[w]);
-		w++;
-	}
-	free(tab[w]);
-	free(tab);
-	return (NULL);
-}
+	size_t	i;
+	size_t	len;
 
-char	**ft_matrix_add_line(char **src, char *newline)
-{
-	char	**dest;
-	int		w;
-
-	w = 0;
-	if (src)
-	{
-		while (src[w])
-			w++;
-	}
-	w++;
-	dest = ft_calloc(w + 1, sizeof(char *));
-	if (!dest)
+	i = 0;
+	if (!str || times <= 0)
 		return (NULL);
-	dest[w] = 0;
-	w--;
-	dest[w] = ft_strdup(newline);
-	free(newline);
-	w--;
-	while (w >= 0)
+	len = ft_strlen(str);
+	while (i <= len)
 	{
-		dest[w] = ft_strdup(src[w]);
-		if (!dest[w])
-			return (free_all(dest, w + 1));
-		w--;
+		if (str[i] == old)
+		{
+			str[i] = new;
+			times--;
+			if (times <= 0)
+				break ;
+		}
+		i++;
 	}
-	if (src)
-		free_all(src, 0);
-	return (dest);
+	return (str);
 }

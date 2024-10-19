@@ -1,57 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_matrix_add_line.c                               :+:      :+:    :+:   */
+/*   ft_str_repl_seg.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/17 17:50:12 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/19 18:12:22 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	**free_all(char **tab, int w)
+char	*ft_str_repl_seg(char *str, char *old, char *new)
 {
-	while (tab[w])
-	{
-		free(tab[w]);
-		w++;
-	}
-	free(tab[w]);
-	free(tab);
-	return (NULL);
-}
+	size_t	i;
+	size_t	j;
+	size_t	len;
+	size_t	l2;
+	char	*str2;
 
-char	**ft_matrix_add_line(char **src, char *newline)
-{
-	char	**dest;
-	int		w;
-
-	w = 0;
-	if (src)
-	{
-		while (src[w])
-			w++;
-	}
-	w++;
-	dest = ft_calloc(w + 1, sizeof(char *));
-	if (!dest)
+	i = 0;
+	j = 0;
+	if (!str || !old)
 		return (NULL);
-	dest[w] = 0;
-	w--;
-	dest[w] = ft_strdup(newline);
-	free(newline);
-	w--;
-	while (w >= 0)
+	len = ft_strlen(str);
+	l2 = ft_strlen(old);
+	if (l2 > len)
+		return (str);
+	l2 = len - l2 + ft_strlen(new);
+	str2 = ft_calloc(l2, sizeof(char *));
+	if (!str2)
+		return (str);
+	while (i <= len)
 	{
-		dest[w] = ft_strdup(src[w]);
-		if (!dest[w])
-			return (free_all(dest, w + 1));
-		w--;
+		if (str[i] == old[0])
+		{
+			str[i] = new;
+			times--;
+			if (times <= 0)
+				break ;
+		}
+		else
+			str2[j] = str[i];
+		i++;
+		j++;
 	}
-	if (src)
-		free_all(src, 0);
-	return (dest);
+	free(str);
+	return (str2);
 }

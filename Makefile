@@ -17,7 +17,7 @@ all: $(NAME)
 bonus: $(BONUS_NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) -L $(SRC_LFT) $(LFT_FLAGS) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) -L $(SRC_LFT) $(LFT_FLAGS) -lreadline -o $(NAME)
 
 #$(BONUS_NAME): $(BONUS_OBJ)
 #	@$(CC) $(FLAGS) $(BONUS_OBJ) -L $(SRC_LFT) $(LFT_FLAGS) -o $(BONUS_NAME)
