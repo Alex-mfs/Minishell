@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/19 17:47:07 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/19 18:02:51 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static void	expand_token(t_token *tk)
 			value = ft_itoa(/*get_exit_status()*/);
 		//else
 		//	value = get_env(name);
-		tk->token = ft_str_repl_chr(tk->token, name, value, 1);
+		tk->token = ft_str_repl_seg(tk->token, name, value); //WIP INCORRECTO!!
 		free(name);
 		free(value);
 	}
