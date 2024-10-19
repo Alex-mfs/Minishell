@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/19 15:56:37 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/19 16:19:21 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ void	parse(t_minish *ms)
 	prev_cmd = ms->cmd_list;
 	while (buff && buff->type == PIPE)
 	{
-		buff = parse_command(ms, buff->next); //Potenciais problemas de memória com buff. Ter atenção ao testar. WIP Redireções
+		buff = parse_command(ms, buff->next); //Potenciais problemas de memória com buff. Ter atenção ao testar.
 		curr_cmd = cmdlst_last(ms->cmd_list);
 		prev_cmd = parse_pipe(prev_cmd, curr_cmd, ms);
 	}
