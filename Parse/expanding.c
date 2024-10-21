@@ -12,34 +12,6 @@
 
 #include "../include/minishell.h"
 
-/*void	merge_lexemes(t_list *lexemes)
-{
-	t_list	*aux;
-	t_token	*next_token;
-	t_token	*curr_token;
-	char	*tmp;
-
-	while (lexemes)
-	{
-		curr_token = lexemes->content;
-		if (!lexemes->next)
-			return ;
-		if (!curr_token->can_merge)
-		{
-			lexemes = lexemes->next;
-			continue ;
-		}
-		next_token = lexemes->next->content;
-		tmp = curr_token->str;
-		curr_token->str = ft_strjoin(curr_token->str, next_token->str);
-		free(tmp);
-		curr_token->can_merge &= next_token->can_merge;
-		aux = lexemes->next;
-		lexemes->next = lexemes->next->next;
-		ft_lstdelone(aux, (void *)token_destroy);
-	}
-}*/
-
 static char	*find_name(char *token)
 {
 	/*char	*tmp;
@@ -64,7 +36,7 @@ static char	*find_name(char *token)
 	return (ft_substr(token, pos, end - pos + 1));
 }
 
-static void	expand_token(t_token *tk)
+static void	expand_token(t_minish *ms, t_token *tk)
 {
 	/*char	*value;
 	char	*key;
@@ -92,8 +64,8 @@ static void	expand_token(t_token *tk)
 		name = find_name(tk->token);
 		if (ft_str_cmp(name, "$?"))
 			value = ft_itoa(get_exit_status());
-		//else
-		//	value = get_env(name);
+		else
+			value = get_env(name, ms->env_list);
 		buff = ft_strdup(tk->token);
 		tk->token = ft_str_repl_seg(buff, name, value);
 		free(name);
@@ -124,8 +96,36 @@ void	expand(t_minish *ms)
 	while (curr)
 	{
 		if (curr->type == DOUBLE_QUOTES || curr->type == OTHER)
-			expand_token(curr); //WIP rewrites $ in inputs
+			expand_token(ms, curr);
 		curr = curr->next;
 	}
 	//merge(ms); WIP what is merge? quotes are mergeable.
 }
+
+/*void	merge_lexemes(t_list *lexemes)
+{
+	t_list	*aux;
+	t_token	*next_token;
+	t_token	*curr_token;
+	char	*tmp;
+
+	while (lexemes)
+	{
+		curr_token = lexemes->content;
+		if (!lexemes->next)
+			return ;
+		if (!curr_token->can_merge)
+		{
+			lexemes = lexemes->next;
+			continue ;
+		}
+		next_token = lexemes->next->content;
+		tmp = curr_token->str;
+		curr_token->str = ft_strjoin(curr_token->str, next_token->str);
+		free(tmp);
+		curr_token->can_merge &= next_token->can_merge;
+		aux = lexemes->next;
+		lexemes->next = lexemes->next->next;
+		ft_lstdelone(aux, (void *)token_destroy);
+	}
+}*/

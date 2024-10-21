@@ -59,7 +59,7 @@ static void	compute(t_minish *ms, char *input)
 	get_tokens(ms, input); //WIP mergeable? what is merge?
 	if (!validate_tokens(ms)) //WIP na verdade, é permitido terminar num pipe. Corrigir.
 		return ;
-	expand(ms); //WIP Lida com inputs tipo $. Incompleto.
+	expand(ms); //WIP Falta estudar questao do merge.
 	parse(ms);
 	if(assign_var(ms)) //WIP Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
 		execute(ms); //WIP Executar cada um dos comandos
