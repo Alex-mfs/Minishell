@@ -75,7 +75,7 @@ static void	tk_clear(t_token **lst)
 	}
 }
 
-static void	ast_clear(t_ast **lst)
+static void	cmd_clear(t_ast **lst)
 {
 	t_ast	*buff;
 
@@ -84,6 +84,10 @@ static void	ast_clear(t_ast **lst)
 		while (*lst)
 		{
 			buff = (*lst)->next;
+			if ((*lst)->left && (*lst)->index >= 0)
+				cmd_clear(&((*lst)->left));
+			if ((*lst)->right && (*lst)->index >= 0)
+				cmd_clear(&((*lst)->right));
 			free((*lst)->cmd);
 			ft_free_matrix((*lst)->args);
 			free(*lst);
@@ -113,11 +117,11 @@ void	sanitize_ms(t_minish *ms, bool sair)
 		ft_lstclear(&ms()->envtmp, (void (*)(void *))env_destroy);
 		exit(ms()->exit_status);
 	}*/
-	ast_clear(&(ms->cmd_list));
-	//WIP free ms->pipes INTMATRIX
+	//WIP free ms->pipes INTMATRIX //fazer num ft_?
+	cmd_clear(&(ms->cmd_list));
 	tk_clear(&(ms->tk_list));
-	ms->cmd_list = NULL;
 	ms->pipes = NULL;
+	ms->cmd_list = NULL;
 	ms->tk_list = NULL;
 	if (sair)
 	{
