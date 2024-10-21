@@ -85,17 +85,20 @@ static void	expand_token(t_token *tk)
 	}*/
 	char	*name;
 	char	*value;
+	char	*buff;
 
 	while (ft_strchr(tk->token, '$'))
 	{
 		name = find_name(tk->token);
 		if (ft_str_cmp(name, "$?"))
-			value = ft_itoa(/*get_exit_status()*/);
+			value = ft_itoa(get_exit_status());
 		//else
 		//	value = get_env(name);
-		tk->token = ft_str_repl_seg(tk->token, name, value); //WIP INCORRECTO!!
+		buff = ft_strdup(tk->token);
+		tk->token = ft_str_repl_seg(buff, name, value);
 		free(name);
 		free(value);
+		free(buff);
 	}
 }
 

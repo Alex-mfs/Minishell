@@ -74,6 +74,7 @@ char	*ft_strchr(const char *str, int c);
 char	*ft_strrchr(const char *str, int c);
 int		ft_strchr_pos(const char *str, char c);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
+size_t	ft_strnstr_pos(const char *big, const char *little, size_t len);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 bool	ft_str_cmp(const char *s1, const char *s2);
 bool	ft_rptcheck_str(char **str);
@@ -87,6 +88,7 @@ char	*ft_substr(const char *str, unsigned int start, size_t len);
 // Strings - Complex Operations
 char	*ft_strtrim(const char *s1, const char *set);
 char	*ft_str_repl_chr(char *str, char old, char new, int times);
+char	*ft_str_repl_seg(char *str, char *old, char *new);
 char	**ft_matrix_dup(char **src);
 char	**ft_matrix_add_line(char **src, char *newline);
 void	ft_striteri(char *str, void (*f)(unsigned int, char *));
