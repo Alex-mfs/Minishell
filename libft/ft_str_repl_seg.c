@@ -24,7 +24,7 @@ static char	*replace_short(const char *str, char *old, char *new, size_t len)
 	b = ft_strnstr_pos(str, old, len);
 	str2 = ft_calloc(len - ft_strlen(old) + ft_strlen(new), sizeof(char *));
 	if (!str2)
-		return (str);
+		return (NULL);
 	while (i <= len)
 	{
 		if (i == b)
@@ -57,7 +57,7 @@ static char	*replace_long(const char *str, char *old, char *new, size_t len)
 	b = ft_strnstr_pos(str, old, len);
 	str2 = ft_calloc(len - ft_strlen(old) + ft_strlen(new), sizeof(char *));
 	if (!str2)
-		return (str);
+		return (NULL);
 	while (i <= len)
 	{
 		if (i == b)
@@ -91,7 +91,7 @@ char	*ft_str_repl_seg(const char *str, char *old, char *new)
 	o = ft_strlen(old);
 	n = ft_strlen(new);
 	if (!old || o > len || !ft_strnstr(str, old, len))
-		return (str);
+		return (NULL);
 	if (n > o)
 		str2 = replace_long(str, old, new, len);
 	else

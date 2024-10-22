@@ -12,14 +12,16 @@
 
 #include "libft.h"
 
-char	*ft_str_repl_chr(char *str, char old, char new, int times)
+char	*ft_str_repl_chr(char *str, char old, char new, size_t times)
 {
 	size_t	i;
 	size_t	len;
 
 	i = 0;
-	if (!str || times <= 0)
+	if (!str)
 		return (NULL);
+	if (times == 0)
+		return (str);
 	len = ft_strlen(str);
 	while (i <= len)
 	{
@@ -27,7 +29,7 @@ char	*ft_str_repl_chr(char *str, char old, char new, int times)
 		{
 			str[i] = new;
 			times--;
-			if (times <= 0)
+			if (times == 0)
 				break ;
 		}
 		i++;
