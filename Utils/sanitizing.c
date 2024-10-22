@@ -117,7 +117,7 @@ void	sanitize_ms(t_minish *ms, bool sair)
 		ft_lstclear(&ms()->envtmp, (void (*)(void *))env_destroy);
 		exit(ms()->exit_status);
 	}*/
-	//WIP free ms->pipes INTMATRIX //fazer num ft_?
+	ft_free_intmatrix(ms->pipes, (size_t)cmdlst_size(ms->cmd_list, false));
 	cmd_clear(&(ms->cmd_list));
 	tk_clear(&(ms->tk_list));
 	ms->pipes = NULL;
