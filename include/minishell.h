@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/23 01:53:55 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:06:58 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
-//# include <sys/types.h>
-//# include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include "../libft/libft.h"
 
 typedef enum e_lexer
