@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/23 10:27:16 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/23 10:36:42 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,18 @@ static void	cmd_clear(t_ast **lst)
 				cmd_clear(&((*lst)->left));
 			if ((*lst)->right && (*lst)->index >= 0)
 				cmd_clear(&((*lst)->right));
-			free((*lst)->cmd);
-			ft_free_matrix((*lst)->args);
+			if ((*lst)->cmd)
+				free((*lst)->cmd);
+			if ((*lst)->args)
+				ft_free_matrix((*lst)->args);
 			free(*lst);
 			*lst = buff;
 		}
 	}
 }
 
-// void	sanitize_ms(t_minish *ms, bool sair)
-// {
+void	sanitize_ms(t_minish *ms, bool sair)
+{
 	/*ft_free(ms()->input);
 	ft_free(ms()->prompt);
 	ast_clear(ms()->ast, ast_destroy_node);
@@ -117,23 +119,21 @@ static void	cmd_clear(t_ast **lst)
 		ft_lstclear(&ms()->envtmp, (void (*)(void *))env_destroy);
 		exit(ms()->exit_status);
 	}*/
-	ft_free_intmatrix(ms->pipes, (size_t)cmdlst_size(ms->cmd_list, false));
-	cmd_clear(&(ms->cmd_list));
-	tk_clear(&(ms->tk_list));
+	if (ms->pipes)
+		ft_free_intmatrix(ms->pipes, (size_t)cmdlst_size(ms->cmd_list, false));
+	if (ms->cmd_list)
+		cmd_clear(&(ms->cmd_list));
+	if (ms->tk_list)
+		tk_clear(&(ms->tk_list));
 	ms->pipes = NULL;
 	ms->cmd_list = NULL;
 	ms->tk_list = NULL;
-
-	// Se sair for true, liberar o restante e sair do programa
 	if (sair)
 	{
 		if (ms->cwd)
 			free(ms->cwd);
-
 		if (ms->env_list)
 			ft_free_matrix(ms->env_list);
-
-		// Sair do programa com o código de status armazenado
 		exit(get_exit_status());
 	}
 }

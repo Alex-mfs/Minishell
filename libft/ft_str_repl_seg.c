@@ -10,7 +10,7 @@
 // /*                                                                            */
 // /* ************************************************************************** */
 
-// #include "libft.h"
+#include "libft.h"
 
 static char	*replace_short(const char *str, char *old, char *new, size_t len)
 {
