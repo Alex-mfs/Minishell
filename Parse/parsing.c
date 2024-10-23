@@ -123,7 +123,7 @@ static t_token	*parse_redir(t_ast *cmd, t_token *tk)
 	redir = ft_calloc(1, sizeof(t_ast));
 	if (!redir)
 		return (NULL);
-	redir->cmd = tk->token;
+	redir->cmd = ft_strdup(tk->token);
 	redir->args = ft_matrix_add_line(redir->args, ft_strdup(tk->next->token));
 	redir->left = NULL;
 	redir->right = NULL;
@@ -167,7 +167,7 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 			buff = parse_redir(cmd, buff);
 		else if (!cmd->cmd)
 		{
-			cmd->cmd = buff->token;
+			cmd->cmd = ft_strdup(buff->token);
 			cmdlst_addback(&ms->cmd_list, cmd);
 		}
 		else
@@ -197,11 +197,9 @@ void	parse(t_minish *ms)
 	t_ast	*prev_cmd;
 	t_ast	*curr_cmd;
 
-	printf("TestParse0: %s\n", ms->tk_list->token);
 	buff = parse_command(ms, ms->tk_list); //WIP parse_command original usa scanner, sem RESET. Confirmar que esta forma funciona
 	if (!buff)
 		return ;
-	printf("TestParse1: %s\n", ms->tk_list->token);
 	prev_cmd = ms->cmd_list;
 	while (buff && buff->type == PIPE)
 	{

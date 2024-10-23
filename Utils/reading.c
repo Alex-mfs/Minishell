@@ -56,8 +56,6 @@ static void	compute(t_minish *ms, char *input)
 	if (!validate_quotes(input))
 		return ;
 	get_tokens(ms, input); //WIP mergeable? what is merge?
-	printf("TestReading0: %s\n", ms->tk_list->token);
-	printf("TestReading1: %s\n", ms->tk_list->next->token);
 	if (!validate_tokens(ms)) //WIP na verdade, é permitido terminar num pipe. Corrigir.
 		return ;
 	expand(ms); //WIP Falta estudar questao do merge.
