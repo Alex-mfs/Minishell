@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/19 19:12:09 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:20:42 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,9 +197,11 @@ void	parse(t_minish *ms)
 	t_ast	*prev_cmd;
 	t_ast	*curr_cmd;
 
+	printf("TestParse0: %s\n", ms->tk_list->token);
 	buff = parse_command(ms, ms->tk_list); //WIP parse_command original usa scanner, sem RESET. Confirmar que esta forma funciona
 	if (!buff)
 		return ;
+	printf("TestParse1: %s\n", ms->tk_list->token);
 	prev_cmd = ms->cmd_list;
 	while (buff && buff->type == PIPE)
 	{

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/19 16:23:00 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:42:46 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,14 @@ static int	save_token(t_minish *ms, char *symbol, t_lexer type)
 	token->token = symbol;
 	token->type = type;
 	token->next = NULL;
+	printf("TestToken0: Type %d\n", type);
 	tklst_addback(&ms->tk_list, token);
+	printf("TestToken1: %s\n", ms->tk_list->token);
+	printf("TestToken2: %d\n", (int)ft_strlen(ms->tk_list->token));
 	return ((int)ft_strlen(symbol));
 }
 
-static int	save_cmd(t_minish *ms, char *cmd, char limit)
+static int	save_cmd(t_minish *ms, char *input, char limit)
 {
 	/*int		jump;
 	char	*token;
@@ -96,17 +99,17 @@ static int	save_cmd(t_minish *ms, char *cmd, char limit)
 	i = 0;
 	if (limit == ' ')
 	{
-		while (cmd[i] && !is_tk_delim(cmd[i]))
+		while (input[i] && !is_tk_delim(input[i]))
 			i++;
 	}
 	else
 	{
-		while (cmd[i] && cmd[i] != limit)
+		while (input[i] && input[i] != limit)
 			i++;
 	}
-	if (cmd[i] == '\0' && (limit == '\'' || limit == '\"'))
+	if (input[i] == '\0' && (limit == '\'' || limit == '\"'))
 		return (-1);
-	content = ft_substr(cmd, 0, i);
+	content = ft_substr(input, 0, i);
 	if (limit == '\"')
 		save_token(ms, content, DOUBLE_QUOTES);
 	else if (limit == '\'')
@@ -167,6 +170,8 @@ void	get_tokens(t_minish *ms, char *input)
 		else
 			i += 1 + save_cmd(ms, &input[i], ' ');
 	}
+	printf("TestTokenGet0: %s\n", ms->tk_list->token);
+	printf("TestTokenGet1: %s\n", ms->tk_list->next->token);
 	//WIP mergeable? what is merge? quotes are mergeable
 }
 //[bool]can_merge = _is_mergeable(input, match, jump);

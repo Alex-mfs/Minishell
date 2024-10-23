@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/23 10:20:25 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:20:47 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static void	compute(t_minish *ms, char *input)
 	if (!validate_quotes(input))
 		return ;
 	get_tokens(ms, input); //WIP mergeable? what is merge?
+	printf("TestReading0: %s\n", ms->tk_list->token);
+	printf("TestReading1: %s\n", ms->tk_list->next->token);
 	if (!validate_tokens(ms)) //WIP na verdade, é permitido terminar num pipe. Corrigir.
 		return ;
 	expand(ms); //WIP Falta estudar questao do merge.
