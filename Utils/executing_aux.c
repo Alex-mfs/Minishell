@@ -29,14 +29,18 @@ bool	need2be_parent(char *command, char *arg)
 	return (is_parent);
 }
 
-bool	is_redirection(t_token *token)
+bool	is_redirection(char *cmd)
 {
-	return (token->type >= REDIR_INPUT_1 && token->type <= REDIR_OUTPUT_2);
+	if (ft_strchr(cmd, '<') || ft_strchr(cmd, '>'))
+		return (true);
+	return (false);
 }
 
-bool	is_redir_or_pipe(t_token *token)
+bool	is_redir_or_pipe(char *cmd)
 {
-	return (token->type == PIPE || is_redirection(token));
+	if (ft_strchr(cmd, '|') || is_redirection(cmd))
+		return (true);
+	return (false);
 }
 
 void	error(char *str, int status)

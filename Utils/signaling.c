@@ -26,7 +26,12 @@ void	set_signals(void)
 
 void	set_signals_heredoc(void)
 {
-	signal(SIGINT, handle_heredoc_interrupt);
+	struct sigaction	sa;
+
+	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = handle_heredoc_interrupt;
+	sa.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 }
 

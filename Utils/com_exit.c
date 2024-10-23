@@ -47,7 +47,7 @@ long long	ft_atoll(char *str)
 	return ((long long)(num * sign));
 }
 
-long long	validate_and_convert_arg(char *arg)
+long long	validate_and_convert_arg(char *arg, t_minish *ms)
 {
 	long long	num;
 
@@ -55,7 +55,7 @@ long long	validate_and_convert_arg(char *arg)
 	if (num == 255)
 	{
 		error("exit: numeric argument required\n", 255);
-		sanitize(true);
+		sanitize_ms(ms, true);
 	}
 	return (num);
 }
@@ -68,7 +68,7 @@ long long	calculate_exit_code(long long num)
 	return (num);
 }
 
-void	exit_bash(char **exit_args)
+void	exit_bash(char **exit_args, t_minish *ms)
 {
 	size_t		arg_num;
 	long long	num;
@@ -84,9 +84,9 @@ void	exit_bash(char **exit_args)
 	}
 	if (arg_num == 1)
 	{
-		num = validate_and_convert_arg(exit_args[0]);
+		num = validate_and_convert_arg(exit_args[0], ms);
 		num = calculate_exit_code(num);
 		set_exit_status(num);
 	}
-	sanitize(true);
+	sanitize_ms(ms, true);
 }

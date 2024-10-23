@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/19 19:05:09 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/23 03:59:16 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	execute_if_btin_exists(char *cmd, char **arg, t_minish *ms)
 			execve(path, arg, ms->env_list);
 			error("minishell: permission denied or execution failed\n", 126);
 		}
-		ft_free(path);
+		free(path);
+		path = NULL;
 	}
 	else
 		error("minishell: command not found\n", 127);
@@ -36,12 +37,18 @@ void	execute_if_btin_exists(char *cmd, char **arg, t_minish *ms)
 void	do_command(char	*cmd, char **args, t_minish *ms)
 {
 	set_exit_status(0);
+	printf("cmd - %c\n", cmd[0]);
+	printf("args - %s\n", args[0]);
+	if (cmd[0] == '\0')
+		printf("cmd - nulo\n");
+	if (cmd == NULL)
+		printf("cmd - nulolo\n");
 	if (ft_str_cmp(cmd, "pwd"))
 		printf("%s\n", ms->cwd);
 	else if (ft_str_cmp(cmd, "echo"))
 		echo(args);
 	else if (ft_str_cmp(cmd, "exit"))
-		exit_bash(args);
+		exit_bash(args, ms);
 	else if (ft_str_cmp(cmd, "env"))
 		env(args, ms->env_list);
 	else if (ft_str_cmp(cmd, "export"))
@@ -63,11 +70,11 @@ pid_t	child_exec(t_ast *node, t_minish *ms)
 	if (pid == 0)
 	{
 		if (ms->fd_in == -1 || ms->fd_out == -1)
-			sanitize(true);
+			sanitize_ms(ms, true);
 		pipe_data_flow(node->index, ms);
 		relinking_in_out(ms);
 		do_command(node->cmd, node->args, ms);
-		sanitize(true);
+		sanitize_ms(ms, true);
 	}
 	close_in_out(node->index, ms);
 	return (pid);
@@ -82,26 +89,26 @@ pid_t	pipeline_exec(t_ast	*node, t_minish *ms)
 		return (last_child_pid);
 	last_child_pid = pipeline_exec(node->left, ms);
 	last_child_pid = pipeline_exec(node->right, ms);
-	if (!is_redir_or_pipe(node->token))
+	if (!is_redir_or_pipe(node->cmd))
 	{
 		if (need2be_parent(node->cmd, node->args[0]))
 			do_command(node->cmd, node->args, ms);
 		else
 			last_child_pid = child_exec(node, ms);
 	}
-	else if (is_redirection(node->token))
-		execute_redirection(node->token->type, node->args[0], ms);
+	else if (is_redirection(node->cmd))
+		execute_redir(node->cmd, node->args[0], ms);
 	return (last_child_pid);
 }
 
-void	execute(t_minish *ms, t_ast	*ast)
+void	execute(t_minish *ms)
 {
 	int		status;
 	pid_t	last_child_pid;
 
 	status = 0x7F;
 	pipeline_matrix(ms);
-	last_child_pid = pipeline_exec(ast, ms);
+	last_child_pid = pipeline_exec(ms->cmd_list, ms);
 	last_child_pid = waitpid(last_child_pid, &status, 0);
 	while (waitpid(0, NULL, 0) > 0)
 		continue ;

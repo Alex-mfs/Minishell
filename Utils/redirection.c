@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/17 01:56:24 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/23 01:49:25 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,20 +99,30 @@ void	read_until_delimiter(const char *delimiter, t_minish *ms)
 		free(line);
 	}
 	close(fd);
-	sanitize(true);
+	sanitize_ms(ms, true);
 }
 
 int	heredoc(char *delimiter, t_minish *ms)
 {
-	int	fd;
+	int		fd;
+	int		status;
+	pid_t	pid;
 
 	set_signals_heredoc();
 	if (ms->fd_in > STDIN_FILENO)
 		close(ms->fd_in);
-	if (fork() == 0)
+	pid = fork();
+	if (pid == 0)
+	{
+		set_signals_heredoc();
 		read_until_delimiter(delimiter, ms);
-	ignore_signals();
-	waitpid(0, NULL, 0);
+	}
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		sanitize_ms(ms, true);
+		return (-1);
+	}
 	set_signals();
 	fd = open("heredoc.tmp", O_RDONLY);
 	if (fd == -1)
@@ -120,18 +130,18 @@ int	heredoc(char *delimiter, t_minish *ms)
 	return (fd);
 }
 
-void	execute_redirection(t_lexer type, const char *filename, t_minish *ms)
+void	execute_redir(const char *type, char *filename, t_minish *ms)
 {
 	int	fd;	
 
 	fd = -1;
-	if (type == REDIR_OUTPUT_1)
+	if (ft_str_cmp(type, ">"))
 		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	else if (type == REDIR_OUTPUT_2)
+	else if (ft_str_cmp(type, ">>"))
 		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	else if (type == REDIR_INPUT_1)
+	else if (ft_str_cmp(type, "<"))
 		fd = open(filename, O_RDONLY);
-	else if (type == REDIR_INPUT_2)
+	else if (ft_str_cmp(type, "<<"))
 		fd = heredoc(filename, ms);
 	if (fd == -1)
 	{
@@ -139,7 +149,7 @@ void	execute_redirection(t_lexer type, const char *filename, t_minish *ms)
 		set_exit_status(1);
 		return ;
 	}
-	if (type == REDIR_INPUT_1 || type == REDIR_INPUT_2)
+	if (ft_str_cmp(type, "<") || ft_str_cmp(type, "<<"))
 		ms->fd_in = fd;
 	else
 		ms->fd_out = fd;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:44:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/19 19:19:47 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:31:44 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 void	pipe_data_flow(int cmd_index, t_minish *ms)
 {
-	if (ms->cmd_num <= 1)
+	int	cmd_num;
+
+	cmd_num = cmdlst_size(ms->cmd_list, true);
+	if (cmd_num <= 1)
 		return ;
 	if (ms->fd_in == 0 && cmd_index > 0)
 		ms->fd_in = ms->pipes[cmd_index - 1][0];
-	if (ms->fd_out == 1 && cmd_index < ms->cmd_num - 1)
+	if (ms->fd_out == 1 && cmd_index < cmd_num - 1)
 		ms->fd_out = ms->pipes[cmd_index][1];
 }
 
@@ -38,7 +41,7 @@ void	close_in_out(int index, t_minish *ms)
 		close(ms->fd_out);
 	if (index > 0)
 		close(ms->pipes[index - 1][0]);
-	if (ms->cmd_num - 1 > index)
+	if ((cmdlst_size(ms->cmd_list, true) - 1) > index)
 		close(ms->pipes[index][1]);
 	ms->fd_in = 0;
 	ms->fd_out = 1;
@@ -52,12 +55,11 @@ void	pipeline_matrix(t_minish *ms)
 {
 	int	i;
 
-	//WIP substituir "cmd_num" por "int	cmdlst_size(t_ast *lst, bool total)"
 	i = 0;
-	ms->pipes = ft_calloc(ms->cmd_num, sizeof(int *));
+	ms->pipes = ft_calloc(cmdlst_size(ms->cmd_list, true), sizeof(int *));
 	if (!ms->pipes)
 		return ;
-	while (i < ms->cmd_num - 1)
+	while (i < (cmdlst_size(ms->cmd_list, true) - 1))
 	{
 		ms->pipes[i] = ft_calloc(2, sizeof(int));
 		if (!ms->pipes[i])

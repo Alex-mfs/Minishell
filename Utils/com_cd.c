@@ -47,9 +47,9 @@ void	cd(char **tokens, t_minish *ms)
 		error("minishell: cd: too many arguments\n", 1);
 		return ;
 	}
-	if (!tokens[0] || !ft_strcmp(tokens[0], "~"))
+	if (!tokens[0] || ft_str_cmp(tokens[0], "~"))
 	{
-		change_dir(get_env("HOME", ms), ms);
+		change_dir(get_env("HOME", ms->env_list), ms);
 		return ;
 	}
 	if (stat(tokens[0], &stats) == 0 && S_ISDIR(stats.st_mode))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/19 19:11:43 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/23 01:53:55 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct s_ast
 	struct s_ast	*left;
 	struct s_ast	*right;
 	struct s_ast	*next;
-	t_token			*token; //WIP Onde usado, substituir por cmd[0]
 }			t_ast;
 
 typedef struct s_minish
@@ -99,8 +98,8 @@ void	sanitize_envp(t_minish *ms);
 
 //executing_aux
 void	error(char *str, int status);
-bool	is_redir_or_pipe(t_token *token);
-bool	is_redirection(t_token *token);
+bool	is_redir_or_pipe(char *cmd);
+bool	is_redirection(char *cmd);
 bool	need2be_parent(char *command, char *arg);
 
 //pipeline
@@ -116,7 +115,7 @@ int		get_exit_status(void);
 
 
 //commands
-void	exit_bash(char **exit_args);
+void	exit_bash(char **exit_args, t_minish *ms);
 void	export(char **exp_args, t_minish *ms);
 void	env(char **env_arg, char **env_list);
 char	*get_env(const char *key, char **env_list);
@@ -125,6 +124,7 @@ void	unset(char **vars, t_minish *ms);
 void	cd(char **tokens, t_minish *ms);
 
 //export_aux
+int		ft_strlen_sep(const char *s, char *seps);
 char	*extract_key(const char *assignment);
 void	copy_env_except_key(char **src, char **dest, const char *key, int len);
 void	remove_from_tmp(t_minish *ms, const char *key);
@@ -136,6 +136,8 @@ void	add_or_update_env(char ***target_env, const char *assignment);
 //path
 char	*get_executable_path(char *cmd, t_minish *ms);
 
+//Redirection
+void	execute_redir(const char *type, char *filename, t_minish *ms);
 
 //Utils(?) - cmd_listing
 int		cmdlst_size(t_ast *lst, bool total);

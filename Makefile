@@ -1,8 +1,10 @@
 NAME = minishell
 #BONUS_NAME = minishell_bonus
 CC = cc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 LFT_FLAGS = -lft
+READLINE_INC = -I/opt/homebrew/opt/readline/include
+READLINE_LIB = -L/opt/homebrew/opt/readline/lib -lreadline
 RM = rm -fr
 MAIN = minishell.c
 #BONUS = minishell_bonus.c
@@ -17,7 +19,7 @@ all: $(NAME)
 bonus: $(BONUS_NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) -L $(SRC_LFT) $(LFT_FLAGS) -lreadline -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) -L $(SRC_LFT) $(LFT_FLAGS) $(READLINE_LIB) -o $(NAME)
 
 #$(BONUS_NAME): $(BONUS_OBJ)
 #	@$(CC) $(FLAGS) $(BONUS_OBJ) -L $(SRC_LFT) $(LFT_FLAGS) -o $(BONUS_NAME)
@@ -26,7 +28,7 @@ $(OBJ): $(MAIN) $(SRC)
 #	@git clone git@github.com:joao-rib/JP_libft.git libft
 	@make -C $(SRC_LFT) -s
 	@mkdir -p obj
-	@$(CC) $(FLAGS) -c $(SRC) $(MAIN)
+	@$(CC) $(FLAGS) $(READLINE_INC) -c $(SRC) $(MAIN)
 	@mv *.o obj/
 
 #$(BONUS_OBJ): $(BONUS) $(BONUS_SRC)

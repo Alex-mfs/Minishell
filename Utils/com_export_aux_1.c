@@ -6,11 +6,21 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:29:37 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/16 17:39:27 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/23 01:07:59 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	ft_strlen_sep(const char *s, char *seps)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && !ft_strchr(seps, s[i]))
+		i++;
+	return (i);
+}
 
 int	find_env_in_tmp(t_minish *ms, const char *name)
 {
@@ -34,7 +44,7 @@ char	*extract_key(const char *assignment)
 	size_t	len;
 	char	*key;
 
-	len = ft_strlen_sep(assignment, '=');
+	len = ft_strlen_sep(assignment, "=");
 	key = ft_substr(assignment, 0, len);
 	return (key);
 }

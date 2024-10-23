@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:18:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/16 17:43:57 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/23 01:03:47 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	handle_no_assignment(t_minish *ms, char *arg)
 	char	*empty_assign;
 
 	if (find_env_in_tmp(ms, arg))
-		add_or_update_env(ms->env_tmp, arg);
+		add_or_update_env(&ms->env_tmp, arg);
 	else
 	{
 		empty_assign = malloc(ft_strlen(arg) + 2);
@@ -82,9 +82,9 @@ void	export(char **exp_args, t_minish *ms)
 	while (exp_args[i])
 	{
 		if (ft_strchr(exp_args[i], '='))
-			handle_assigment(ms, exp_args[i]);
+			handle_assignment(ms, exp_args[i]);
 		else
-			handle_no_assigment(ms, exp_args[i]);
+			handle_no_assignment(ms, exp_args[i]);
 		i++;
 	}
 }
