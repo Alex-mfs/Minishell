@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/23 03:43:02 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/23 10:20:25 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	compute(t_minish *ms, char *input)
 	get_tokens(ms, input); //WIP mergeable? what is merge?
 	if (!validate_tokens(ms)) //WIP na verdade, é permitido terminar num pipe. Corrigir.
 		return ;
-	//expand(ms); //WIP Lida com inputs tipo $. Incompleto.
+	expand(ms); //WIP Falta estudar questao do merge.
 	parse(ms);
 	if(!assign_var(ms)) //WIP Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
 		execute(ms); //WIP Executar cada um dos comandos

@@ -125,6 +125,9 @@ static t_token	*parse_redir(t_ast *cmd, t_token *tk)
 		return (NULL);
 	redir->cmd = tk->token;
 	redir->args = ft_matrix_add_line(redir->args, ft_strdup(tk->next->token));
+	redir->left = NULL;
+	redir->right = NULL;
+	redir->next = NULL;
 	if (tk->type == REDIR_INPUT_1 || tk->type == REDIR_INPUT_2)
 		cmd->left = redir;
 	else

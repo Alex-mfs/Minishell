@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sanitizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/23 03:21:34 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/23 10:27:16 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	tk_clear(t_token **lst)
 	}
 }
 
-static void	ast_clear(t_ast **lst)
+static void	cmd_clear(t_ast **lst)
 {
 	t_ast	*buff;
 
@@ -84,10 +84,12 @@ static void	ast_clear(t_ast **lst)
 		while (*lst)
 		{
 			buff = (*lst)->next;
-			//if ((*lst)->cmd)
-				//free((*lst)->cmd);
-			if ((*lst)->args)
-				ft_free_matrix((*lst)->args);
+			if ((*lst)->left && (*lst)->index >= 0)
+				cmd_clear(&((*lst)->left));
+			if ((*lst)->right && (*lst)->index >= 0)
+				cmd_clear(&((*lst)->right));
+			free((*lst)->cmd);
+			ft_free_matrix((*lst)->args);
 			free(*lst);
 			*lst = buff;
 		}
@@ -115,35 +117,11 @@ static void	ast_clear(t_ast **lst)
 		ft_lstclear(&ms()->envtmp, (void (*)(void *))env_destroy);
 		exit(ms()->exit_status);
 	}*/
-// 	ast_clear(&(ms->cmd_list));
-// 	//WIP free ms->pipes INTMATRIX
-// 	tk_clear(&(ms->tk_list));
-// 	ms->cmd_list = NULL;
-// 	ms->pipes = NULL;
-// 	ms->tk_list = NULL;
-// 	if (sair)
-// 	{
-// 		free(ms->cwd);
-// 		ft_free_matrix(ms->env_list);
-// 		exit(get_exit_status());
-// 	}
-// }
-
-void	sanitize_ms(t_minish *ms, bool sair)
-{
-	// Liberar a lista de comandos da AST
-	if (ms->cmd_list)
-		ast_clear(&(ms->cmd_list));
-
-	// WIP: liberar ms->pipes (INTMATRIX), adicionar aqui quando implementado
-
-	// Liberar a lista de tokens
-	if (ms->tk_list)
-		tk_clear(&(ms->tk_list));
-
-	// Zerar os ponteiros após liberar
-	ms->cmd_list = NULL;
+	ft_free_intmatrix(ms->pipes, (size_t)cmdlst_size(ms->cmd_list, false));
+	cmd_clear(&(ms->cmd_list));
+	tk_clear(&(ms->tk_list));
 	ms->pipes = NULL;
+	ms->cmd_list = NULL;
 	ms->tk_list = NULL;
 
 	// Se sair for true, liberar o restante e sair do programa

@@ -12,40 +12,89 @@
 
 // #include "libft.h"
 
-// char	*ft_str_repl_seg(char *str, char *old, char *new)
-// {
-// 	size_t	i;
-// 	size_t	j;
-// 	size_t	len;
-// 	size_t	l2;
-// 	char	*str2;
+static char	*replace_short(const char *str, char *old, char *new, size_t len)
+{
+	size_t	i;
+	size_t	j;
+	size_t	b;
+	char	*str2;
 
-// 	i = 0;
-// 	j = 0;
-// 	if (!str || !old)
-// 		return (NULL);
-// 	len = ft_strlen(str);
-// 	l2 = ft_strlen(old);
-// 	if (l2 > len)
-// 		return (str);
-// 	l2 = len - l2 + ft_strlen(new);
-// 	str2 = ft_calloc(l2, sizeof(char *));
-// 	if (!str2)
-// 		return (str);
-// 	while (i <= len)
-// 	{
-// 		if (str[i] == old[0])
-// 		{
-// 			str[i] = new;
-// 			times--;
-// 			if (times <= 0)
-// 				break ;
-// 		}
-// 		else
-// 			str2[j] = str[i];
-// 		i++;
-// 		j++;
-// 	}
-// 	free(str);
-// 	return (str2);
-// }
+	i = 0;
+	j = 0;
+	b = ft_strnstr_pos(str, old, len);
+	str2 = ft_calloc(len - ft_strlen(old) + ft_strlen(new), sizeof(char *));
+	if (!str2)
+		return (NULL);
+	while (i <= len)
+	{
+		if (i == b)
+		{
+			b = ft_strlen(new);
+			while (j < b)
+			{
+				str2[i + j] = new[j];
+				j++;
+			}
+			b = ft_strlen(old);
+			i += b;
+			j = b - j;
+		}
+		str2[i - j] = str[i];
+		i++;
+	}
+	return (str2);
+}
+
+static char	*replace_long(const char *str, char *old, char *new, size_t len)
+{
+	size_t	i;
+	size_t	j;
+	size_t	b;
+	char	*str2;
+
+	i = 0;
+	j = 0;
+	b = ft_strnstr_pos(str, old, len);
+	str2 = ft_calloc(len - ft_strlen(old) + ft_strlen(new), sizeof(char *));
+	if (!str2)
+		return (NULL);
+	while (i <= len)
+	{
+		if (i == b)
+		{
+			b = ft_strlen(new);
+			while (j < b)
+			{
+				str2[i + j] = new[j];
+				j++;
+			}
+			b = ft_strlen(old);
+			i += b;
+			j -= b;
+		}
+		str2[i + j] = str[i];
+		i++;
+	}
+	return (str2);
+}
+
+char	*ft_str_repl_seg(const char *str, char *old, char *new)
+{
+	size_t	len;
+	size_t	o;
+	size_t	n;
+	char	*str2;
+
+	if (!str)
+		return (NULL);
+	len = ft_strlen(str);
+	o = ft_strlen(old);
+	n = ft_strlen(new);
+	if (!old || o > len || !ft_strnstr(str, old, len))
+		return (NULL);
+	if (n > o)
+		str2 = replace_long(str, old, new, len);
+	else
+		str2 = replace_short(str, old, new, len);
+	return (str2);
+}
