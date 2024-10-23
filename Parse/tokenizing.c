@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/19 16:23:00 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:48:35 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,13 @@ static int	save_token(t_minish *ms, char *symbol, t_lexer type)
 		return (0);
 	ft_lstadd_back(&ms()->lexemes, ft_lstnew(token));
 	return (ft_strlen(str));*/
+
 	t_token	*token;
 
 	token = ft_calloc(1, sizeof(t_token));
 	if (!token)
 		ft_error_msg("Error while creating token");
-	token->token = symbol;
+	token->token = ft_strdup(symbol);
 	token->type = type;
 	token->next = NULL;
 	tklst_addback(&ms->tk_list, token);
@@ -107,6 +108,11 @@ static int	save_cmd(t_minish *ms, char *cmd, char limit)
 	if (cmd[i] == '\0' && (limit == '\'' || limit == '\"'))
 		return (-1);
 	content = ft_substr(cmd, 0, i);
+	if (content == NULL || content[0] == '\0')
+	{
+		free(content);
+		return (0);  // Não salva os tokens vazios
+	}
 	if (limit == '\"')
 		save_token(ms, content, DOUBLE_QUOTES);
 	else if (limit == '\'')
@@ -165,7 +171,10 @@ void	get_tokens(t_minish *ms, char *input)
 		else if (input[i] == '\'')
 			i += 2 + save_cmd(ms, &input[i + 1], '\'');
 		else
+		{
+			printf("Token[0] encontrado: %c\n", input[i]);
 			i += 1 + save_cmd(ms, &input[i], ' ');
+		}
 	}
 	//WIP mergeable? what is merge? quotes are mergeable
 }

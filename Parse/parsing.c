@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/19 19:12:09 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:40:20 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 	cmd->next = NULL;
 	cmd->left = NULL;
 	cmd->right = NULL;
+	cmd->args = ft_calloc(1, sizeof(char *));
 	while (buff && buff->type != PIPE)
 	{
 		if (buff->type >= REDIR_INPUT_1 && buff->type <= REDIR_OUTPUT_2)

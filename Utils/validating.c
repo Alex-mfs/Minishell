@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validating.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/29 17:24:27 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:46:15 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,12 @@ bool	validate_tokens(t_minish *ms)
 	curr = ms->tk_list;
 	while (curr)
 	{
+		if (curr->token == NULL || curr->token[0] == '\0')
+		{
+			printf("Erro: token vazio\n");
+			return false;
+		}
+		printf("Validando token: %s, Tipo: %d\n", curr->token, curr->type);
 		if (curr->type >= REDIR_INPUT_1 && curr->type <= PIPE)
 		{
 			n_symbols++;
@@ -102,7 +108,10 @@ bool	validate_tokens(t_minish *ms)
 		curr = curr->next;
 	}
 	if (n_symbols >= n_commands)
+	{
+		printf("Erro: número de símbolos é maior ou igual ao número de comandos.\n");
 		return (false);
+	}
 	return (true);
 }
 

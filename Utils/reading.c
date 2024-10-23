@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/23 10:20:25 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:43:35 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,16 @@ static bool	assign_var(t_minish *ms)
 	return (false);
 }
 
+void	print_token_list(t_minish *ms)
+{
+    t_token *curr = ms->tk_list;
+    while (curr)
+    {
+        printf("Token: %s, Tipo: %d\n", curr->token, curr->type);
+        curr = curr->next;
+    }
+}
+
 static void	compute(t_minish *ms, char *input)
 {
 	/*if (!lexical_analysis())
@@ -56,6 +66,7 @@ static void	compute(t_minish *ms, char *input)
 	if (!validate_quotes(input))
 		return ;
 	get_tokens(ms, input); //WIP mergeable? what is merge?
+	print_token_list(ms);
 	if (!validate_tokens(ms)) //WIP na verdade, é permitido terminar num pipe. Corrigir.
 		return ;
 	expand(ms); //WIP Falta estudar questao do merge.
