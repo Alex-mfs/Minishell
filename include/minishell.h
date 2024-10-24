@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/23 01:53:55 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:00:00 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int		get_exit_status(void);
 
 //commands
 void	exit_bash(char **exit_args, t_minish *ms);
-void	export(char **exp_args, t_minish *ms);
+void	ft_export(char **exp_args, t_minish *ms);
 void	env(char **env_arg, char **env_list);
 char	*get_env(const char *key, char **env_list);
 void	echo(char **words);

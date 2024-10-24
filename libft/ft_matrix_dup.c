@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strarrdup.c                                     :+:      :+:    :+:   */
+/*   ft_matrix_dup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/01 15:31:10 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:37:57 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 static char	**free_all(char **tab, int w)
 {
@@ -35,7 +36,7 @@ char	**ft_matrix_dup(char **src)
 	dest = ft_calloc(w + 1, sizeof(char *));
 	if (!dest)
 		return (NULL);
-	dest[w] = 0;
+	//dest[w] = 0;
 	w--;
 	while (w >= 0)
 	{

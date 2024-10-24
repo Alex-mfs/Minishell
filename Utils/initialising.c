@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/23 02:38:27 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:38:27 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,41 +34,54 @@
 // 	return (trimmed);
 // }
 
-static char *trim_name(char *to_trim)
-{
-    char    *trimmed;
-    char    *equal_sign;
+// static char *trim_name(char *to_trim)
+// {
+//     char    *trimmed;
+//     char    *equal_sign;
 
-    // Verifique se to_trim não é NULL e contém o caractere '='
-    if (!to_trim || !(equal_sign = ft_strchr(to_trim, '=')))
-    {
-        printf("Error: Invalid string passed to trim_name.\n");
-        free(to_trim); // Libere a string original, se necessário
-        return NULL;
-    }
+//     // Verifique se to_trim não é NULL e contém o caractere '='
+//     if (!to_trim || !(equal_sign = ft_strchr(to_trim, '=')))
+//     {
+//         printf("Error: Invalid string passed to trim_name.\n");
+//         free(to_trim); // Libere a string original, se necessário
+//         return NULL;
+//     }
 
-    // Duplicar a parte após o '='
-    trimmed = ft_strdup(equal_sign + 1);
-    free(to_trim); // Libere a string original após a duplicação
-    return (trimmed);
-}
+//     // Duplicar a parte após o '='
+//     trimmed = ft_strdup(equal_sign + 1);
+//     free(to_trim); // Libere a string original após a duplicação
+//     return (trimmed);
+// }
 
 void	init_ms(t_minish *ms, char **envp)
 {
-	int	i;
+	//int	i;
 	int	env_len;
 
-	i = 0;
+	//i = 0;
 	env_len = 0;
 	ms->env_list = ft_matrix_dup(envp);
 	ms->env_tmp = ft_matrix_dup(envp);
 	while (ms->env_list[env_len] != NULL)
 		env_len++;
-	while (i < env_len)
-	{
-		ms->env_list[i] = trim_name(ft_strdup(ms->env_list[i]));
-		i++;
-	}
+	// printf("0/ %d", env_len);
+	// while (i < env_len)
+	// {
+	// 	printf("1/ %s\n", ms->env_list[i]);
+	// 	i++;
+	// }
+	// i = 0;
+	// while (i < env_len)
+	// {
+	// 	ms->env_list[i] = trim_name(ft_strdup(ms->env_list[i])); nao fazer trim_name
+	// 	i++;
+	// }
+	// i = 0;
+	// while (i < env_len)
+	// {
+	// 	printf("2/ %s\n", ms->env_list[i]);
+	// 	i++;
+	// }
 	ms->cwd = getcwd(NULL, 4096);
 	ms->fd_in = 0;
 	ms->fd_out = 1;

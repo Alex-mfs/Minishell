@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:18:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/23 01:03:47 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:47:51 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,28 @@ void	add_or_update_env(char ***target_env, const char *assignment)
 
 void	handle_no_assignment(t_minish *ms, char *arg)
 {
-	char	*empty_assign;
+	char	*new_assign;
+	char	*env_value_tmp;
+	size_t	assign_len;
+	int		index;
 
-	if (find_env_in_tmp(ms, arg))
-		add_or_update_env(&ms->env_tmp, arg);
-	else
-	{
-		empty_assign = malloc(ft_strlen(arg) + 2);
-		if (!empty_assign)
-			return ;
-		ft_strlcpy(empty_assign, arg, ft_strlen(arg) + 1);
-		ft_strlcat(empty_assign, "=", ft_strlen(arg) + 2);
-		add_or_update_env(&ms->env_list, empty_assign);
-		free(empty_assign);
-	}
+	env_value_tmp = NULL;
+	index = find_env_index(ms->env_tmp, arg);
+	if (index != -1)
+		env_value_tmp = ft_strchr(ms->env_tmp[index], '=');
+	assign_len = ft_strlen(arg) + 2;
+	if (env_value_tmp)
+		assign_len += ft_strlen(env_value_tmp + 1);
+	new_assign = malloc(assign_len);
+	if (!new_assign)
+		return ;
+	ft_strlcpy(new_assign, arg, ft_strlen(arg) + 1);
+	ft_strlcat(new_assign, "=", ft_strlen(arg) + 2);
+	if (env_value_tmp)
+		ft_strlcat(new_assign, env_value_tmp + 1, assign_len);
+	add_or_update_env(&ms->env_list, new_assign);
+	free(new_assign);
+	add_or_update_env(&ms->env_tmp, arg);
 }
 
 void	handle_assignment(t_minish *ms, char *arg)
@@ -72,7 +80,7 @@ void	handle_assignment(t_minish *ms, char *arg)
 	add_or_update_env(&ms->env_list, arg);
 }
 
-void	export(char **exp_args, t_minish *ms)
+void	ft_export(char **exp_args, t_minish *ms)
 {
 	int	i;
 

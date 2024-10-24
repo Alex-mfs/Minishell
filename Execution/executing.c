@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/23 03:59:16 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:02:13 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	execute_if_btin_exists(char *cmd, char **arg, t_minish *ms)
 void	do_command(char	*cmd, char **args, t_minish *ms)
 {
 	set_exit_status(0);
-	printf("cmd - %c\n", cmd[0]);
-	printf("args - %s\n", args[0]);
+	printf("cmd - %s\n", cmd);
+	printf("args[0] - %s\n", args[0]);
 	if (cmd[0] == '\0')
 		printf("cmd - nulo\n");
 	if (cmd == NULL)
@@ -52,7 +52,7 @@ void	do_command(char	*cmd, char **args, t_minish *ms)
 	else if (ft_str_cmp(cmd, "env"))
 		env(args, ms->env_list);
 	else if (ft_str_cmp(cmd, "export"))
-		export(args, ms);
+		ft_export(args, ms);
 	else if (ft_str_cmp(cmd, "unset"))
 		unset(args, ms);
 	else if (ft_str_cmp(cmd, "cd"))
