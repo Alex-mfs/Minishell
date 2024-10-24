@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/24 11:34:06 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:51:40 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static void	compute(t_minish *ms, char *input)
 		buff = buff->next;
 		i++;
 	}
+	printf("\n");
 	//END TESTE TOKEN
 	if (!validate_tokens(ms)) //WIP na verdade, é permitido terminar num pipe. Corrigir.
 		return ;
@@ -78,6 +79,7 @@ static void	compute(t_minish *ms, char *input)
 		buff2 = buff2->next;
 		i++;
 	}
+	printf("\n");
 	//END TESTE CMD
 	if(!assign_var(ms)) //WIP Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
 		execute(ms);
