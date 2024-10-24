@@ -31,7 +31,7 @@ static char	*find_name(char *token)
 	end = pos;
 	if (token[pos + 1] == '?')
 		return (ft_strdup("$?"));
-	while (token[pos] && !ft_isdelim(token[pos]))
+	while (token[end] && !ft_isdelim(token[end]))
 		end++;
 	return (ft_substr(token, pos, end - pos + 1));
 }
@@ -65,7 +65,7 @@ static void	expand_token(t_minish *ms, t_token *tk)
 		if (ft_str_cmp(name, "$?"))
 			value = ft_itoa(get_exit_status());
 		else
-			value = get_env(name, ms->env_list);
+			value = get_env(name, ms->env_tmp);
 		buff = ft_strdup(tk->token);
 		tk->token = ft_str_repl_seg(buff, name, value);
 		free(name);
