@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/24 11:39:36 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:31:13 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	get_tokens(t_minish *ms, char *input)
 		else if (input[i] == '\'')
 			i += 2 + save_cmd(ms, &input[i + 1], '\'');
 		else
-			i += 1 + save_cmd(ms, &input[i], ' ');
+			i += save_cmd(ms, &input[i], ' ');
 	}
 	//WIP Entender o merge
 }
