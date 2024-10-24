@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/24 11:51:40 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:06:19 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	compute(t_minish *ms, char *input)
 	i = 0;
 	while(buff)
 	{
-		printf("Token %d: %s\n", i, buff->token);
+		printf("Token %d: %s [Type %d]\n", i, buff->token, buff->type);
 		buff = buff->next;
 		i++;
 	}

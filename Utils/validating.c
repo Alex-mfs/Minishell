@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/29 17:24:27 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:14:23 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,18 +105,3 @@ bool	validate_tokens(t_minish *ms)
 		return (false);
 	return (true);
 }
-
-/*t_token	*scanner(t_operation op)
-{
-	static t_list	*current = NULL;
-
-	if (op == READ && current)
-		return (current->content);
-	else if (op == RESET)
-		current = ms()->lexemes;
-	else if (op == NEXT)
-		current = current->next;
-	else if (op == LOOKAHEAD && current->next)
-		return (current->next->content);
-	return (NULL);
-}*/
