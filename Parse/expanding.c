@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/24 11:41:12 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:58:23 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	expand(t_minish *ms)
 	curr = ms->tk_list;
 	while (curr)
 	{
-		if (curr->type == DOUBLE_QUOTES || curr->type == OTHER) //Pode dar erro em redirects. Testar.
+		if (curr->type == DOUBLE_QUOTES || curr->type == OTHER) //Pode dar erro em redirects, ou poderei ter que dar skip a heredocs. Testar.
 			expand_token(ms, curr);
 		curr = curr->next;
 	}
