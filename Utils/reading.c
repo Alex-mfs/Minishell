@@ -89,19 +89,6 @@ static void	compute(t_minish *ms, char *input)
 
 //static char	*maintain_prompt(char *cwd)
 //{
-	//# define PROMPT_UPPER	"┎─── "
-	//# define PROMPT_LOWER	"┖─ minishell ❯ "
-	/*char	*tmp;
-	char	*prompt;
-	char	*prefix;
-	char	*suffix;
-
-	prefix = ANSI_BOLD""ANSI_WHITE""PROMPT_UPPER""ANSI_UNDERLINE""ANSI_CYAN;
-	suffix = ANSI_RST"\n"ANSI_WHITE""PROMPT_LOWER""ANSI_RST;
-	tmp = ft_strjoin(prefix, ms()->cwd); //current working directory
-	prompt = ft_strjoin(tmp, suffix);
-	free(tmp);
-	return (prompt);*/
 	//char	*prompt;
 	//char	*suffix;
 
@@ -150,20 +137,6 @@ static char	*maintain_prompt(char *cwd)
 
 void	read_inputs(t_minish *ms)
 {
-	/*	while (1)
-	{
-		(ms()->prompt) = _update_prompt();
-		(ms()->input) = readline(ms()->prompt);
-		if (!ms()->input)
-		{
-			printf("exit\n");
-			sanitize(true);
-		}
-		add_history(ms()->input);
-		_compute();
-		sanitize(false);
-	}
-	rl_clear_history();*/
 	char	*prompt;
 	char	*input;
 
