@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/19 18:02:51 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:41:12 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,6 @@
 
 static char	*find_name(char *token)
 {
-	/*char	*tmp;
-	int		len;
-
-	len = 0;
-	tmp = ft_strnstr(str, "$", ft_strlen(str));
-	if (tmp[1] == '?')
-		return (ft_strdup("$?"));
-	while (ft_isalnum(tmp[len + 1]) || tmp[len + 1] == '_')
-		len++;
-	return (ft_substr(tmp, 0, len + 1));*/
 	int	pos;
 	int	end;
 
@@ -38,23 +28,6 @@ static char	*find_name(char *token)
 
 static void	expand_token(t_minish *ms, t_token *tk)
 {
-	/*char	*value;
-	char	*key;
-	char	*tmp;
-
-	while (ft_strnstr(token->str, "$", ft_strlen(token->str)))
-	{
-		key = _find_key(token->str);
-		if (!ft_strcmp(key, "$?"))
-			value = ft_itoa(ms()->exit_status);
-		else
-			value = get_env(key);
-		tmp = token->str;
-		token->str = ft_strreplace(token->str, key, value);
-		ft_free(tmp);
-		ft_free(value);
-		ft_free(key);
-	}*/
 	char	*name;
 	char	*value;
 	char	*buff;
@@ -76,30 +49,16 @@ static void	expand_token(t_minish *ms, t_token *tk)
 
 void	expand(t_minish *ms)
 {
-	/*t_list	*curr;
-	t_token	*token;
-
-	curr = ms()->lexemes;
-	while (curr)
-	{
-		token = ((t_token *)curr->content);
-		if (token->type == LEX_IN_2)
-			curr = curr->next;
-		else if (token->type == LEX_DOUBLE_QUOTES || token->type == LEX_TERM)
-			_expand_variable(token);
-		curr = curr->next;
-	}
-	merge_lexemes(ms()->lexemes);*/
 	t_token	*curr;
 
 	curr = ms->tk_list;
 	while (curr)
 	{
-		if (curr->type == DOUBLE_QUOTES || curr->type == OTHER)
+		if (curr->type == DOUBLE_QUOTES || curr->type == OTHER) //Pode dar erro em redirects. Testar.
 			expand_token(ms, curr);
 		curr = curr->next;
 	}
-	//merge(ms); WIP what is merge? quotes are mergeable.
+	//merge(ms); WIP Entender o merge.
 }
 
 /*void	merge_lexemes(t_list *lexemes)

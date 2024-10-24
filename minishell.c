@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/23 02:36:07 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:36:16 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ int	main(int argc, char **argv, char **envp)
 	init_ms(&ms, envp);
     set_signals(); //WIP - Preciso estudo
     read_inputs(&ms); //WIP
-	ft_free_matrix(ms.env_list);
+	ft_free_matrix(ms.env_list); //WIP Isto faz-se no sanitize?
+	ft_free_matrix(ms.env_tmp); //WIP Isto faz-se no sanitize?
+	ft_free_matrix(ms.path); //WIP Isto faz-se no sanitize?
     return (g_exit_status); // finalizar o programa na main.
 }
 

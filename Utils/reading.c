@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/23 12:20:47 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:34:06 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,27 +41,46 @@ static bool	assign_var(t_minish *ms)
 
 static void	compute(t_minish *ms, char *input)
 {
-	/*if (!lexical_analysis())
-		return (0);
-	lexer();
-	if (!syntatic_analysis())
-		return (0);
-	expander();
-	parser();
-	if (!is_assignment(ms()->lexemes->content))
-		execute(ms()->ast);
-	update_envs();
-	unlink(HEREDOC);
-	return (0);*/
+	t_token	*buff; //PARA TESTES
+	t_ast	*buff2; //PARA TESTES
+	int		i; //PARA TESTES
+	int		j; //PARA TESTES
+
 	if (!validate_quotes(input))
 		return ;
-	get_tokens(ms, input); //WIP mergeable? what is merge?
+	get_tokens(ms, input); //WIP Falta entender questao do merge.
+	//TESTE TOKEN
+	buff = ms->tk_list;
+	i = 0;
+	while(buff)
+	{
+		printf("Token %d: %s\n", i, buff->token);
+		buff = buff->next;
+		i++;
+	}
+	//END TESTE TOKEN
 	if (!validate_tokens(ms)) //WIP na verdade, é permitido terminar num pipe. Corrigir.
 		return ;
-	expand(ms); //WIP Falta estudar questao do merge.
+	expand(ms); //WIP Falta entender questao do merge.
 	parse(ms);
+	//TESTE CMD
+	buff2 = ms->cmd_list;
+	i = 0;
+	while(buff2)
+	{
+		printf("Node %d: cmd=%s\n", i, buff2->cmd);
+		j = 0;
+		while(buff2->args[j])
+		{
+			printf("\tArg %d: %s\n", j, buff2->args[j]);
+			j++;
+		}
+		buff2 = buff2->next;
+		i++;
+	}
+	//END TESTE CMD
 	if(!assign_var(ms)) //WIP Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
-		execute(ms); //WIP Executar cada um dos comandos
+		execute(ms);
 	//WIP sanitize_envp(ms); //WIP actualizar env_list e...path? Porque actualizar env_list?
 	//WIP unlink(HEREDOC) delete any heredoc file
 }

@@ -12,3 +12,4 @@ main.c
 minishell
 minishell_bonus
 *.DS_Store*
+.nfs*
