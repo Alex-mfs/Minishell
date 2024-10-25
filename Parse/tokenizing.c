@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/23 15:48:35 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/24 23:30:13 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ void	get_tokens(t_minish *ms, char *input)
 			i += 2 + save_cmd(ms, &input[i + 1], '\'');
 		else
 		{
-			printf("Token[0] encontrado: %c\n", input[i]);
+			//printf("Token[0] encontrado: %c\n", input[i]);
 			i += 1 + save_cmd(ms, &input[i], ' ');
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/24 11:38:27 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/25 00:43:33 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,16 @@
 void	init_ms(t_minish *ms, char **envp)
 {
 	//int	i;
-	int	env_len;
+	// int	env_len;
 
 	//i = 0;
-	env_len = 0;
+	// env_len = 0;
+	char *path_env;
+
 	ms->env_list = ft_matrix_dup(envp);
 	ms->env_tmp = ft_matrix_dup(envp);
-	while (ms->env_list[env_len] != NULL)
-		env_len++;
+	// while (ms->env_list[env_len] != NULL)
+	// 	env_len++;
 	// printf("0/ %d", env_len);
 	// while (i < env_len)
 	// {
@@ -82,7 +84,13 @@ void	init_ms(t_minish *ms, char **envp)
 	// 	printf("2/ %s\n", ms->env_list[i]);
 	// 	i++;
 	// }
+	ms->cmd_list = NULL;
 	ms->cwd = getcwd(NULL, 4096);
 	ms->fd_in = 0;
 	ms->fd_out = 1;
+	path_env = getenv("PATH");
+	if (path_env)
+		ms->path = ft_split(path_env, ':');
+	else
+		ms->path = NULL;
 }

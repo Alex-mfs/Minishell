@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:39:57 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/17 01:40:25 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/25 13:04:18 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,15 @@ char	*get_relative_path(char *exe, t_minish *ms)
 
 char	*get_executable_path(char *cmd, t_minish *ms)
 {
+	char	*path;
+
 	if (cmd[0] == '.')
-		return (get_relative_path(cmd, ms));
+	{
+		path = (get_relative_path(cmd, ms));
+	}
 	else
-		return (get_absolute_path(cmd, ms));
+	{
+		path = (get_absolute_path(cmd, ms));
+	}
+	return (path);
 }

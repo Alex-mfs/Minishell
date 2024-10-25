@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/23 15:46:15 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/24 23:30:33 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ bool	validate_tokens(t_minish *ms)
 			printf("Erro: token vazio\n");
 			return false;
 		}
-		printf("Validando token: %s, Tipo: %d\n", curr->token, curr->type);
+		//printf("Validando token: %s, Tipo: %d\n", curr->token, curr->type);
 		if (curr->type >= REDIR_INPUT_1 && curr->type <= PIPE)
 		{
 			n_symbols++;

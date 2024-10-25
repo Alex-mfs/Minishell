@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:18:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/24 15:47:51 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/24 16:07:15 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	handle_assignment(t_minish *ms, char *arg)
 	char	*key;
 
 	key = extract_key(arg);
-	if (find_env_in_tmp(ms, key))
+	if (find_env_index(ms->env_tmp, key) != -1)
 		remove_from_tmp(ms, key);
 	free(key);
 	add_or_update_env(&ms->env_list, arg);

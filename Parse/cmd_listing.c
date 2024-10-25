@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_listing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/17 17:59:33 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/25 00:34:47 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	lastpipe_index(t_ast *lst)
 	blist = lst;
 	while (blist != NULL)
 	{
-		blist = blist->next;
-		if (blist->index < 0)
+		if (blist && blist->index < 0)
 			i = blist->index;
+		blist = blist->next;
 	}
 	return (i);
 }
