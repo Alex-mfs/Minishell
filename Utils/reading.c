@@ -76,6 +76,10 @@ static void	compute(t_minish *ms, char *input)
 			printf("\tArg %d: %s\n", j, buff2->args[j]);
 			j++;
 		}
+		if (buff2->left)
+			printf("\t\tRedirect %d: %s %s\n", i, buff2->left->cmd, buff2->left->args[0]);
+		if (buff2->right)
+			printf("\t\tRedirect %d: %s %s\n", i, buff2->right->cmd, buff2->right->args[0]);
 		buff2 = buff2->next;
 		i++;
 	}
