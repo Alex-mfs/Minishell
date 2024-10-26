@@ -86,7 +86,11 @@ static void	compute(t_minish *ms, char *input)
 	printf("\n");
 	//END TESTE CMD
 	if(!assign_var(ms)) //WIP Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
+	{
+		printf("TestAA\n");
 		execute(ms);
+		printf("TestBB\n");
+	}
 	//WIP sanitize_envp(ms); //WIP actualizar env_list e...path? Porque actualizar env_list?
 	//WIP unlink(HEREDOC) delete any heredoc file
 }

@@ -74,6 +74,8 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 			cmd->args = ft_matrix_add_line(cmd->args, ft_strdup(buff->token));
 		buff = buff->next;
 	}
+	if (!cmd->args)
+		cmd->args = ft_matrix_add_line(cmd->args, ft_strdup("\0"));
 	return (buff);
 }
 
