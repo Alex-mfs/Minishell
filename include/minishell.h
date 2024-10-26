@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/24 12:00:00 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/26 11:07:20 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,9 @@ bool	need2be_parent(char *command, char *arg);
 void	pipeline_matrix(t_minish *ms);
 void	close_in_out(int index, t_minish *ms);
 void	relinking_in_out(t_minish *ms);
-void	pipe_data_flow(int cmd_index, t_minish *ms);
-
+//void	pipe_data_flow(int cmd_index, t_minish *ms);
+void	pipe_data_flow(int cmd_index, t_minish *ms, char **fullcmd);
+void	exec_if_exists(char **arg, t_minish *ms);
 
 //minishell.c - exit_status
 void	set_exit_status(int status);
