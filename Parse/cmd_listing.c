@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_listing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/25 00:34:47 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:02:55 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int	cmdlst_size(t_ast *lst, bool total)
 	blist = lst;
 	while (blist != NULL)
 	{
-		if (total) //inclui commands e pipes, mas nao redirects
+		if (total)
 			i++;
-		else if (blist->index >= 0) //inclui apenas commands
+		else if (blist->index >= 0)
 			i++;
 		blist = blist->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   com_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:21:00 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/17 01:17:40 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:17:15 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*get_env(const char *key, char **env_list)
 	}
 	return (ft_strdup(""));
 }
-
 
 void	env(char **env_arg, char **env_list)
 {

@@ -3,122 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/28 13:38:04 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:40:31 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/*t_ast	*ast_new(t_token *token)
+static t_ast	*parse_pipe(t_ast *prev, t_ast *curr, t_minish *ms)
 {
-	t_ast	*node;
-
-	node = ft_calloc(1, sizeof(t_ast));
-	if (!node)
-		return (NULL);
-	node->token = token;
-	node->args = ft_calloc(1, sizeof(char *));
-	return (node);
-}
-
-void	ast_insert(t_ast **ast, t_ast *node, bool left)
-{
-	if (*ast && left)
-		(*ast)->left = node;
-	else if (*ast && !left)
-		(*ast)->right = node;
-	else
-		*ast = node;
-}
-
-void	ast_destroy_node(t_ast *ast)
-{
-	token_destroy(ast->token);
-	matrix_destroy(ast->args);
-}
-
-void	ast_clear(t_ast *ast, void (*del)(t_ast *))
-{
-	if (!ast)
-		return ;
-	ast_clear(ast->left, del);
-	ast_clear(ast->right, del);
-	del(ast);
-	ft_free(ast);
-}*/
-
-/*t_token	*scanner(t_operation op)
-{
-	static t_list	*current = NULL;
-
-	if (op == READ && current)
-		return (current->content);
-	else if (op == RESET)
-		current = ms()->lexemes;
-	else if (op == NEXT)
-		current = current->next;
-	else if (op == LOOKAHEAD && current->next)
-		return (current->next->content);
-	return (NULL);
-}
-
-void	parser(void)
-{
-	scanner(RESET);
-	ms()->ast = _parse_pipeline();
-}*/
-
-// static t_ast	*parse_pipe(t_ast *prev, t_ast *curr, t_minish *ms)
-// {
-// 	/*	t_ast	*root;
-
-// 	root = ast_new(token_new(ft_strdup("|"), LEX_PIPE, false));
-// 	if (!root)
-// 		return (NULL);
-// 	ast_insert(&root, ast, true);
-// 	ast_insert(&root, command, false);
-// 		void	ast_insert(t_ast **ast, t_ast *node, bool left)
-// 			if (*ast && left)
-// 				(*ast)->left = node;
-// 			else if (*ast && !left)
-// 				(*ast)->right = node;
-// 			else
-// 				*ast = node;
-// 	return (root);*/
-// 	t_ast	*pip;
-
-// 	pip = ft_calloc(1, sizeof(t_ast));
-// 	if (!pip)
-// 		return (NULL);
-// 	pip->cmd = ft_calloc(2, sizeof(char *));
-// 	if (!pip->cmd)
-// 		return (NULL);
-// 	pip->cmd = ft_strdup("|");
-// 	if (lastpipe_index(ms->cmd_list) >= 0)
-// 		pip->index = -1;
-// 	else
-// 		pip->index = lastpipe_index(ms->cmd_list) - 1;
-// 	pip->left = prev;
-// 	pip->right = curr;
-// 	return (pip);
-// }
-/*static t_ast *parse_pipe(t_ast *prev, t_ast *curr, t_minish *ms)
-{
-    t_ast *pip;
-
-    pip = ft_calloc(1, sizeof(t_ast));
-    if (!pip) {
-        printf("Erro: falha ao alocar memória para o pipe\n");
-        return NULL;
-    }
-    pip->cmd = ft_strdup("|");
-    if (!pip->cmd) {
-        printf("Erro: falha ao definir comando pipe\n");
-        return NULL;
-    }
+	t_ast	*pip;
 
     if (lastpipe_index(ms->cmd_list) >= 0)
         pip->index = -1;
@@ -392,63 +288,21 @@ static t_token *parse_redir(t_ast *cmd, t_token *tk, int *error)
 
 static t_ast *parse_command(t_minish *ms, t_token *buff, int *error)
 {
-    t_ast *cmd;
-    t_token *tk = buff;
+	t_ast	*redir;
 
-    *error = 0;
-	(void)ms;
-    cmd = ft_calloc(1, sizeof(t_ast));
-    if (!cmd)
-    {
-        perror("Erro ao alocar memória para cmd");
-        *error = 1;
-        return NULL;
-    }
-
-    cmd->args = ft_calloc(1, sizeof(char *));
-    cmd->redirs = NULL;
-    cmd->next = NULL;
-
-    printf("Iniciando novo comando\n");
-
-    while (tk && tk->type != PIPE)
-    {
-        printf("Processando token: '%s', tipo: %d\n", tk->token, tk->type);
-
-        if (tk->type == OTHER)
-        {
-            if (!cmd->cmd)
-            {
-                cmd->cmd = ft_strdup(tk->token);
-                printf("Comando definido: '%s'\n", cmd->cmd);
-            }
-            else
-            {
-                cmd->args = ft_matrix_add_line(cmd->args, ft_strdup(tk->token));
-                printf("Argumento adicionado: '%s'\n", tk->token);
-            }
-        }
-        else if (tk->type >= REDIR_INPUT_1 && tk->type <= REDIR_OUTPUT_2)
-        {
-            tk = parse_redir(cmd, tk, error);
-            if (*error)
-            {
-                printf("Erro ao processar redirecionamento\n");
-                return NULL;
-            }
-            continue; // Já avançamos os tokens dentro de parse_redir
-        }
-        else
-        {
-            printf("Token inesperado: '%s'\n", tk->token);
-            *error = 1;
-            return NULL;
-        }
-
-        tk = tk->next;
-    }
-
-    return cmd;
+	redir = ft_calloc(1, sizeof(t_ast));
+	if (!redir)
+		return (NULL);
+	redir->cmd = ft_strdup(tk->token);
+	redir->args = ft_matrix_add_line(redir->args, ft_strdup(tk->next->token));
+	redir->left = NULL;
+	redir->right = NULL;
+	redir->next = NULL;
+	if (tk->type == REDIR_INPUT_1 || tk->type == REDIR_INPUT_2)
+		cmd->left = redir;
+	else
+		cmd->right = redir;
+	return (tk->next);
 }
 
 // void	parse(t_minish *ms)
@@ -555,32 +409,46 @@ static t_ast *parse_command(t_minish *ms, t_token *buff, int *error)
 
 void parse(t_minish *ms)
 {
-    t_token *buff;
-    int error = 0;
+	t_ast	*cmd;
 
-    printf("Iniciando parsing...\n");
-    buff = ms->tk_list;
+	cmd = ft_calloc(1, sizeof(t_ast));
+	if (!cmd)
+		return (NULL);
+	cmd->next = NULL;
+	cmd->left = NULL;
+	cmd->right = NULL;
+	while (buff && buff->type != PIPE)
+	{
+		if (buff->type >= REDIR_INPUT_1 && buff->type <= REDIR_OUTPUT_2)
+			buff = parse_redir(cmd, buff);
+		else if (!cmd->cmd)
+		{
+			cmd->cmd = ft_strdup(buff->token);
+			cmdlst_addback(&ms->cmd_list, cmd);
+		}
+		else
+			cmd->args = ft_matrix_add_line(cmd->args, ft_strdup(buff->token));
+		buff = buff->next;
+	}
+	if (!cmd->args)
+		cmd->args = ft_matrix_add_line(cmd->args, ft_strdup("\0"));
+	return (buff);
+}
 
-    while (buff)
-    {
-        t_ast *cmd = parse_command(ms, buff, &error);
-        if (error)
-        {
-            printf("Erro durante o parsing do comando\n");
-            return;
-        }
-        cmdlst_addback(&ms->cmd_list, cmd);
+void	parse(t_minish *ms)
+{
+	t_token	*buff;
+	t_ast	*prev_cmd;
+	t_ast	*curr_cmd;
 
-        // Avançar para o próximo comando após o pipe
-        while (buff && buff->type != PIPE)
-            buff = buff->next;
-
-        if (buff && buff->type == PIPE)
-        {
-            printf("Encontrado pipe, avançando para o próximo comando\n");
-            buff = buff->next; // Avança após o PIPE
-        }
-    }
-
-    printf("Parsing concluído\n");
+	buff = parse_command(ms, ms->tk_list);
+	if (!buff)
+		return ;
+	prev_cmd = ms->cmd_list;
+	while (buff && buff->type == PIPE)
+	{
+		buff = parse_command(ms, buff->next); //Potenciais problemas de memória com buff. Ter atenção ao testar.
+		curr_cmd = cmdlst_last(ms->cmd_list);
+		prev_cmd = parse_pipe(prev_cmd, curr_cmd, ms);
+	}
 }

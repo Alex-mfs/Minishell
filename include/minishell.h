@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/28 13:07:23 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/28 19:04:06 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
-//# include <sys/types.h>
-//# include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include "../libft/libft.h"
-
-typedef struct s_redir {
-    char *type;
-    char *filename;
-    struct s_redir *next;
-} t_redir;
-
 
 typedef enum e_lexer
 {
@@ -55,7 +48,6 @@ typedef struct s_ast
 	int				index;
 	char			*cmd;
 	char			**args;
-	t_redir			*redirs;
 	struct s_ast	*left;
 	struct s_ast	*right;
 	struct s_ast	*next;

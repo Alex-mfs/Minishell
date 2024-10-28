@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validating.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/24 23:30:33 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/28 19:03:15 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,13 @@ bool	validate_tokens(t_minish *ms)
 	n_symbols = 0;
 	n_commands = 1;
 	curr = ms->tk_list;
+	if (curr->type >= REDIR_INPUT_1 && curr->type <= PIPE)
+		return (false);
 	while (curr)
 	{
-		if (curr->token == NULL || curr->token[0] == '\0')
-		{
-			printf("Erro: token vazio\n");
-			return false;
-		}
-		//printf("Validando token: %s, Tipo: %d\n", curr->token, curr->type);
+		if (is_redirection(curr->token)
+			&& (!curr->next || is_redir_or_pipe(curr->next->token)))
+			return (false);
 		if (curr->type >= REDIR_INPUT_1 && curr->type <= PIPE)
 		{
 			n_symbols++;
@@ -109,23 +108,8 @@ bool	validate_tokens(t_minish *ms)
 	}
 	if (n_symbols >= n_commands)
 	{
-		printf("Erro: número de símbolos é maior ou igual ao número de comandos.\n");
+		//printf("Erro: número de símbolos é maior ou igual ao número de comandos.\n"); //ALEX
 		return (false);
 	}
 	return (true);
 }
-
-/*t_token	*scanner(t_operation op)
-{
-	static t_list	*current = NULL;
-
-	if (op == READ && current)
-		return (current->content);
-	else if (op == RESET)
-		current = ms()->lexemes;
-	else if (op == NEXT)
-		current = current->next;
-	else if (op == LOOKAHEAD && current->next)
-		return (current->next->content);
-	return (NULL);
-}*/
