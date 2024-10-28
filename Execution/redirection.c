@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/23 01:49:25 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:41:35 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,22 +84,23 @@ void	read_until_delimiter(const char *delimiter, t_minish *ms)
 	while (1)
 	{
 		line = readline("heredoc > ");
-		if (!line)
+		if (!line || ft_str_cmp(line, delimiter))
 		{
+			free(line);
 			printf("\n");
 			break ;
 		}
-		else if (ft_str_cmp(line, delimiter))
-		{
-			free(line);
-			break ;
-		}
+		// else if (ft_str_cmp(line, delimiter))
+		// {
+		// 	free(line);
+		// 	break ;
+		// }
 		line = expand_heredoc(line, ms->env_list);
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
 	close(fd);
-	sanitize_ms(ms, true);
+	exit(EXIT_SUCCESS);
 }
 
 int	heredoc(char *delimiter, t_minish *ms)
@@ -120,37 +121,127 @@ int	heredoc(char *delimiter, t_minish *ms)
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
-		sanitize_ms(ms, true);
+		set_exit_status(130);
 		return (-1);
 	}
 	set_signals();
-	fd = open("heredoc.tmp", O_RDONLY);
+	fd = open("heredoc_tmp", O_RDONLY);
 	if (fd == -1)
 		error("minishell: heredoc\n", 1);
 	return (fd);
 }
 
-void	execute_redir(const char *type, char *filename, t_minish *ms)
-{
-	int	fd;	
+// void	execute_redir(const char *type, char *filename, t_minish *ms)
+// {
+// 	int	fd;
 
-	fd = -1;
-	if (ft_str_cmp(type, ">"))
-		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	else if (ft_str_cmp(type, ">>"))
-		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	else if (ft_str_cmp(type, "<"))
-		fd = open(filename, O_RDONLY);
-	else if (ft_str_cmp(type, "<<"))
-		fd = heredoc(filename, ms);
-	if (fd == -1)
-	{
-		perror(filename);
-		set_exit_status(1);
-		return ;
-	}
-	if (ft_str_cmp(type, "<") || ft_str_cmp(type, "<<"))
-		ms->fd_in = fd;
-	else
-		ms->fd_out = fd;
+// 	fd = -1;
+// 	if (ft_str_cmp(type, ">"))
+// 	{
+//         fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+//         printf("execute_redir: abriu '%s' com O_TRUNC, fd=%d\n", filename, fd);
+//         if (fd == -1)
+//         {
+//             perror(filename);
+//             set_exit_status(1);
+//             return;
+//         }
+//         close(fd); // Fecha o arquivo imediatamente
+//     }
+// 	else if (ft_str_cmp(type, ">>"))
+// 	{
+//     	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
+//     	printf("execute_redir: abriu '%s' com O_APPEND, fd=%d\n", filename, fd);
+//     	if (fd == -1)
+// 	    {
+//         	perror(filename);
+//             set_exit_status(1);
+//             return;
+//         }
+//         if (ms->fd_out != STDOUT_FILENO)
+//             close(ms->fd_out);
+//         ms->fd_out = fd;
+//     }
+// 	else if (ft_str_cmp(type, "<"))
+// 		fd = open(filename, O_RDONLY);
+// 	else if (ft_str_cmp(type, "<<"))
+// 		fd = heredoc(filename, ms);
+// 	printf("execute_redir: type='%s', filename='%s', fd=%d\n", type, filename, fd);
+// 	if (fd == -1)
+// 	{
+// 		perror(filename);
+// 		set_exit_status(1);
+// 		return ;
+// 	}
+// 	if (ft_str_cmp(type, "<") || ft_str_cmp(type, "<<"))
+// 		ms->fd_in = fd;
+// 	else
+// 	{
+// 		if (ms->fd_out != STDOUT_FILENO)
+// 			close(ms->fd_out);
+// 		ms->fd_out = fd;
+// 	}
+// 	printf("execute_redir: ms->fd_in=%d, ms->fd_out=%d\n", ms->fd_in, ms->fd_out);
+// }
+
+void execute_redir(const char *type, char *filename, t_minish *ms)
+{
+	int local_fd_in = ms->fd_in;  // Local para não sobrescrever
+    int local_fd_out = ms->fd_out;
+
+    printf("execute_redir: type='%s', filename='%s'\n", type, filename);
+
+    if (ft_str_cmp(type, ">"))
+    {
+        local_fd_out = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+        if (local_fd_out == -1)
+        {
+            perror(filename);
+            set_exit_status(1);
+            return;
+        }
+        if (local_fd_out != STDOUT_FILENO)
+            close(local_fd_out);
+        ms->fd_out = local_fd_out;
+    }
+    else if (ft_str_cmp(type, ">>"))
+    {
+        local_fd_out = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
+        if (local_fd_out == -1)
+        {
+            perror(filename);
+            set_exit_status(1);
+            return;
+        }
+        if (local_fd_out != STDOUT_FILENO)
+            close(local_fd_out);
+        ms->fd_out = local_fd_out;
+    }
+    else if (ft_str_cmp(type, "<"))
+    {
+        local_fd_in = open(filename, O_RDONLY);
+        if (local_fd_in == -1)
+        {
+            perror(filename);
+            set_exit_status(1);
+            return;
+        }
+        if (local_fd_in != STDIN_FILENO)
+            close(local_fd_in);
+        ms->fd_in = local_fd_in;
+    }
+    else if (ft_str_cmp(type, "<<"))
+    {
+        local_fd_in = heredoc(filename, ms);
+        if (local_fd_in == -1)
+        {
+            set_exit_status(1);
+            return;
+        }
+        if (local_fd_in != STDIN_FILENO)
+            close(local_fd_in);
+        ms->fd_in = local_fd_in;
+    }
+
+    printf("execute_redir: ms->fd_in=%d, ms->fd_out=%d\n", ms->fd_in, ms->fd_out);
 }

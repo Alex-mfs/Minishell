@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:44:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/26 11:16:33 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:54:49 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	pipe_data_flow(int cmd_index, t_minish *ms, char **fullcmd)
 	if (cmd_num <= 1)
 		return ;
 	//printf("pipe_data_flow: cmd_index=%d, cmd_num=%d\n", cmd_index, cmd_num);
-	if (cmd_index > 0)
+	if (cmd_index > 0 && ms->fd_in == STDIN_FILENO)
 	{
 		ms->fd_in = ms->pipes[cmd_index - 1][0];
 	}
-	if (cmd_index < cmd_num - 1)
+	if (cmd_index < cmd_num - 1 && ms->fd_out == STDOUT_FILENO)
 	{
 		if (fullcmd && !get_executable_path(*fullcmd, ms))
 			printf("minishell: command not found\n");
@@ -50,24 +50,27 @@ void	relinking_in_out(t_minish *ms)
 {
     if (ms->fd_in != STDIN_FILENO)
     {
-        //printf("relinking_in_out: duplicando fd_in (%d) para STDIN\n", ms->fd_in);
+        printf("relinking_in_out: duplicando fd_in (%d) para STDIN\n", ms->fd_in);
         if (dup2(ms->fd_in, STDIN_FILENO) == -1)
         {
             perror("dup2 fd_in");
             exit(EXIT_FAILURE);
         }
         close(ms->fd_in);
+		ms->fd_in = STDIN_FILENO;
     }
     if (ms->fd_out != STDOUT_FILENO)
     {
-        //printf("relinking_in_out: duplicando fd_out (%d) para STDOUT\n", ms->fd_out);
+        printf("relinking_in_out: duplicando fd_out (%d) para STDOUT\n", ms->fd_out);
         if (dup2(ms->fd_out, STDOUT_FILENO) == -1)
         {
             printf("dup2 fd_out");
             exit(EXIT_FAILURE);
         }
         close(ms->fd_out);
+		ms->fd_out = STDOUT_FILENO;
     }
+	//printf("relinking_in_out: após redirecionamento, ms->fd_in=%d, ms->fd_out=%d\n", ms->fd_in, ms->fd_out);
 }
 
 

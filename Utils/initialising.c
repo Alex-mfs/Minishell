@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/25 00:43:33 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/28 10:27:08 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	init_ms(t_minish *ms, char **envp)
 	// 	printf("2/ %s\n", ms->env_list[i]);
 	// 	i++;
 	// }
+	ms->stdin_backup = dup(STDIN_FILENO);
+	ms->stdout_backup = dup(STDOUT_FILENO);
 	ms->cmd_list = NULL;
 	ms->cwd = getcwd(NULL, 4096);
 	ms->fd_in = 0;

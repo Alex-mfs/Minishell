@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/24 11:32:52 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:39:12 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,11 @@ static void	compute(t_minish *ms, char *input)
 		return ;
 	expand(ms); //WIP Falta estudar questao do merge.
 	parse(ms);
+	printf("chegou aqui.\n");
 	if(!assign_var(ms)) //WIP Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
 		execute(ms); //WIP Executar cada um dos comandos
 	//WIP sanitize_envp(ms); //WIP actualizar env_list e...path? Porque actualizar env_list?
-	unlink("heredoc.tmp");
+	unlink("heredoc_tmp");
 }
 
 //static char	*maintain_prompt(char *cwd)
