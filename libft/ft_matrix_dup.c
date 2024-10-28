@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_matrix_dup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/24 11:37:57 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/28 19:44:15 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**ft_matrix_dup(char **src)
 	dest = ft_calloc(w + 1, sizeof(char *));
 	if (!dest)
 		return (NULL);
-	//dest[w] = 0;
+	dest[w] = 0;
 	w--;
 	while (w >= 0)
 	{
