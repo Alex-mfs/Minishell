@@ -13,3 +13,4 @@ minishell
 minishell_bonus
 *.DS_Store*
 *.txt
+.nfs*
