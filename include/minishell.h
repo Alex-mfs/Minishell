@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/28 19:30:21 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/28 19:52:10 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	parse(t_minish *ms);
 int		cmdlst_size(t_ast *lst, bool total);
 t_ast	*cmdlst_last(t_ast *lst);
 void	cmdlst_addback(t_ast **lst, t_ast *new);
+t_ast	*lastpipe(t_ast *lst);
 int		lastpipe_index(t_ast *lst);
 void	tklst_addback(t_token **lst, t_token *new);
 
