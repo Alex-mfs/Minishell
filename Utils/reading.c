@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/28 11:39:40 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:06:36 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void	compute(t_minish *ms, char *input)
 	//END TESTE CMD
 	if(!assign_var(ms)) //WIP Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
 	{
-		printf("TestAA\n");
+		printf("TestAA\n\n");
 		execute(ms);
 		printf("TestBB\n");
 	}
