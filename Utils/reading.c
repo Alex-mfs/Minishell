@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/28 14:06:36 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:27:12 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	compute(t_minish *ms, char *input)
 	//TESTE TOKEN
 	buff = ms->tk_list;
 	i = 0;
-	while(buff)
+	while (buff)
 	{
 		printf("Token %d: %s [Type %d]\n", i, buff->token, buff->type);
 		buff = buff->next;
@@ -70,11 +70,11 @@ static void	compute(t_minish *ms, char *input)
 	//TESTE CMD
 	buff2 = ms->cmd_list;
 	i = 0;
-	while(buff2)
+	while (buff2)
 	{
 		printf("Node %d: cmd=%s\n", i, buff2->cmd);
 		j = 0;
-		while(buff2->args[j])
+		while (buff2->args[j])
 		{
 			printf("\tArg %d: %s\n", j, buff2->args[j]);
 			j++;
@@ -88,7 +88,7 @@ static void	compute(t_minish *ms, char *input)
 	}
 	printf("\n");
 	//END TESTE CMD
-	if(!assign_var(ms)) //WIP Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
+	if (!assign_var(ms)) //WIP Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
 	{
 		printf("TestAA\n\n");
 		execute(ms);
@@ -122,7 +122,6 @@ static char	*maintain_prompt(char *cwd)
 	free(suffix);
 	return (prompt);
 }
-
 
 void	read_inputs(t_minish *ms)
 {
