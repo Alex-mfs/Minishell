@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/24 12:14:23 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:55:56 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,13 @@ bool	validate_tokens(t_minish *ms)
 	n_symbols = 0;
 	n_commands = 1;
 	curr = ms->tk_list;
+	if (curr->type >= REDIR_INPUT_1 && curr->type <= PIPE)
+		return (false);
 	while (curr)
 	{
+		if (is_redirection(curr->token)
+			&& (!curr->next || is_redir_or_pipe(curr->next->token)))
+			return (false);
 		if (curr->type >= REDIR_INPUT_1 && curr->type <= PIPE)
 		{
 			n_symbols++;

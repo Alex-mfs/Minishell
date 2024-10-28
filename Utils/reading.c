@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/24 12:06:19 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:39:40 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,12 @@ static void	compute(t_minish *ms, char *input)
 	}
 	printf("\n");
 	//END TESTE TOKEN
-	if (!validate_tokens(ms)) //WIP na verdade, é permitido terminar num pipe. Corrigir.
+	if (!validate_tokens(ms))
+	{
+		ft_error_msg("Input syntax error");
 		return ;
-	expand(ms); //WIP Falta entender questao do merge.
+	}
+	expand(ms); //WIP Falta entender questao do merge
 	parse(ms);
 	//TESTE CMD
 	buff2 = ms->cmd_list;
@@ -95,50 +98,28 @@ static void	compute(t_minish *ms, char *input)
 	//WIP unlink(HEREDOC) delete any heredoc file
 }
 
-//static char	*maintain_prompt(char *cwd)
-//{
-	//char	*prompt;
-	//char	*suffix;
-
-	//prompt = /*Formatacao prefixo*/"Curr.Directory:"/*Formatacao cwd*/;
-	//prompt = "\033[1m""\033[32m""Curr.Directory:""\033[0m""\033[32m"; //Bold Green, then regular green
-	//suffix = /*Reset a formatacao cwd*//*Formatacao sufixo*/ "Input minishell:" /*Reset formatacao*/;
-	//suffix = "\033[0m""\n""\033[4m""\033[97m""Input minishell:""\033[0m";
-	//prompt = ft_strbuild(prompt, cwd); //Potential memory issue? Test with valgrind
-	//prompt = ft_strbuild(prompt, suffix);
-	//return (prompt);
-	//prefix + cwd + suffix
-	//formatacao do prompt está aberta para discussão
-//}
-
 static char	*maintain_prompt(char *cwd)
 {
 	char	*prompt;
 	char	*suffix;
 
-	// Duplicar a string literal para que ela seja alocada dinamicamente
-	prompt = ft_strdup("\033[1m""\033[32m""Curr.Directory:""\033[0m""\033[32m"); // Bold Green, then regular green
+	prompt = ft_strdup("\033[1m""\033[34m""Curr.Directory:""\033[0m""\033[34m");
 	if (!prompt)
 		return (NULL);
-
-	// Duplicar a string suffix para garantir que ela possa ser concatenada e liberada
 	suffix = ft_strdup("\033[0m""\n""\033[4m""\033[97m""Input minishell:""\033[0m");
 	if (!suffix)
 	{
-		free(prompt); // Liberar prompt caso suffix falhe
+		free(prompt);
 		return (NULL);
 	}
-
-	// Concatenar o prompt com o cwd e, em seguida, com o suffix
-	prompt = ft_strbuild(prompt, cwd); // Agora a string 'prompt' foi alocada dinamicamente
+	prompt = ft_strbuild(prompt, cwd);
 	if (!prompt)
 	{
 		free(suffix);
 		return (NULL);
 	}
-
-	prompt = ft_strbuild(prompt, suffix); // Concatenar o sufixo
-	free(suffix); // Liberar o suffix, pois já foi concatenado
+	prompt = ft_strbuild(prompt, suffix);
+	free(suffix);
 	return (prompt);
 }
 
@@ -154,15 +135,15 @@ void	read_inputs(t_minish *ms)
 		input = readline(prompt); //WIP confirmar os efeitos de readline; gera memoryleaks, mas valgrind pode ignorar, investigar
 		if (!input) // em caso de ctrl+d
 		{
-			printf("Input allocation error.\nExiting minishell\n");
-			sanitize_ms(ms, true); //with exit // fazer algo parecido mas retornar para o main para finalizar;
+			ft_error_msg("Input allocation error.\nExiting minishell\n");
+			sanitize_ms(ms, true);
 			break ;
 		}
 		add_history(input);
 		compute(ms, input); //WIP execute/compute input
 		free(input);
 		free(prompt);
-		sanitize_ms(ms, false); //without exit
+		sanitize_ms(ms, false);
 	}
 	rl_clear_history();
 }
