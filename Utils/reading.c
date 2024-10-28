@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/28 18:57:10 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/28 19:19:47 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static bool	assign_var(t_minish *ms)
 	return (false);
 }
 
-void	print_token_list(t_minish *ms)
+void	print_token_list(t_minish *ms)//ALEX
 {
     t_token *curr = ms->tk_list;
     while (curr)
@@ -47,7 +47,7 @@ void	print_token_list(t_minish *ms)
         printf("Token: %s, Tipo: %d\n", curr->token, curr->type);
         curr = curr->next;
     }
-}
+}//ALEX
 
 static void	compute(t_minish *ms, char *input)
 {
@@ -71,7 +71,7 @@ static void	compute(t_minish *ms, char *input)
 	}
 	printf("\n");
 	//END TESTE TOKEN //JOAO
-	if (!validate_tokens(ms))
+	if (!validate_tokens(ms)) //WIP Rever, testar, definir
 	{
 		ft_error_msg("Input syntax error");
 		return ;
@@ -151,7 +151,7 @@ void	read_inputs(t_minish *ms)
 			break ;
 		}
 		add_history(input);
-		compute(ms, input); //WIP execute/compute input
+		compute(ms, input);
 		free(input);
 		free(prompt);
 		sanitize_ms(ms, false);
