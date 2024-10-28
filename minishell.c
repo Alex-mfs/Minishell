@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/24 11:36:16 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:13:13 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	ft_bzero(&ms, sizeof(t_minish));
 	init_ms(&ms, envp);
-    set_signals(); //WIP - Preciso estudo
-    read_inputs(&ms); //WIP
+	set_signals(); //WIP - Preciso estudo
+	read_inputs(&ms); //WIP
 	ft_free_matrix(ms.env_list); //WIP Isto faz-se no sanitize?
 	ft_free_matrix(ms.env_tmp); //WIP Isto faz-se no sanitize?
 	ft_free_matrix(ms.path); //WIP Isto faz-se no sanitize?
-    return (g_exit_status); // finalizar o programa na main.
+	return (g_exit_status); // finalizar o programa na main.
 }
-

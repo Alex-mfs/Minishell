@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   com_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:54:07 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/16 18:19:00 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:16:02 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	remove_var_from_env(char ***env_list, const char *key)
 	i = 0;
 	while ((*env_list)[i])
 		i++;
-
 	new_env_list = malloc(sizeof(char *) * i);
 	if (!new_env_list)
 		return ;
