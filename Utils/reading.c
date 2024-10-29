@@ -57,8 +57,11 @@ static void	compute(t_minish *ms, char *input)
 	int		j; //PARA TESTES
 
 	if (!validate_quotes(input))
+	{
+		ft_error_msg("Quote syntax");
 		return ;
-	get_tokens(ms, input); //WIP Falta entender questao do merge.
+	}
+	get_tokens(ms, input);
 	//print_token_list(ms); //ALEX
 	//TESTE TOKEN //JOAO
 	buff = ms->tk_list;
@@ -71,12 +74,12 @@ static void	compute(t_minish *ms, char *input)
 	}
 	printf("\n");
 	//END TESTE TOKEN //JOAO
-	if (!validate_tokens(ms)) //WIP Rever, testar, definir
+	if (!validate_tokens(ms))
 	{
-		ft_error_msg("Input syntax error");
+		ft_error_msg("Input syntax");
 		return ;
 	}
-	expand(ms); //WIP Falta entender questao do merge
+	expand(ms);
 	parse(ms);
 	//TESTE CMD //JOAO
 	buff2 = ms->cmd_list;
@@ -100,13 +103,13 @@ static void	compute(t_minish *ms, char *input)
 	printf("\n");
 	//END TESTE CMD //JOAO
 	//printf("chegou aqui.\n"); //ALEX
-	if (!assign_var(ms)) //WIP Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
+	if (!assign_var(ms))
 	{
-		//printf("TestAA\n\n"); //JOAO
-		execute(ms);
-		//printf("TestBB\n"); //JOAO
+		printf("TestAA\n\n"); //JOAO
+		//execute(ms);
+		printf("TestBB\n"); //JOAO
 	}
-	sanitize_envp(ms); //WIP Confirmar que env_list e env_tmp não estão trocadas
+	sanitize_envp(ms);
 	unlink("heredoc_tmp");
 }
 
@@ -143,8 +146,8 @@ void	read_inputs(t_minish *ms)
 	while (1)
 	{
 		prompt = maintain_prompt(ms->cwd);
-		input = readline(prompt); //WIP confirmar os efeitos de readline; gera memoryleaks, mas valgrind pode ignorar, investigar
-		if (!input) // em caso de ctrl+d
+		input = readline(prompt);
+		if (!input)
 		{
 			ft_error_msg("Input allocation error.\nExiting minishell\n");
 			sanitize_ms(ms, true);

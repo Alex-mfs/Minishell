@@ -39,3 +39,12 @@ int	main(int argc, char **argv, char **envp)
 	ft_free_matrix(ms.path); //WIP Isto faz-se no sanitize?
 	return (g_exit_status);
 }
+
+//WIP Falta entender questao do merge (get_tokens + expand)
+//WIP Validating - Rever, testar, definir
+
+//WIP assign_var - Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
+//WIP sanitize_envp - Confirmar que env_list e env_tmp não estão trocadas
+
+//WIP expanding - Testar quotes dentro de redirects, testar heredocs.
+//WIP confirmar os efeitos de readline; gera memoryleaks, mas valgrind pode ignorar, investigar

@@ -54,7 +54,7 @@ void	expand(t_minish *ms)
 	curr = ms->tk_list;
 	while (curr)
 	{
-		if (curr->type == DOUBLE_QUOTES || curr->type == OTHER) //Pode dar erro em redirects, ou poderei ter que dar skip a heredocs. Testar.
+		if (curr->type == DOUBLE_QUOTES || curr->type == OTHER)
 			expand_token(ms, curr);
 		curr = curr->next;
 	}
