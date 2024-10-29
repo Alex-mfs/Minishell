@@ -32,10 +32,10 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	ft_bzero(&ms, sizeof(t_minish));
 	init_ms(&ms, envp);
-	set_signals(); //WIP - Preciso estudo
-	read_inputs(&ms); //WIP constante
+	set_signals();
+	read_inputs(&ms);
 	ft_free_matrix(ms.env_list); //WIP Isto faz-se no sanitize?
 	ft_free_matrix(ms.env_tmp); //WIP Isto faz-se no sanitize?
 	ft_free_matrix(ms.path); //WIP Isto faz-se no sanitize?
-	return (g_exit_status); // finalizar o programa na main.
+	return (g_exit_status);
 }

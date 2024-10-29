@@ -12,25 +12,17 @@
 
 #include "../include/minishell.h"
 
-/*void	update_envs(void)
-{
-	char	*tmp;
-
-	matrix_destroy(ms()->path);
-	matrix_destroy(ms()->envp);
-	tmp = get_env("PATH");
-	(ms()->path) = ft_split(tmp, ':');
-	(ms()->envp) = envlist_to_matrix(ms()->envlist);
-	free(tmp);
-}*/
-
 void	sanitize_envp(t_minish *ms)
 {
-	//libertar path?
-	//libertar env_list
-	//buscar linha PATH, dar split de acordo com ':'
-	//voltar a guardar a informacao actualizada em env_list
-	(void)ms;
+	char	*buff_path;
+
+	ft_free_matrix(ms->path);
+	ft_free_matrix(ms->env_list);
+	buff_path = get_env("PATH", ms->env_tmp);
+	if (buff_path)
+		ms->path = ft_split(buff_path, ':');
+	ms->env_list = ft_matrix_dup(ms->env_tmp);
+	free(buff_path);
 }
 
 static void	tk_clear(t_token **lst)

@@ -106,7 +106,7 @@ static void	compute(t_minish *ms, char *input)
 		execute(ms);
 		//printf("TestBB\n"); //JOAO
 	}
-	//WIP sanitize_envp(ms); //WIP actualizar env_list e...path? Porque actualizar env_list?
+	sanitize_envp(ms); //WIP Confirmar que env_list e env_tmp não estão trocadas
 	unlink("heredoc_tmp");
 }
 
