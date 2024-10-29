@@ -97,6 +97,7 @@ void	expand(t_minish *ms);
 void	parse(t_minish *ms);
 //Parse - Listing
 int		cmdlst_size(t_ast *lst, bool total);
+t_ast	*cmdlst_penult(t_ast *lst);
 t_ast	*cmdlst_last(t_ast *lst);
 void	cmdlst_addback(t_ast **lst, t_ast *new);
 t_ast	*lastpipe(t_ast *lst);

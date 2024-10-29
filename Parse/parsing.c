@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-static t_ast	*parse_pipe(t_ast *prev, t_ast *curr, t_minish *ms)
+static t_ast	*new_pipe(void)
 {
 	t_ast	*pip;
 
@@ -23,12 +23,33 @@ static t_ast	*parse_pipe(t_ast *prev, t_ast *curr, t_minish *ms)
 	if (!pip->cmd)
 		return (NULL);
 	pip->cmd = "|";
-	if (lastpipe_index(ms->cmd_list) >= 0)
-		pip->index = -1;
+	pip->args = ft_matrix_add_line(pip->args, ft_strdup("\0"));
+	return (pip);
+}
+
+static t_ast	*parse_pipe(t_ast *prev, t_ast *curr, t_minish *ms)
+{
+	t_ast	*pip;
+
+	pip = new_pipe();
+	if (!pip)
+		return (NULL);
+	if (prev->cmd[0] != '|')
+		prev->next = pip;
 	else
-		pip->index = lastpipe_index(ms->cmd_list) - 1;
-	pip->left = prev;
+		prev->next->next = pip;
+	pip->next = curr;
 	pip->right = curr;
+	if (lastpipe_index(ms->cmd_list) >= 0)
+	{
+		pip->left = prev;
+		pip->index = -1;
+	}
+	else
+	{
+		pip->left = lastpipe(ms->cmd_list);
+		pip->index = pip->left->index - 1;
+	}
 	return (pip);
 }
 

@@ -12,6 +12,21 @@
 
 #include "../include/minishell.h"
 
+t_ast	*lastpipe(t_ast *lst)
+{
+	t_ast	*blist;
+	t_ast	*ultima;
+
+	blist = lst;
+	while (blist != NULL)
+	{
+		if (blist && blist->index < 0)
+			ultima = blist;
+		blist = blist->next;
+	}
+	return (ultima);
+}
+
 int	lastpipe_index(t_ast *lst)
 {
 	int		i;
@@ -46,7 +61,7 @@ int	cmdlst_size(t_ast *lst, bool total)
 	return (i);
 }
 
-t_ast	*lastpipe(t_ast *lst)
+t_ast	*cmdlst_penult(t_ast *lst)
 {
 	t_ast	*penult;
 
@@ -80,7 +95,7 @@ void	cmdlst_addback(t_ast **lst, t_ast *new)
 		{
 			ultima = cmdlst_last(*lst);
 			if (ultima->index < 0)
-				new->index = lastpipe(*lst)->index + 1;
+				new->index = cmdlst_penult(*lst)->index + 1;
 			else
 				new->index = ultima->index + 1;
 			ultima->next = new;
