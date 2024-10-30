@@ -40,6 +40,7 @@ typedef struct s_token
 {
 	char			*token;
 	t_lexer			type;
+	bool			to_merge;
 	struct s_token	*next;
 }			t_token;
 
@@ -61,6 +62,7 @@ typedef struct s_minish
 	char			**env_tmp;
 	char			*cwd;
 	struct s_token	*tk_list;
+	bool			aux_merge;
 	t_ast			*current_node;
 	int				stdin_backup;
 	int				stdout_backup;

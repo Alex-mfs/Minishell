@@ -75,6 +75,7 @@ void	sanitize_ms(t_minish *ms, bool sair)
 	ms->pipes = NULL;
 	ms->cmd_list = NULL;
 	ms->tk_list = NULL;
+	ms->aux_merge = false;
 	if (sair)
 	{
 		if (ms->cwd)

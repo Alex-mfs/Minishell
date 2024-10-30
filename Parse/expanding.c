@@ -12,6 +12,30 @@
 
 #include "../include/minishell.h"
 
+static void	merge_tokens(t_minish *ms)
+{
+	t_token	*curr;
+	t_token	*next;
+
+	curr = ms->tk_list;
+	while (curr)
+	{
+		next = curr->next;
+		if (!next)
+			break ;
+		if (!curr->to_merge && next->to_merge)
+		{
+			curr->token = ft_strbuild(curr->token, next->token);
+			curr->next = next->next;
+			curr->type = OTHER;
+			free(next->token);
+			free(next);
+		}
+		else
+			curr = curr->next;
+	}
+}
+
 static char	*find_name(char *token)
 {
 	int	pos;
@@ -58,33 +82,5 @@ void	expand(t_minish *ms)
 			expand_token(ms, curr);
 		curr = curr->next;
 	}
-	//merge(ms); WIP Entender o merge.
+	merge_tokens(ms);
 }
-
-/*void	merge_lexemes(t_list *lexemes)
-{
-	t_list	*aux;
-	t_token	*next_token;
-	t_token	*curr_token;
-	char	*tmp;
-
-	while (lexemes)
-	{
-		curr_token = lexemes->content;
-		if (!lexemes->next)
-			return ;
-		if (!curr_token->can_merge)
-		{
-			lexemes = lexemes->next;
-			continue ;
-		}
-		next_token = lexemes->next->content;
-		tmp = curr_token->str;
-		curr_token->str = ft_strjoin(curr_token->str, next_token->str);
-		free(tmp);
-		curr_token->can_merge &= next_token->can_merge;
-		aux = lexemes->next;
-		lexemes->next = lexemes->next->next;
-		ft_lstdelone(aux, (void *)token_destroy);
-	}
-}*/

@@ -68,7 +68,7 @@ static void	compute(t_minish *ms, char *input)
 	i = 0;
 	while (buff)
 	{
-		printf("Token %d: %s [Type %d]\n", i, buff->token, buff->type);
+		printf("Token %d: %s [Type %d] [Merge:%d]\n", i, buff->token, buff->type, buff->to_merge);
 		buff = buff->next;
 		i++;
 	}

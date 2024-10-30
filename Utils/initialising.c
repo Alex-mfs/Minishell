@@ -29,4 +29,5 @@ void	init_ms(t_minish *ms, char **envp)
 		ms->path = ft_split(path_env, ':');
 	else
 		ms->path = NULL;
+	ms->aux_merge = false;
 }
