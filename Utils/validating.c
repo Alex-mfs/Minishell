@@ -12,6 +12,13 @@
 
 #include "../include/minishell.h"
 
+static bool validation_error(char *msg)
+{
+	printf("\033[1m""\033[31m""""Minishell:""\033[0m""%s\n", msg);
+	//set_exit_status();
+	return (false);
+}
+
 bool	validate_quotes(char *input)
 {
 	/*int		i;
@@ -43,6 +50,7 @@ bool	validate_quotes(char *input)
 	i = 0;
 	sq_count = 0;
 	dq_count = 0;
+	//WIP Em vez disto, fazer verificação de quotes fechadas
 	while (input[i])
 	{
 		if (input[i] == '\"')
@@ -59,57 +67,20 @@ bool	validate_quotes(char *input)
 
 bool	validate_tokens(t_minish *ms)
 {
-	/*t_token	*next;
-	int		num_pipes;
-	int		num_commands;
-
-	num_pipes = 0;
-	num_commands = 1;
-	scanner(RESET);
-	if (is_redir_or_pipe(scanner(READ)))
-		return (error(ANSI_RED, ERROR_SYNTAX, scanner(READ)->str, 2));
-	while (scanner(READ))
-	{
-		next = scanner(LOOKAHEAD);
-		if (is_redirection(scanner(READ)) && (!next || is_redir_or_pipe(next)))
-			return (error(ANSI_RED, ERROR_UNCLOSED_RED, NULL, 2));
-		if (scanner(READ)->type == LEX_PIPE)
-		{
-			num_pipes++;
-			if (next && !is_redir_or_pipe(next))
-				num_commands++;
-		}
-		scanner(NEXT);
-	}
-	if (num_pipes >= num_commands)
-		return (error(ANSI_RED, ERROR_UNCLOSED_PIPES, NULL, 2));
-	return (true);*/
 	t_token	*curr;
-	int		n_symbols;
-	int		n_commands;
 
-	n_symbols = 0;
-	n_commands = 1;
 	curr = ms->tk_list;
-	if (curr->type >= REDIR_INPUT_1 && curr->type <= PIPE)
-		return (false);
+	if (curr->type == PIPE)
+		return (false); //WIP Mensagem: "Input Syntax with Pipe"
 	while (curr)
 	{
 		if (is_redirection(curr->token)
 			&& (!curr->next || is_redir_or_pipe(curr->next->token)))
-			return (false);
-		if (curr->type >= REDIR_INPUT_1 && curr->type <= PIPE)
-		{
-			n_symbols++;
-			if (curr->next && curr->next->type > PIPE)
-				n_commands++;
-		}
+			return (false); //WIP Mensagem: "Input Syntax with Redirection"
+		if (curr->type == PIPE
+			&& (!curr->next || curr->next->type == PIPE))
+			return (false); //WIP Mensagem: "Input Syntax with Pipe" //WIP talvez uma mensagem especifica a minishell
 		curr = curr->next;
-	}
-	if (n_symbols >= n_commands)
-	{
-		//printf("Erro: número de símbolos é maior ou igual ao número de comandos.\n"); //ALEX
-		return (false);
 	}
 	return (true);
 }

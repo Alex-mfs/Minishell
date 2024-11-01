@@ -56,12 +56,12 @@ static void	compute(t_minish *ms, char *input)
 	int		i; //PARA TESTES
 	int		j; //PARA TESTES
 
-	if (!validate_quotes(input))
+	if (!validate_quotes(input)) //WIP Insuficiente, reescrever //WIP Implementar mensagens de erro e exit_status
 	{
 		ft_error_msg("Quote syntax");
 		return ;
 	}
-	get_tokens(ms, input);
+	get_tokens(ms, input); //WIP Verificar que "|<" funciona...
 	//print_token_list(ms); //ALEX
 	//TESTE TOKEN //JOAO
 	buff = ms->tk_list;
@@ -74,7 +74,7 @@ static void	compute(t_minish *ms, char *input)
 	}
 	printf("\n");
 	//END TESTE TOKEN //JOAO
-	if (!validate_tokens(ms))
+	if (!validate_tokens(ms)) //WIP Implementar mensagens de erro e exit_status
 	{
 		ft_error_msg("Input syntax");
 		return ;

@@ -40,9 +40,10 @@ int	main(int argc, char **argv, char **envp)
 	return (g_exit_status);
 }
 
-//WIP Falta entender questao do merge (get_tokens + expand)
 //WIP Validating - Rever, testar, definir
+//WIP Tokenizing - echo example"< Makefile"
 
+//WIP validation_error - Qual o exit_status?
 //WIP assign_var - Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
 //WIP sanitize_envp - Confirmar que env_list e env_tmp não estão trocadas
 

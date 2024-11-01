@@ -67,6 +67,8 @@ static int	save_token(t_minish *ms, char *symbol, t_lexer type, bool merge)
 	token->type = type;
 	token->next = NULL;
 	token->to_merge = merge;
+	if (!merge)
+		ms->aux_merge = false;
 	tklst_addback(&ms->tk_list, token);
 	return ((int)ft_strlen(symbol));
 }
@@ -87,6 +89,7 @@ static int	save_cmd(t_minish *ms, char *input, char limit)
 			i = ft_strchr_pos(input, '\'');
 		else if (merge_case == DOUBLE_QUOTES)
 			i = ft_strchr_pos(input, '\"');
+		//WIP echo example"< Makefile"
 	}
 	else
 	{
