@@ -54,6 +54,13 @@ bool	validate_quotes(char *input)
 	return (true);
 }
 
+static bool	tk_red_pip(t_token *tk)
+{
+	if (tk->type >= REDIR_INPUT_1 && tk->type <= PIPE)
+		return (true);
+	return (false);
+}
+
 bool	validate_tokens(t_minish *ms)
 {
 	t_token	*curr;
@@ -63,8 +70,8 @@ bool	validate_tokens(t_minish *ms)
 		return (validation_error("Input syntax near pipe"));
 	while (curr)
 	{
-		if (is_redirection(curr->token)
-			&& (!curr->next || is_redir_or_pipe(curr->next->token)))
+		if ((curr->type >= REDIR_INPUT_1 && curr->type <= REDIR_OUTPUT_2)
+			&& (!curr->next || tk_red_pip(curr->next)))
 			return (validation_error("Input syntax near redirection"));
 		if (curr->type == PIPE
 			&& (!curr->next || curr->next->type == PIPE))

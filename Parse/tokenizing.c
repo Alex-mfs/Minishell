@@ -12,43 +12,12 @@
 
 #include "../include/minishell.h"
 
-static t_lexer	find_quotes(char *str)
-{
-	t_lexer	result;
-	int		i;
-	int		squote;
-	int		dquote;
-
-	i = 0;
-	squote = 0;
-	dquote = 0;
-	while (str[i] && squote != 2 && dquote != 2)
-	{
-		if (str[i] == '\"' && dquote >= 0)
-		{
-			squote = -1;
-			result = DOUBLE_QUOTES;
-			dquote++;
-		}
-		else if (str[i] == '\'' && squote >= 0)
-		{
-			dquote = -1;
-			result = SINGLE_QUOTES;
-			squote++;
-		}
-		i++;
-	}
-	if (dquote != 2 && squote != 2)
-		result = OTHER;
-	free(str);
-	return (result);
-}
-
 static bool	is_tk_delim(int c)
 {
 	if (c == ' ' || c == '<' || c == '>'
-		|| c == '|' || c == '\t' || c == '\n'
-		|| c == '\v' || c == '\f' || c == '\r')
+		|| c == '|' || c == '\'' || c == '\"'
+		|| c == 't' || c == '\n' || c == '\v'
+		|| c == '\f' || c == '\r')
 		return (true);
 	else
 		return (false);
@@ -77,19 +46,12 @@ static int	save_cmd(t_minish *ms, char *input, char limit)
 {
 	int		i;
 	char	*content;
-	t_lexer	merge_case;
 
 	i = 0;
 	if (limit == ' ')
 	{
-		while (input[i] && !is_tk_delim(input[i])) //!ft_strchr("<>| \t\n\v\f\r", input[i])
+		while (input[i] && !is_tk_delim(input[i])) //!ft_strchr("<>|\'\" \t\n\v\f\r", input[i])
 			i++;
-		merge_case = find_quotes(ft_substr(input, 0, i)); //Elaborar ft_strchr_n(char*, char, int n)?
-		if (merge_case == SINGLE_QUOTES)
-			i = ft_strchr_pos(input, '\'');
-		else if (merge_case == DOUBLE_QUOTES)
-			i = ft_strchr_pos(input, '\"');
-		//WIP echo example"< Makefile"
 	}
 	else
 	{

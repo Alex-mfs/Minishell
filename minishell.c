@@ -41,12 +41,11 @@ int	main(int argc, char **argv, char **envp)
 }
 
 //WIP Expanding - Não converte dentro de quotes correctamente
-//WIP Tokenizing - echo example"< Makefile"
 //WIP Sanitizing - Comandos com pipes não libertam memória correctamente
 
 //WIP validation_error - Qual o exit_status?
 //WIP assign_var - Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
 //WIP sanitize_envp - Confirmar que env_list e env_tmp não estão trocadas
 
-//WIP expanding - Testar quotes dentro de redirects, testar heredocs.
+//WIP expanding - Testar heredocs.
 //WIP confirmar os efeitos de readline; gera memoryleaks, mas valgrind pode ignorar, investigar
