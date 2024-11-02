@@ -60,7 +60,9 @@ static int	save_cmd(t_minish *ms, char *input, char limit)
 		if (input[i] == '\0')
 			return (-1);
 	}
-	content = ft_substr(input, 0, i); //WIP Aqui se aloca memoria. Incluir e pensar em salvaguardas
+	content = ft_substr(input, 0, i);
+	if (!content)
+		ft_error_msg("Token memory allocation");
 	if (limit == '\"')
 		save_token(ms, content, DOUBLE_QUOTES, ms->aux_merge);
 	else if (limit == '\'')

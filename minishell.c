@@ -40,7 +40,6 @@ int	main(int argc, char **argv, char **envp)
 	return (g_exit_status);
 }
 
-//WIP Expanding - Não converte dentro de quotes correctamente
 //WIP Sanitizing - Comandos com pipes não libertam memória correctamente
 
 //WIP validation_error - Qual o exit_status?
