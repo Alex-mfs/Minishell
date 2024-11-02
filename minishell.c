@@ -40,8 +40,9 @@ int	main(int argc, char **argv, char **envp)
 	return (g_exit_status);
 }
 
-//WIP Validating - Testar
+//WIP Expanding - Não converte dentro de quotes correctamente
 //WIP Tokenizing - echo example"< Makefile"
+//WIP Sanitizing - Comandos com pipes não libertam memória correctamente
 
 //WIP validation_error - Qual o exit_status?
 //WIP assign_var - Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)

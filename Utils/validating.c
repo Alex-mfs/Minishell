@@ -14,7 +14,7 @@
 
 static bool validation_error(char *msg)
 {
-	printf("\033[1m""\033[31m""""Error:""\033[0m""%s\n", msg);
+	printf("\033[1m""\033[31m""""Error: ""\033[0m""%s\n", msg);
 	//set_exit_status();
 	return (false);
 }
@@ -37,7 +37,6 @@ bool	validate_quotes(char *input)
 {
 	int		i;
 	int		check;
-	char	quote;
 
 	i = 0;
 	while (input[i])

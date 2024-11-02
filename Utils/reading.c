@@ -57,10 +57,7 @@ static void	compute(t_minish *ms, char *input)
 	int		j; //PARA TESTES
 
 	if (!validate_quotes(input)) //WIP Implementar exit_status
-	{
-		ft_error_msg("Quote syntax");
 		return ;
-	}
 	get_tokens(ms, input); //WIP Verificar que "|<" funciona...
 	//print_token_list(ms); //ALEX
 	//TESTE TOKEN //JOAO
@@ -75,10 +72,7 @@ static void	compute(t_minish *ms, char *input)
 	printf("\n");
 	//END TESTE TOKEN //JOAO
 	if (!validate_tokens(ms)) //WIP Implementar exit_status
-	{
-		ft_error_msg("Input syntax");
 		return ;
-	}
 	expand(ms);
 	parse(ms);
 	//TESTE CMD //JOAO
