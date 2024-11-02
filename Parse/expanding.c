@@ -63,8 +63,6 @@ static void	expand_token(t_minish *ms, t_token *tk)
 			value = ft_itoa(get_exit_status());
 		else
 			value = get_env(name, ms->env_tmp);
-		printf("TestExpand Name:%s\n", name);
-		printf("TestExpand Value:%s\n\n", value);
 		buff = ft_strdup(tk->token);
 		tk->token = ft_str_repl_seg(buff, name, value);
 		free(name);
