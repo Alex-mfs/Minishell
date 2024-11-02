@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 	return (g_exit_status);
 }
 
-//WIP Validating - Rever, testar, definir
+//WIP Validating - Testar
 //WIP Tokenizing - echo example"< Makefile"
 
 //WIP validation_error - Qual o exit_status?

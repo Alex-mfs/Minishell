@@ -56,7 +56,7 @@ static void	compute(t_minish *ms, char *input)
 	int		i; //PARA TESTES
 	int		j; //PARA TESTES
 
-	if (!validate_quotes(input)) //WIP Insuficiente, reescrever //WIP Implementar mensagens de erro e exit_status
+	if (!validate_quotes(input)) //WIP Implementar exit_status
 	{
 		ft_error_msg("Quote syntax");
 		return ;
@@ -74,7 +74,7 @@ static void	compute(t_minish *ms, char *input)
 	}
 	printf("\n");
 	//END TESTE TOKEN //JOAO
-	if (!validate_tokens(ms)) //WIP Implementar mensagens de erro e exit_status
+	if (!validate_tokens(ms)) //WIP Implementar exit_status
 	{
 		ft_error_msg("Input syntax");
 		return ;

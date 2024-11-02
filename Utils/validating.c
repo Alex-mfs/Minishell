@@ -14,55 +14,45 @@
 
 static bool validation_error(char *msg)
 {
-	printf("\033[1m""\033[31m""""Minishell:""\033[0m""%s\n", msg);
+	printf("\033[1m""\033[31m""""Error:""\033[0m""%s\n", msg);
 	//set_exit_status();
 	return (false);
 }
 
-bool	validate_quotes(char *input)
+static int	find_match(char *str, char quote)
 {
-	/*int		i;
-	char	quote;
-	bool	in_quotes;
-
-	i = -1;
-	quote = '\"';
-	in_quotes = false;
-	if (is_spaces(ms()->input))
-		return (false);
-	while (ms()->input[++i])
-	{
-		if (in_quotes && ms()->input[i] == quote)
-			in_quotes = false;
-		else if (!in_quotes && ft_strchr("\"\'", ms()->input[i]))
-		{
-			quote = ms()->input[i];
-			in_quotes = true;
-		}
-	}
-	if (in_quotes)
-		return (error(ANSI_RED, ERROR_UNCLOSED_QUOTES, NULL, 2));
-	return (true);*/
 	int	i;
-	int	sq_count;
-	int	dq_count;
 
-	i = 0;
-	sq_count = 0;
-	dq_count = 0;
-	//WIP Em vez disto, fazer verificação de quotes fechadas
-	while (input[i])
+	i = 1;
+	while (str[i])
 	{
-		if (input[i] == '\"')
-			dq_count++;
-		else if (input[i] == '\'')
-			sq_count++;
+		if (str[i] == quote)
+			return (i + 1);
 		i++;
 	}
-	if (dq_count % 2 || sq_count % 2)
-		return (false);
-	else
-		return (true);
+	return (0);
+}
+
+bool	validate_quotes(char *input)
+{
+	int		i;
+	int		check;
+	char	quote;
+
+	i = 0;
+	while (input[i])
+	{
+		check = i;
+		if (input[i] == '\"' || input[i] == '\'')
+		{
+			i += find_match(input + i, input[i]);
+			if (i == check)
+				return (validation_error("Unclosed quotes"));
+		}
+		else
+			i++;
+	}
+	return (true);
 }
 
 bool	validate_tokens(t_minish *ms)
@@ -71,15 +61,15 @@ bool	validate_tokens(t_minish *ms)
 
 	curr = ms->tk_list;
 	if (curr->type == PIPE)
-		return (false); //WIP Mensagem: "Input Syntax with Pipe"
+		return (validation_error("Input syntax near pipe"));
 	while (curr)
 	{
 		if (is_redirection(curr->token)
 			&& (!curr->next || is_redir_or_pipe(curr->next->token)))
-			return (false); //WIP Mensagem: "Input Syntax with Redirection"
+			return (validation_error("Input syntax near redirection"));
 		if (curr->type == PIPE
 			&& (!curr->next || curr->next->type == PIPE))
-			return (false); //WIP Mensagem: "Input Syntax with Pipe" //WIP talvez uma mensagem especifica a minishell
+			return (validation_error("Unclosed pipe"));
 		curr = curr->next;
 	}
 	return (true);
