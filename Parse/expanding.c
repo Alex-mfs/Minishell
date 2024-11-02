@@ -42,12 +42,12 @@ static char	*find_name(char *token)
 	int	end;
 
 	pos = ft_strchr_pos(token, '$');
-	end = pos;
-	if (token[pos + 1] == '?')
+	end = pos + 1;
+	if (token[end] == '?')
 		return (ft_strdup("$?"));
-	while (token[end] && !ft_isdelim(token[end]))
+	while (token[end] && ft_isalnum(token[end]))
 		end++;
-	return (ft_substr(token, pos, end - pos + 1));
+	return (ft_substr(token, pos, end - pos));
 }
 
 static void	expand_token(t_minish *ms, t_token *tk)
@@ -63,6 +63,8 @@ static void	expand_token(t_minish *ms, t_token *tk)
 			value = ft_itoa(get_exit_status());
 		else
 			value = get_env(name, ms->env_tmp);
+		printf("TestExpand Name:%s\n", name);
+		printf("TestExpand Value:%s\n\n", value);
 		buff = ft_strdup(tk->token);
 		tk->token = ft_str_repl_seg(buff, name, value);
 		free(name);
