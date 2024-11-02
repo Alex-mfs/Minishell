@@ -22,7 +22,7 @@ static t_ast	*new_pipe(void)
 	pip->cmd = ft_calloc(2, sizeof(char *));
 	if (!pip->cmd)
 		return (NULL);
-	pip->cmd = "|";
+	pip->cmd = ft_strdup("|");
 	pip->args = ft_matrix_add_line(pip->args, ft_strdup("\0"));
 	return (pip);
 }
