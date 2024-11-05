@@ -24,7 +24,7 @@ static char	**free_all(char **tab, int w)
 	return (NULL);
 }
 
-static int	countlines(const char **src)
+static int	countlines(char **src)
 {
 	int		w;
 
