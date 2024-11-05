@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/17 17:50:12 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:57:50 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@ static char	**free_all(char **tab, int w)
 	return (NULL);
 }
 
+static int	countlines(const char **src)
+{
+	int		w;
+
+	w = 0;
+	while (src[w])
+		w++;
+	return (w);
+}
+
 char	**ft_matrix_add_line(char **src, char *newline)
 {
 	char	**dest;
@@ -31,10 +41,7 @@ char	**ft_matrix_add_line(char **src, char *newline)
 
 	w = 0;
 	if (src)
-	{
-		while (src[w])
-			w++;
-	}
+		w = countlines(src);
 	w++;
 	dest = ft_calloc(w + 1, sizeof(char *));
 	if (!dest)

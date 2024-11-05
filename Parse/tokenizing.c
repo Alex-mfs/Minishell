@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/28 18:46:21 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:26:29 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,18 @@ static int	save_token(t_minish *ms, char *symbol, t_lexer type, bool merge)
 	return ((int)ft_strlen(symbol));
 }
 
+static int	quote_limit(char *str, char limit)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != limit)
+		i++;
+	if (str[i] == '\0')
+		return (0);
+	return (i);
+}
+
 static int	save_cmd(t_minish *ms, char *input, char limit)
 {
 	int		i;
@@ -54,12 +66,7 @@ static int	save_cmd(t_minish *ms, char *input, char limit)
 			i++;
 	}
 	else
-	{
-		while (input[i] && input[i] != limit)
-			i++;
-		if (input[i] == '\0')
-			return (-1);
-	}
+		i = quote_limit(input, limit);
 	content = ft_substr(input, 0, i);
 	if (!content)
 		ft_error_msg("Token memory allocation");
@@ -81,8 +88,8 @@ void	get_tokens(t_minish *ms, char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (ft_isdelim(input[i]))
-			i++;
+		if (ft_isdelim(input[i]) && i++ >= 0)
+			ms->aux_merge = false;
 		else if (input[i] == '|')
 			i += save_token(ms, "|", PIPE, false);
 		else if (input[i] == '<' && input[i + 1] == '<')
@@ -99,7 +106,5 @@ void	get_tokens(t_minish *ms, char *input)
 			i += 2 + save_cmd(ms, &input[i + 1], '\'');
 		else
 			i += save_cmd(ms, &input[i], ' ');
-		if (ft_isdelim(input[i - 1]))
-			ms->aux_merge = false;
 	}
 }

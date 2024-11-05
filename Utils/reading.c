@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/28 19:19:47 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/05 12:01:09 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ static bool	assign_var(t_minish *ms)
 
 void	print_token_list(t_minish *ms) //ALEX
 {
-    t_token *curr = ms->tk_list;
-    while (curr)
+	t_token	*curr = ms->tk_list;
+	
+	while (curr)
     {
         printf("Token: %s, Tipo: %d\n", curr->token, curr->type);
         curr = curr->next;
@@ -51,7 +52,6 @@ void	print_token_list(t_minish *ms) //ALEX
 
 static void	compute(t_minish *ms, char *input)
 {
-
 	if (!validate_quotes(input)) //WIP Implementar exit_status
 		return ;
 	get_tokens(ms, input);
@@ -62,7 +62,7 @@ static void	compute(t_minish *ms, char *input)
 	parse(ms);
 	//printf("chegou aqui.\n"); //ALEX
 	if (!assign_var(ms))
-		//execute(ms);
+		execute(ms);
 	sanitize_envp(ms);
 	unlink("heredoc_tmp");
 }
@@ -75,7 +75,8 @@ static char	*maintain_prompt(char *cwd)
 	prompt = ft_strdup("\033[1m""\033[34m""Curr.Directory:""\033[0m""\033[34m");
 	if (!prompt)
 		return (NULL);
-	suffix = ft_strdup("\033[0m""\n""\033[4m""\033[97m""Input minishell:""\033[0m");
+	suffix = ft_strdup("\033[0m""\n""\033[4m""\033[97m" \
+			"Input minishell:""\033[0m");
 	if (!suffix)
 	{
 		free(prompt);

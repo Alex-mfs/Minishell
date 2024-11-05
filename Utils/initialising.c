@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/28 19:17:32 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:02:02 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_ms(t_minish *ms, char **envp)
 {
-	char *path_env;
+	char	*path_env;
 
 	ms->env_list = ft_matrix_dup(envp);
 	ms->env_tmp = ft_matrix_dup(envp);

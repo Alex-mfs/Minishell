@@ -6,13 +6,13 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/28 19:03:15 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:05:22 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static bool validation_error(char *msg)
+static bool	validation_error(char *msg)
 {
 	printf("\033[1m""\033[31m""""Error: ""\033[0m""%s\n", msg);
 	//set_exit_status();
