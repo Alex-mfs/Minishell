@@ -88,9 +88,9 @@ static void	compute(t_minish *ms, char *input)
 			j++;
 		}
 		if (buff2->left)
-			printf("\t\tRedirectEsquerda: index=%d, cmd=%s, arg[0]=%s\n", buff2->left->index, buff2->left->cmd, buff2->left->args[0]);
+			printf("\t\tNó Esquerda: index=%d, cmd=%s, arg[0]=%s\n", buff2->left->index, buff2->left->cmd, buff2->left->args[0]);
 		if (buff2->right)
-			printf("\t\tRedirectDireita: index=%d, cmd=%s, arg[0]=%s\n", buff2->right->index, buff2->right->cmd, buff2->right->args[0]);
+			printf("\t\tNó Direita: index=%d, cmd=%s, arg[0]=%s\n", buff2->right->index, buff2->right->cmd, buff2->right->args[0]);
 		buff2 = buff2->next;
 		i++;
 	}
