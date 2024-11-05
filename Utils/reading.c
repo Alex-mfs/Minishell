@@ -58,7 +58,7 @@ static void	compute(t_minish *ms, char *input)
 
 	if (!validate_quotes(input)) //WIP Implementar exit_status
 		return ;
-	get_tokens(ms, input); //WIP Verificar que "|<" funciona...
+	get_tokens(ms, input);
 	//print_token_list(ms); //ALEX
 	//TESTE TOKEN //JOAO
 	buff = ms->tk_list;
@@ -80,7 +80,7 @@ static void	compute(t_minish *ms, char *input)
 	i = 0;
 	while (buff2)
 	{
-		printf("Node %d: cmd=%s\n", i, buff2->cmd);
+		printf("Node %d, Index %d: cmd=%s\n", i, buff2->index, buff2->cmd);
 		j = 0;
 		while (buff2->args[j])
 		{
@@ -88,9 +88,9 @@ static void	compute(t_minish *ms, char *input)
 			j++;
 		}
 		if (buff2->left)
-			printf("\t\tRedirect %d: %s %s\n", i, buff2->left->cmd, buff2->left->args[0]);
+			printf("\t\tRedirectEsquerda: index=%d, cmd=%s, arg[0]=%s\n", buff2->left->index, buff2->left->cmd, buff2->left->args[0]);
 		if (buff2->right)
-			printf("\t\tRedirect %d: %s %s\n", i, buff2->right->cmd, buff2->right->args[0]);
+			printf("\t\tRedirectDireita: index=%d, cmd=%s, arg[0]=%s\n", buff2->right->index, buff2->right->cmd, buff2->right->args[0]);
 		buff2 = buff2->next;
 		i++;
 	}

@@ -16,7 +16,7 @@ static bool	is_tk_delim(int c)
 {
 	if (c == ' ' || c == '<' || c == '>'
 		|| c == '|' || c == '\'' || c == '\"'
-		|| c == 't' || c == '\n' || c == '\v'
+		|| c == '\t' || c == '\n' || c == '\v'
 		|| c == '\f' || c == '\r')
 		return (true);
 	else
