@@ -1,0 +1,91 @@
+//JOAO
+
+/*	t_token	*buff; //PARA TESTES
+	//t_ast	*buff2; //PARA TESTES
+	int		i; //PARA TESTES
+	//int		j; //PARA TESTES*/	
+
+    /*	//TESTE TOKEN //JOAO
+	buff = ms->tk_list;
+	i = 0;
+	while (buff)
+	{
+		printf("Token %d: %s [Type %d] [Merge:%d]\n", i, buff->token, buff->type, buff->to_merge);
+		buff = buff->next;
+		i++;
+	}
+	printf("\n");
+	//END TESTE TOKEN //JOAO*/
+
+    /*//TESTE CMD //JOAO
+	buff2 = ms->cmd_list;
+	i = 0;
+	while (buff2)
+	{
+		printf("Node %d, Index %d: cmd=%s\n", i, buff2->index, buff2->cmd);
+		j = 0;
+		while (buff2->args[j])
+		{
+			printf("\tArg %d: %s\n", j, buff2->args[j]);
+			j++;
+		}
+		if (buff2->left)
+			printf("\t\tNó Esquerda: index=%d, cmd=%s, arg[0]=%s\n", buff2->left->index, buff2->left->cmd, buff2->left->args[0]);
+		if (buff2->right)
+			printf("\t\tNó Direita: index=%d, cmd=%s, arg[0]=%s\n", buff2->right->index, buff2->right->cmd, buff2->right->args[0]);
+		buff2 = buff2->next;
+		i++;
+	}
+	printf("\n");
+	//END TESTE CMD //JOAO*/
+
+/*    static void	print_tree(t_ast *node) //JOAO
+{
+	printf("Passando por Node Index %d: cmd=%s, arg[0]=%s\n", node->index, node->cmd, node->args[0]);
+	if (node->left)
+		printf("\tNó Esquerda: Index=%d, cmd=%s, arg[0]=%s\n", node->left->index, node->left->cmd, node->left->args[0]);
+	if (node->right)
+		printf("\tNó Direita: Index=%d, cmd=%s, arg[0]=%s\n", node->right->index, node->right->cmd, node->right->args[0]);
+	if (node->left)
+		print_tree(node->left);
+	if (node->right)
+		print_tree(node->right);
+	printf("\t\tResolvendo o Node Index %d: cmd=%s, arg[0]=%s\n", node->index, node->cmd, node->args[0]);
+} //JOAO
+
+	//TESTE CMD //JOAO
+	print_tree(lastpipe(ms->cmd_list));
+	printf("\n");
+	//END TESTE CMD //JOAO*/
+
+
+
+
+//ALEX
+
+/*void	print_token_list(t_minish *ms) //ALEX
+{
+    t_token *curr = ms->tk_list;
+    while (curr)
+    {
+        printf("Token: %s, Tipo: %d\n", curr->token, curr->type);
+        curr = curr->next;
+    }
+} //ALEX
+
+//print_token_list(ms); //ALEX*/
+
+
+
+
+
+
+//AMBOS
+
+/*	//printf("chegou aqui.\n"); //ALEX
+	if (!assign_var(ms))
+	{
+		printf("TestAA\n\n"); //JOAO
+		//execute(ms);
+		printf("TestBB\n"); //JOAO
+	}*/

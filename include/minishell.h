@@ -103,7 +103,6 @@ t_ast	*cmdlst_penult(t_ast *lst);
 t_ast	*cmdlst_last(t_ast *lst);
 void	cmdlst_addback(t_ast **lst, t_ast *new);
 t_ast	*lastpipe(t_ast *lst);
-int		lastpipe_index(t_ast *lst);
 void	tklst_addback(t_token **lst, t_token *new);
 
 //Execution - Executing

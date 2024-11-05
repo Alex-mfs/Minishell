@@ -18,29 +18,16 @@ t_ast	*lastpipe(t_ast *lst)
 	t_ast	*ultima;
 
 	blist = lst;
+	ultima = NULL;
 	while (blist != NULL)
 	{
 		if (blist && blist->index < 0)
 			ultima = blist;
 		blist = blist->next;
 	}
+	if (!ultima)
+		return (lst);
 	return (ultima);
-}
-
-int	lastpipe_index(t_ast *lst)
-{
-	int		i;
-	t_ast	*blist;
-
-	i = 0;
-	blist = lst;
-	while (blist != NULL)
-	{
-		if (blist && blist->index < 0)
-			i = blist->index;
-		blist = blist->next;
-	}
-	return (i);
 }
 
 int	cmdlst_size(t_ast *lst, bool total)

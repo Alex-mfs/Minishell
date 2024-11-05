@@ -40,7 +40,7 @@ static t_ast	*parse_pipe(t_ast *prev, t_ast *curr, t_minish *ms)
 		prev->next->next = pip;
 	pip->next = curr;
 	pip->right = curr;
-	if (lastpipe_index(ms->cmd_list) >= 0)
+	if (lastpipe(ms->cmd_list)->index >= 0)
 	{
 		pip->left = prev;
 		pip->index = -1;
