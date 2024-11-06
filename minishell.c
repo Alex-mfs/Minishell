@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/28 19:22:06 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:35:00 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,7 @@ int	main(int argc, char **argv, char **envp)
 	return (g_exit_status);
 }
 
-//WIP validation_error - Qual o exit_status?
-//WIP assign_var - Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
-//WIP sanitize_envp - Confirmar que env_list e env_tmp não estão trocadas
+//WIP sanitize_envp - A troca so acontece em caso de export
 
 //WIP expanding - Testar heredocs.
 //WIP confirmar os efeitos de readline; gera memoryleaks, mas valgrind pode ignorar, investigar

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 16:18:12 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:34:26 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool	assign_var(t_minish *ms)
 			|| str[ft_strlen(str) - 1] == '=')
 		{
 			error("minishell: bad assignment \n", 1);
-			return (false);
+			return (true);
 		}
 		while (str[++i])
 		{
