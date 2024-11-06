@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 12:48:20 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:44:01 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,10 +327,13 @@ void	execute(t_minish *ms)
 {
 	int		status;
 	pid_t	last;
+	t_ast	*head;
 
+	head = lastpipe(ms->cmd_list);
 	status = 0x7F;
 	pipeline_matrix(ms);
-	last = pipeline_exec(ms->cmd_list, ms);
+	printf("entrou execute\n");
+	last = pipeline_exec(head, ms);
 	last = waitpid(last, &status, 0);
 	while (waitpid(0, NULL, 0) > 0)
 		continue ;

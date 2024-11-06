@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 15:06:21 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:39:06 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static void	compute(t_minish *ms, char *input)
 	if (!assign_var(ms))
 	{
 		printf("TestAA\n\n"); //JOAO
-		//execute(ms);
+		execute(ms);
 		printf("TestBB\n"); //JOAO
 	}
 	sanitize_envp(ms);
