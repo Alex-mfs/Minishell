@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sanitizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/28 18:59:07 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:59:39 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ static void	cmd_clear(t_ast **lst)
 				cmd_clear(&((*lst)->right));
 			if ((*lst)->cmd)
 				free((*lst)->cmd);
-			if ((*lst)->args)
-				ft_free_matrix((*lst)->args);
+			// if ((*lst)->args)
+			// 	ft_free_matrix((*lst)->args);
 			free(*lst);
 			*lst = buff;
 		}
