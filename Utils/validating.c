@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/05 11:05:22 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:22:07 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool	validation_error(char *msg)
 {
 	printf("\033[1m""\033[31m""""Error: ""\033[0m""%s\n", msg);
-	//set_exit_status();
+	set_exit_status(2);
 	return (false);
 }
 
