@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/28 19:21:37 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:59:52 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_ast	*new_pipe(void)
 	if (!pip->cmd)
 		return (NULL);
 	pip->cmd = ft_strdup("|");
-	pip->args = ft_matrix_add_line(pip->args, ft_strdup("\0"));
+	pip->args = ft_matrix_add_line(pip->args, ft_strdup(""));
 	return (pip);
 }
 
