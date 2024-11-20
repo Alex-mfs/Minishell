@@ -40,6 +40,8 @@ int	main(int argc, char **argv, char **envp)
 	return (g_exit_status);
 }
 
+//Alterações: pipeline, redirection
+
 //WIP expanding+merge - Casos malucos //https://mellow-pruner-7c7.notion.site/minishell-0436106d8aba4f2aa7408a9b916adb07
 //WIP sanitize_envp - A troca so acontece em caso de export
 

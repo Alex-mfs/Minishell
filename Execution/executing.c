@@ -109,7 +109,7 @@ void	do_command(char	*cmd, char **args, t_minish *ms)
 	set_exit_status(0);
 	if (!is_builtin(cmd))
 	{
-		printf("do_command: '%s' não é builtin, chamando exec_if_exists\n", cmd);
+		//printf("do_command: '%s' não é builtin, chamando exec_if_exists\n", cmd);
 		full_cmd = join_cmd_arg(cmd, args);
 		exec_if_exists(full_cmd, ms);
         //Se execve falhar, exibir erro e sair
@@ -207,13 +207,13 @@ pid_t child_exec(t_ast *node, t_minish *ms)
     pid = fork();
     if (pid == -1)
     {
-        perror("minishell: erro ao criar processo filho");
+        perror("minishell: erro ao criar processo filho"); // WIP não, assim não
         return -1;
     }
     if (pid == 0)
     {
         // Processar redirecionamentos
-	    printf("child_exec: processo filho iniciado para '%s'\n", node->cmd);
+	    //printf("child_exec: processo filho iniciado para '%s'\n", node->cmd);
         // if (node->left)
 		// {
 		// 	printf("child_exec: processando redirecionamento de entrada\n");
@@ -236,12 +236,12 @@ pid_t child_exec(t_ast *node, t_minish *ms)
         // Aplicar redirecionamentos
         relinking_in_out(ms);
 		//printf("child_exec: ms->fd_in=%d, ms->fd_out=%d após relinking_in_out\n", ms->fd_in, ms->fd_out);
-        ft_putstr_fd("child_exec, apos relinking\n", 0);
+        //ft_putstr_fd("child_exec, apos relinking\n", 0);
 		// Fechar descritores desnecessários
 
         // Executar o comando
         do_command(node->cmd, node->args, ms);
-		ft_putstr_fd("child_exec, apos do_command\n", 0);
+		//ft_putstr_fd("child_exec, apos do_command\n", 0);
         //exit(EXIT_SUCCESS);
         sanitize_ms(ms, true);
     }
@@ -256,25 +256,25 @@ pid_t	pipeline_exec(t_ast	*node, t_minish *ms)
 	last_child_pid = 0;
 	if (!node)
 		return (last_child_pid);
-	printf("pipeline_exec: node->cmd=%s, node->index=%d\n", node->cmd, node->index);
+	//printf("pipeline_exec: node->cmd=%s, node->index=%d\n", node->cmd, node->index);
 	last_child_pid = pipeline_exec(node->left, ms);
 	last_child_pid = pipeline_exec(node->right, ms);
 	if (!is_redir_or_pipe(node->cmd))
 	{
 		if (need2be_parent(node->cmd, node->args[0]))
         {
-            printf("Executing built-in command in parent: %s\n", node->cmd);
+            //printf("Executing built-in command in parent: %s\n", node->cmd);
             do_command(node->cmd, node->args, ms);
         }
 		else
         {
-            printf("Executing command in child: %s\n", node->cmd);
+            //printf("Executing command in child: %s\n", node->cmd);
             last_child_pid = child_exec(node, ms);
         }
 	}
 	else if (is_redirection(node->cmd))
     {
-        printf("Executing redirection: %s\n", node->cmd);
+        //printf("Executing redirection: %s\n", node->cmd);
         execute_redir(node->cmd, node->args[0], ms);
     }
 	return (last_child_pid);
@@ -332,7 +332,7 @@ void	execute(t_minish *ms)
 	head = lastpipe(ms->cmd_list);
 	status = 0x7F;
 	pipeline_matrix(ms);
-	printf("entrou execute\n");
+	//printf("entrou execute\n");
 	last = pipeline_exec(head, ms);
 	last = waitpid(last, &status, 0);
 	while (waitpid(0, NULL, 0) > 0)

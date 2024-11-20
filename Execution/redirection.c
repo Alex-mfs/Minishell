@@ -189,7 +189,7 @@ void execute_redir(const char *type, char *filename, t_minish *ms)
 	int local_fd_in = ms->fd_in;  // Local para não sobrescrever
     int local_fd_out = ms->fd_out;
 
-    printf("execute_redir: type='%s', filename='%s'\n", type, filename);
+    //printf("execute_redir: type='%s', filename='%s'\n", type, filename);
 
     if (ft_str_cmp(type, ">"))
     {
@@ -202,7 +202,8 @@ void execute_redir(const char *type, char *filename, t_minish *ms)
         }
         if (local_fd_out != STDOUT_FILENO)
             close(local_fd_out);
-        ms->fd_out = local_fd_out;
+        //ms->fd_out = local_fd_out;
+		dup2(ms->fd_out, local_fd_out);
     }
     else if (ft_str_cmp(type, ">>"))
     {
@@ -215,7 +216,8 @@ void execute_redir(const char *type, char *filename, t_minish *ms)
         }
         if (local_fd_out != STDOUT_FILENO)
             close(local_fd_out);
-        ms->fd_out = local_fd_out;
+        //ms->fd_out = local_fd_out;
+		dup2(ms->fd_out, local_fd_out);
     }
     else if (ft_str_cmp(type, "<"))
     {
@@ -228,7 +230,8 @@ void execute_redir(const char *type, char *filename, t_minish *ms)
         }
         if (local_fd_in != STDIN_FILENO)
             close(local_fd_in);
-        ms->fd_in = local_fd_in;
+        //ms->fd_in = local_fd_in;
+		dup2(ms->fd_in, local_fd_in);
     }
     else if (ft_str_cmp(type, "<<"))
     {
@@ -240,8 +243,9 @@ void execute_redir(const char *type, char *filename, t_minish *ms)
         }
         if (local_fd_in != STDIN_FILENO)
             close(local_fd_in);
-        ms->fd_in = local_fd_in;
+        //ms->fd_in = local_fd_in;
+		dup2(ms->fd_in, local_fd_in);
     }
 
-    printf("execute_redir: ms->fd_in=%d, ms->fd_out=%d\n", ms->fd_in, ms->fd_out);
+    //printf("execute_redir: ms->fd_in=%d, ms->fd_out=%d\n", ms->fd_in, ms->fd_out);
 }
