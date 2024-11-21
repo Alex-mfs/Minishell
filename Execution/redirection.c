@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/20 14:14:56 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:49:37 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ void	execute_redir(const char *type, char *filename, t_minish *ms)
 			set_exit_status(1);
 			return ;
 		}
-		if (local_fd_out != STDOUT_FILENO)
-			close(local_fd_out);
-		//ms->fd_out = local_fd_out;
-		dup2(ms->fd_out, local_fd_out);
+		//if (local_fd_out != STDOUT_FILENO)
+		//	close(local_fd_out);
+		ms->fd_out = local_fd_out;
+		//dup2(ms->fd_out, local_fd_out);
 	}
 	else if (ft_str_cmp(type, "<"))
 	{
@@ -87,10 +87,10 @@ void	execute_redir(const char *type, char *filename, t_minish *ms)
 			set_exit_status(1);
 			return ;
 		}
-		if (local_fd_in != STDIN_FILENO)
-			close(local_fd_in);
-		//ms->fd_in = local_fd_in;
-		dup2(ms->fd_in, local_fd_in);
+		//if (local_fd_in != STDIN_FILENO)
+		//	close(local_fd_in);
+		ms->fd_in = local_fd_in;
+		//dup2(ms->fd_in, local_fd_in);
 	}
 	else if (ft_str_cmp(type, "<<"))
 		local_fd_in = do_heredoc(ms, filename);

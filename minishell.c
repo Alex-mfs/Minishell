@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 16:56:13 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:54:06 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 	return (g_exit_status);
 }
 
-//Alterações: pipeline, redirection
+//Alterações: pipeline[pipe_data_flow], redirection, executing[join_cmd_arg]
 
 //WIP expanding+merge - Casos malucos //https://mellow-pruner-7c7.notion.site/minishell-0436106d8aba4f2aa7408a9b916adb07
 //WIP sanitize_envp - A troca so acontece em caso de export

@@ -6,13 +6,13 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 16:41:43 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:47:33 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	print_tree(t_ast *node) //JOAO
+/*static void	print_tree(t_ast *node) //JOAO
 {
 	printf("Passando por Node Index %d: cmd=%s, arg[0]=%s\n", node->index, node->cmd, node->args[0]);
 	if (node->left)
@@ -24,7 +24,7 @@ static void	print_tree(t_ast *node) //JOAO
 	if (node->right)
 		print_tree(node->right);
 	printf("\t\tResolvendo o Node Index %d: cmd=%s, arg[0]=%s\n", node->index, node->cmd, node->args[0]);
-} //JOAO
+} //JOAO*/
 
 static bool	assign_var(t_minish *ms)
 {
@@ -89,10 +89,10 @@ static void	compute(t_minish *ms, char *input)
 	printf("\n");
 	//END TESTE TOKEN //JOAO*/
 	parse(ms);
-	//TESTE CMD //JOAO
+	/*//TESTE CMD //JOAO
 	print_tree(lastpipe(ms->cmd_list));
 	printf("\n");
-	//END TESTE CMD //JOAO
+	//END TESTE CMD //JOAO*/
 	if (!assign_var(ms))
 		execute(ms);
 	sanitize_envp(ms);

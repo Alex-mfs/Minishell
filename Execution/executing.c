@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/20 10:35:56 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:51:48 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**join_cmd_arg(char	*cmd, char **args)
 	char	**full_cmd;
 
 	args_count = 0;
-	while (args[args_count])
+	while (args[args_count] && args[args_count][0])
 		args_count++;
 	full_cmd = malloc(sizeof(char *) * (args_count + 2));
 	if (!full_cmd)
