@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing_aux.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:46:55 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/17 01:54:04 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/20 10:27:27 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ bool	need2be_parent(char *command, char *arg)
 		is_parent = true;
 	else if (ft_str_cmp(command, "unset") == true)
 		is_parent = true;
-
 	return (is_parent);
 }
 

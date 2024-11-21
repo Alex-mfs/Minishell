@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/28 19:52:10 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:57:51 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,9 @@ void	pipe_data_flow(int cmd_index, t_minish *ms, char **fullcmd);
 void	exec_if_exists(char **arg, t_minish *ms);
 //Execution - Path
 char	*get_executable_path(char *cmd, t_minish *ms);
-//Execution - Redirection
+//Execution - Redirection + aux
 void	execute_redir(const char *type, char *filename, t_minish *ms);
+void	read_until_delimiter(const char *delimiter, t_minish *ms);
 
 //Commands
 void	exit_bash(char **exit_args, t_minish *ms);
