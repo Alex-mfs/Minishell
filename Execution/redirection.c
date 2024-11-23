@@ -50,7 +50,10 @@ static int	do_heredoc(t_minish *ms, char *filename)
 	if (fd_ret == -1 && fd_ret != STDIN_FILENO)
 		close(fd_ret);
 	if (fd_ret != -1)
-		dup2(ms->fd_in, fd_ret);
+	{
+		ms->fd_in = fd_ret;
+		//dup2(ms->fd_in, fd_ret);
+	}
 	return (fd_ret);
 }
 
