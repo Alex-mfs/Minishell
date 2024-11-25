@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/21 17:23:30 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/25 09:40:20 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ static bool	assign_var(t_minish *ms)
 
 static void	compute(t_minish *ms, char *input)
 {
-	if (!validate_quotes(input)) //WIP Implementar exit_status
+	if (!validate_quotes(input))
 		return ;
 	get_tokens(ms, input);
-	if (!validate_tokens(ms)) //WIP Implementar exit_status
+	if (!validate_tokens(ms))
 		return ;
 	expand(ms);
 	parse(ms);
 	if (!assign_var(ms))
 		execute(ms);
-	sanitize_envp(ms);
+	sanitize_path(ms);
 	unlink("heredoc_tmp");
 }
 

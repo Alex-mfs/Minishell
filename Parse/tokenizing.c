@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/05 11:26:29 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/25 09:36:34 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	save_cmd(t_minish *ms, char *input, char limit)
 	i = 0;
 	if (limit == ' ')
 	{
-		while (input[i] && !is_tk_delim(input[i])) //!ft_strchr("<>|\'\" \t\n\v\f\r", input[i])
+		while (input[i] && !is_tk_delim(input[i]))
 			i++;
 	}
 	else

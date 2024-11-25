@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/21 17:22:57 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/25 10:12:54 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ int	heredoc(char *delimiter, t_minish *ms)
 	return (fd);
 }
 
+static void	report_error(char *filename)
+{
+	perror(filename);
+	set_exit_status(1);
+	return ;
+}
+
 static int	do_heredoc(t_minish *ms, char *filename)
 {
 	int	fd_ret;
@@ -71,11 +78,7 @@ void	execute_redir(const char *type, char *filename, t_minish *ms)
 		else
 			local_fd_out = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		if (local_fd_out == -1)
-		{
-			perror(filename);
-			set_exit_status(1);
-			return ;
-		}
+			return (report_error(filename));
 		//if (local_fd_out != STDOUT_FILENO)
 		//	close(local_fd_out);
 		ms->fd_out = local_fd_out;
@@ -84,11 +87,7 @@ void	execute_redir(const char *type, char *filename, t_minish *ms)
 	{
 		local_fd_in = open(filename, O_RDONLY);
 		if (local_fd_in == -1)
-		{
-			perror(filename);
-			set_exit_status(1);
-			return ;
-		}
+			return (report_error(filename));
 		//if (local_fd_in != STDIN_FILENO)
 		//	close(local_fd_in);
 		ms->fd_in = local_fd_in;

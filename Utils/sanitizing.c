@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   sanitizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 15:23:31 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/25 09:40:45 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	sanitize_envp(t_minish *ms)
+void	sanitize_path(t_minish *ms)
 {
 	char	*buff_path;
-	//int		i; // TESTE ENVP
 
 	ft_free_matrix(ms->path);
 	//ft_free_matrix(ms->env_list);
@@ -24,21 +23,6 @@ void	sanitize_envp(t_minish *ms)
 		ms->path = ft_split(buff_path, ':');
 	//ms->env_list = ft_matrix_dup(ms->env_tmp);
 	free(buff_path);
-	/*//TESTE ENVP
-	i = 0;
-	while (ms->env_list[i])
-	{
-		printf("%s\n", ms->env_list[i]);
-		i++;
-	}
-	printf("\n");
-	i = 0;
-	while (ms->env_tmp[i])
-	{
-		printf("%s\n", ms->env_tmp[i]);
-		i++;
-	}
-	//FIM TESTE ENVP*/
 }
 
 static void	tk_clear(t_token **lst)

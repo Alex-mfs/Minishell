@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/21 16:51:48 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/25 09:55:27 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,40 +31,6 @@ void	exec_if_exists(char **arg, t_minish *ms)
 	execve(path, arg, ms->env_list);
 	error("minishell: permission denied or execution failed\n", 126);
 	exit(126);
-}
-
-bool	is_builtin(char *command)
-{
-	return (!ft_strncmp(command, "exit", ft_strlen(command)) || \
-	!ft_strncmp(command, "pwd", ft_strlen(command)) || \
-	!ft_strncmp(command, "env", ft_strlen(command)) || \
-	!ft_strncmp(command, "echo", ft_strlen(command)) || \
-	!ft_strncmp(command, "unset", ft_strlen(command)) || \
-	!ft_strncmp(command, "export", ft_strlen(command)) || \
-	!ft_strncmp(command, "cd", ft_strlen(command)));
-}
-
-char	**join_cmd_arg(char	*cmd, char **args)
-{
-	int		i;
-	int		args_count;
-	char	**full_cmd;
-
-	args_count = 0;
-	while (args[args_count] && args[args_count][0])
-		args_count++;
-	full_cmd = malloc(sizeof(char *) * (args_count + 2));
-	if (!full_cmd)
-		return (NULL);
-	full_cmd[0] = ft_strdup(cmd);
-	i = 0;
-	while (i < args_count)
-	{
-		full_cmd[i + 1] = ft_strdup(args[i]);
-		i++;
-	}
-	full_cmd[i + 1] = NULL;
-	return (full_cmd);
 }
 
 void	do_command(char	*cmd, char **args, t_minish *ms)
@@ -103,7 +69,7 @@ pid_t	child_exec(t_ast *node, t_minish *ms)
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("minishell: erro ao criar processo filho"); // WIP não, assim não
+		perror("minishell: erro ao criar processo filho"); // WIP Em portugues?
 		return (-1);
 	}
 	if (pid == 0)
@@ -111,7 +77,8 @@ pid_t	child_exec(t_ast *node, t_minish *ms)
 		if (ms->fd_in == -1 || ms->fd_out == -1)
 			sanitize_ms(ms, true);
 		if (!is_builtin(node->cmd))
-			pipe_data_flow(node->index, ms, join_cmd_arg(node->cmd, node->args));
+			pipe_data_flow(node->index, ms,
+				join_cmd_arg(node->cmd, node->args));
 		else
 			pipe_data_flow(node->index, ms, NULL);
 		relinking_in_out(ms);

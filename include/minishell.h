@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/20 11:57:51 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/25 09:51:10 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	handle_child_quit(int signal);
 void	handle_heredoc_interrupt(int signum);
 //Utils - Sanitizing
 void	sanitize_ms(t_minish *ms, bool sair);
-void	sanitize_envp(t_minish *ms);
+void	sanitize_path(t_minish *ms);
 
 //Parse
 void	get_tokens(t_minish *ms, char *input);
@@ -112,6 +112,8 @@ void	error(char *str, int status);
 bool	is_redir_or_pipe(char *cmd);
 bool	is_redirection(char *cmd);
 bool	need2be_parent(char *command, char *arg);
+bool	is_builtin(char *command);
+char	**join_cmd_arg(char	*cmd, char **args);
 //Execution - Pipeline
 void	pipeline_matrix(t_minish *ms);
 void	close_in_out(int index, t_minish *ms);
