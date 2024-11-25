@@ -21,12 +21,13 @@ static bool	assign_var(t_minish *ms)
 	if (ms->tk_list->token && ms->tk_list->token[0])
 	{
 		str = ms->tk_list->token;
-		if (str[0] == '='
-			|| str[ft_strlen(str) - 1] == '=')
+		if (str[0] == '=' || str[ft_strlen(str) - 1] == '=')
 		{
-			error("minishell: bad assignment \n", 1);
+			error("minishell: bad assignment\n", 1);
 			return (true);
 		}
+		if (ft_isdigit(str[0]))
+			return (false);
 		while (str[++i])
 		{
 			if (str[i] == '=')

@@ -45,6 +45,8 @@ static char	*find_name(char *token)
 	end = pos + 1;
 	if (token[end] == '?')
 		return (ft_strdup("$?"));
+	else if (ft_isdigit(token[end]))
+		return (ft_substr(token, pos, end + 1 - pos));
 	while (token[end] && (ft_isalnum(token[end]) || token[end] == '_'))
 		end++;
 	return (ft_substr(token, pos, end - pos));

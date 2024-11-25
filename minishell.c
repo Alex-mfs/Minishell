@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **envp)
 //WIP redirecoes nao abrem/fecham todas
 //WIP export "no argument"
 //WIP memoria aspas """ls -l"""
-//WIP implementar $2
+//WIP confirmar que todos os erros gravam um exit_status
 
 //WIP NORMINETTE
 //WIP expanding+merge - Casos malucos //https://mellow-pruner-7c7.notion.site/minishell-0436106d8aba4f2aa7408a9b916adb07
