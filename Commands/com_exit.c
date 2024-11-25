@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   com_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:19:22 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/16 17:25:12 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:04:13 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,8 @@ void	exit_bash(char **exit_args, t_minish *ms)
 		num = calculate_exit_code(num);
 		set_exit_status(num);
 	}
+	if (arg_num == 0)
+		set_exit_status(0);
+	printf("exit\n");
 	sanitize_ms(ms, true);
 }

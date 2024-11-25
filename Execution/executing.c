@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/25 09:55:27 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:45:01 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ pid_t	child_exec(t_ast *node, t_minish *ms)
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("minishell: erro ao criar processo filho"); // WIP Em portugues?
+		perror("minishell: Error while creating child process");
 		return (-1);
 	}
 	if (pid == 0)

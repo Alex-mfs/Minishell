@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/25 09:51:10 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:16:55 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ typedef struct s_minish
 	struct s_token	*tk_list;
 	bool			aux_merge;
 	t_ast			*current_node;
-	int				stdin_backup;
-	int				stdout_backup;
 	struct s_ast	*cmd_list;
 	int				fd_in;
 	int				fd_out;

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/25 10:12:54 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:06:16 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ static int	do_heredoc(t_minish *ms, char *filename)
 	if (fd_ret == -1 && fd_ret != STDIN_FILENO)
 		close(fd_ret);
 	if (fd_ret != -1)
-	{
 		ms->fd_in = fd_ret;
-		//dup2(ms->fd_in, fd_ret);
-	}
 	return (fd_ret);
 }
 
