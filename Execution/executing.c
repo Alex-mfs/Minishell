@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/25 11:45:01 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/25 12:57:13 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ void	exec_if_exists(char **arg, t_minish *ms)
 	path = get_executable_path(*arg, ms);
 	if (!path || stat(path, &path_stat) != 0)
 	{
+		ft_free_matrix(arg);
 		error("minishell: command not found\n", 127);
-		exit(127);
+		sanitize_ms(ms, true);
 	}
 	if (S_ISDIR(path_stat.st_mode))
 	{
+		ft_free_matrix(arg);
 		error("minishell: is a directory\n", 126);
-		exit(126);
+		sanitize_ms(ms, true);
 	}
 	execve(path, arg, ms->env_list);
 	error("minishell: permission denied or execution failed\n", 126);
@@ -40,6 +42,7 @@ void	do_command(char	*cmd, char **args, t_minish *ms)
 	set_exit_status(0);
 	if (!is_builtin(cmd))
 	{
+		//if (args[0][0] == "\0")
 		full_cmd = join_cmd_arg(cmd, args);
 		exec_if_exists(full_cmd, ms);
 		perror("execve");
