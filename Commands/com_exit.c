@@ -75,7 +75,7 @@ void	exit_bash(char **exit_args, t_minish *ms)
 
 	arg_num = 0;
 	num = 0;
-	while (exit_args[arg_num])
+	while (exit_args[arg_num] && exit_args[arg_num][0])
 		arg_num++;
 	if (arg_num > 1)
 	{

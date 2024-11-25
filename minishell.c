@@ -40,10 +40,11 @@ int	main(int argc, char **argv, char **envp)
 	return (g_exit_status);
 }
 
-//Alterações: pipeline[pipe_data_flow], redirection, executing[join_cmd_arg]
+//Alterações: pipeline[pipe_data_flow], executing[join_cmd_arg], redirection, com_export[handle_assignment], com_echo, com_exit[exit_bash]
+
+//WIP NORMINETTE
+//WIP exit_bash - Qual o exit_status quando não há argumentos?
+//WIP sanitize_envp - Esclarecer path
 
 //WIP expanding+merge - Casos malucos //https://mellow-pruner-7c7.notion.site/minishell-0436106d8aba4f2aa7408a9b916adb07
-//WIP sanitize_envp - A troca so acontece em caso de export
-
-//WIP expanding - Testar heredocs.
 //WIP confirmar os efeitos de readline; gera memoryleaks, mas valgrind pode ignorar, investigar

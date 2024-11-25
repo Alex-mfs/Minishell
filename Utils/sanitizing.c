@@ -15,14 +15,30 @@
 void	sanitize_envp(t_minish *ms)
 {
 	char	*buff_path;
+	//int		i; // TESTE ENVP
 
 	ft_free_matrix(ms->path);
-	ft_free_matrix(ms->env_list);
+	//ft_free_matrix(ms->env_list);
 	buff_path = get_env("PATH", ms->env_tmp);
 	if (buff_path)
 		ms->path = ft_split(buff_path, ':');
-	ms->env_list = ft_matrix_dup(ms->env_tmp);
+	//ms->env_list = ft_matrix_dup(ms->env_tmp);
 	free(buff_path);
+	/*//TESTE ENVP
+	i = 0;
+	while (ms->env_list[i])
+	{
+		printf("%s\n", ms->env_list[i]);
+		i++;
+	}
+	printf("\n");
+	i = 0;
+	while (ms->env_tmp[i])
+	{
+		printf("%s\n", ms->env_tmp[i]);
+		i++;
+	}
+	//FIM TESTE ENVP*/
 }
 
 static void	tk_clear(t_token **lst)
