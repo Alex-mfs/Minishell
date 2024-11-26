@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/26 10:13:28 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:34:18 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	sanitize_ms(t_minish *ms, bool sair)
 	ms->cmd_list = NULL;
 	ms->tk_list = NULL;
 	ms->aux_merge = false;
+	ms->dont_execve = false;
 	if (sair)
 	{
 		if (ms->cwd)

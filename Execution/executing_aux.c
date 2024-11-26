@@ -6,17 +6,22 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:46:55 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/20 10:27:27 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:27:57 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-bool	need2be_parent(char *command, char *arg)
+bool	need2be_parent(char *command, char *arg, t_minish *ms)
 {
 	bool	is_parent;
 
 	is_parent = false;
+	if (ms->qtd_pipes > 0)
+	{
+		ms->qtd_pipes--;
+		return (false);
+	}
 	if (ft_str_cmp(command, "cd") == true)
 		is_parent = true;
 	else if (ft_str_cmp(command, "exit") == true)

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/26 10:14:38 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:34:50 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_ast
 	struct s_ast	*left;
 	struct s_ast	*right;
 	struct s_ast	*next;
+	struct s_ast	*redirections;
 }			t_ast;
 
 typedef struct s_minish
@@ -67,6 +68,8 @@ typedef struct s_minish
 	struct s_ast	*cmd_list;
 	int				fd_in;
 	int				fd_out;
+	int				qtd_pipes;
+	bool			dont_execve;
 }			t_minish;
 
 //Utils - Initialising
@@ -109,7 +112,7 @@ void	execute(t_minish *ms);
 void	error(char *str, int status);
 bool	is_redir_or_pipe(char *cmd);
 bool	is_redirection(char *cmd);
-bool	need2be_parent(char *command, char *arg);
+bool	need2be_parent(char *command, char *arg, t_minish *ms);
 bool	is_builtin(char *command);
 char	**join_cmd_arg(char	*cmd, char **args);
 //Execution - Pipeline
