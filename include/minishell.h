@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/26 12:34:50 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:49:47 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,13 @@ void	tklst_addback(t_token **lst, t_token *new);
 void	execute(t_minish *ms);
 //Execution - Executing_aux
 void	error(char *str, int status);
+void	error_execve(void);
 bool	is_redir_or_pipe(char *cmd);
 bool	is_redirection(char *cmd);
 bool	need2be_parent(char *command, char *arg, t_minish *ms);
 bool	is_builtin(char *command);
 char	**join_cmd_arg(char	*cmd, char **args);
+void	create_fullcmd_pipe_flow(t_minish *ms, t_ast *node);
 //Execution - Pipeline
 void	pipeline_matrix(t_minish *ms);
 void	close_in_out(int index, t_minish *ms);

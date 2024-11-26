@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/26 12:26:25 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:49:28 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	do_command(char	*cmd, char **args, t_minish *ms)
 			return ;
 		full_cmd = join_cmd_arg(cmd, args);
 		exec_if_exists(full_cmd, ms);
-		perror("execve");
-		exit(EXIT_FAILURE);
+		error_execve();
 	}
 	if (ft_str_cmp(cmd, "pwd"))
 		printf("%s\n", ms->cwd);
@@ -63,15 +62,6 @@ void	do_command(char	*cmd, char **args, t_minish *ms)
 		unset(args, ms);
 	else if (ft_str_cmp(cmd, "cd"))
 		cd(args, ms);
-}
-
-void create_fullcmd_pipe_flow(t_minish *ms, t_ast *node)
-{
-	char	**fullcmd;
-
-	fullcmd = join_cmd_arg(node->cmd, node->args);
-	pipe_data_flow(node->index, ms, fullcmd);
-	ft_free_matrix(fullcmd);
 }
 
 pid_t	child_exec(t_ast *node, t_minish *ms)
@@ -118,7 +108,7 @@ pid_t	pipeline_exec(t_ast	*node, t_minish *ms)
 		while (redir_node)
 		{
 			execute_redir(redir_node->cmd, redir_node->args[0], ms);
-			redir_node = redir_node->next;		
+			redir_node = redir_node->next;
 		}
 		if (need2be_parent(node->cmd, node->args[0], ms))
 			do_command(node->cmd, node->args, ms);
@@ -135,13 +125,9 @@ void	execute(t_minish *ms)
 	int		status;
 	pid_t	last;
 	t_ast	*head;
-	// int		original_stdin; chat
-	// int		original_stdout;
 
 	head = lastpipe(ms->cmd_list);
 	status = 0x7F;
-	// original_stdin = dup(STDIN_FILENO); chat
-	// original_stdout = dup(STDOUT_FILENO);
 	pipeline_matrix(ms);
 	last = pipeline_exec(head, ms);
 	last = waitpid(last, &status, 0);
@@ -150,8 +136,4 @@ void	execute(t_minish *ms)
 	if (WIFEXITED(status))
 		set_exit_status(WEXITSTATUS(status));
 	set_signals();
-	// dup2(original_stdin, STDIN_FILENO); chat
-	// dup2(original_stdout, STDOUT_FILENO);
-	// close(original_stdin);
-	// close(original_stdout);
 }

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:46:55 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/26 12:27:57 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:49:10 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,10 @@ void	error(char *str, int status)
 {
 	printf("%s", str);
 	set_exit_status(status);
+}
+
+void	error_execve(void)
+{
+	perror("execve");
+	exit(EXIT_FAILURE);
 }
