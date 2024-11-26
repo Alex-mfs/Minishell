@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:21:00 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/28 14:17:15 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:47:40 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	env(char **env_arg, char **env_list)
 	int	i;
 
 	i = 0;
-	if (env_arg[1] != NULL)
+	if (env_arg[0][0] != 0)
 	{
 		error("env: no such file or directory: \n", 127);
 		return ;

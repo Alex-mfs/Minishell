@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/25 12:28:50 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:13:28 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static void	cmd_clear(t_ast **lst)
 void	sanitize_ms(t_minish *ms, bool sair)
 {
 	if (ms->pipes)
-		ft_free_intmatrix(ms->pipes, (size_t)cmdlst_size(ms->cmd_list, false) - 1);
+		ft_free_intmatrix(ms->pipes,
+			(size_t)cmdlst_size(ms->cmd_list, false) - 1);
 	if (ms->cmd_list)
 		cmd_clear(&(ms->cmd_list));
 	if (ms->tk_list)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   com_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:18:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/24 16:07:15 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/26 11:20:24 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	handle_no_assignment(t_minish *ms, char *arg)
 	index = find_env_index(ms->env_tmp, arg);
 	if (index != -1)
 		env_value_tmp = ft_strchr(ms->env_tmp[index], '=');
+	else
+		return ;
 	assign_len = ft_strlen(arg) + 2;
 	if (env_value_tmp)
 		assign_len += ft_strlen(env_value_tmp + 1);
@@ -66,7 +68,6 @@ void	handle_no_assignment(t_minish *ms, char *arg)
 		ft_strlcat(new_assign, env_value_tmp + 1, assign_len);
 	add_or_update_env(&ms->env_list, new_assign);
 	free(new_assign);
-	add_or_update_env(&ms->env_tmp, arg);
 }
 
 void	handle_assignment(t_minish *ms, char *arg)
@@ -86,9 +87,11 @@ void	ft_export(char **exp_args, t_minish *ms)
 	int	i;
 
 	i = 0;
-	if (!exp_args[0])
+	if (!exp_args[0] || !exp_args[0][0])
 		print_export(ms);
-	while (exp_args[i])
+	if (ft_isdigit(exp_args[0][0]))
+		return (error("minishell: not a valid variable identifier\n", 1));
+	while (exp_args[i] && exp_args[i][0])
 	{
 		if (ft_strchr(exp_args[i], '='))
 			handle_assignment(ms, exp_args[i]);

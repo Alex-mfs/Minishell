@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:54:07 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/28 14:16:02 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 11:29:36 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	unset(char **vars, t_minish *ms)
 	int	i;
 
 	i = 0;
+	if (!vars[0][0])
+		return ;
 	while (vars[i])
 	{
 		remove_var_from_env(&ms->env_list, vars[i]);

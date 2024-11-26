@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/25 11:16:55 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:14:38 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,3 +163,28 @@ void	add_or_update_env(char ***target_env, const char *assignment);
 # define ANSI_RST		"\033[0m"
 # define ANSI_BOLD		"\033[1m"
 # define ANSI_UNDERLINE	"\033[4m"*/
+
+//valgrind
+// --leak-check=full --show-leak-kinds=all --suppressions=suppression_file
+// ./minishell
+//
+/*{
+   name
+   Memcheck:Leak
+   fun:*alloc
+   ...
+   obj:*//*libreadline.so.*
+   ...
+}
+{
+    leak readline
+    Memcheck:Leak
+    ...
+    fun:readline
+}
+{
+    leak add_history
+    Memcheck:Leak
+    ...
+    fun:add_history
+}*/

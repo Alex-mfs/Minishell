@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/25 09:36:34 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:42:07 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static int	save_token(t_minish *ms, char *symbol, t_lexer type, bool merge)
 
 	token = ft_calloc(1, sizeof(t_token));
 	if (!token)
-		ft_error_msg("Error while creating token");
+		error("minishell: Error while creating token", 1);
 	token->token = ft_strdup(symbol);
 	if (!token->token)
-		ft_error_msg("Error while saving token");
+		error("minishell: Error while saving token", 1);
 	token->type = type;
 	token->next = NULL;
 	token->to_merge = merge;
@@ -69,7 +69,7 @@ static int	save_cmd(t_minish *ms, char *input, char limit)
 		i = quote_limit(input, limit);
 	content = ft_substr(input, 0, i);
 	if (!content)
-		ft_error_msg("Token memory allocation");
+		error("minishell: Token memory allocation", 1);
 	if (limit == '\"')
 		save_token(ms, content, DOUBLE_QUOTES, ms->aux_merge);
 	else if (limit == '\'')
