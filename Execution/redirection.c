@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/26 12:46:40 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:52:58 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,10 @@ static int	do_heredoc2(t_minish *ms, char *filename)
 	return (fd_ret);
 }
 
-static void	do_heredoc1(t_minish *ms, char *filename, int fd)
+static void	do_heredoc1(t_minish *ms, char *filename)
 {
+	int	fd;
+
 	fd = do_heredoc2(ms, filename);
 	if (fd == -1)
 		return (report_error(filename, ms));
@@ -98,5 +100,5 @@ void	execute_redir(const char *type, char *filename, t_minish *ms)
 		ms->fd_in = fd;
 	}
 	else if (ft_str_cmp(type, "<<"))
-		do_heredoc1(ms, filename, fd);
+		do_heredoc1(ms, filename);
 }

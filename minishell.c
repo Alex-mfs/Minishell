@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/26 12:24:34 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:01:31 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ int	main(int argc, char **argv, char **envp)
 }
 
 //WIP Expanding gera problemas de memoria
-//WIP redirecoes nao abrem/fecham todas
-//WIP memoria aspas """ls -l"""
+//WIP Heredocs sem funcionar
 
 //WIP NORMINETTE
 //WIP expanding+merge - Casos malucos //https://mellow-pruner-7c7.notion.site/minishell-0436106d8aba4f2aa7408a9b916adb07
