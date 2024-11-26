@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/28 19:52:10 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/25 20:40:33 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_ast
 	struct s_ast	*left;
 	struct s_ast	*right;
 	struct s_ast	*next;
+	struct s_ast	*redirections;
 }			t_ast;
 
 typedef struct s_minish
@@ -64,11 +65,11 @@ typedef struct s_minish
 	struct s_token	*tk_list;
 	bool			aux_merge;
 	t_ast			*current_node;
-	int				stdin_backup;
-	int				stdout_backup;
 	struct s_ast	*cmd_list;
 	int				fd_in;
 	int				fd_out;
+	int				qtd_pipes;
+	bool			dont_execve;
 }			t_minish;
 
 //Utils - Initialising
@@ -91,7 +92,7 @@ void	handle_child_quit(int signal);
 void	handle_heredoc_interrupt(int signum);
 //Utils - Sanitizing
 void	sanitize_ms(t_minish *ms, bool sair);
-void	sanitize_envp(t_minish *ms);
+void	sanitize_path(t_minish *ms);
 
 //Parse
 void	get_tokens(t_minish *ms, char *input);
@@ -103,7 +104,6 @@ t_ast	*cmdlst_penult(t_ast *lst);
 t_ast	*cmdlst_last(t_ast *lst);
 void	cmdlst_addback(t_ast **lst, t_ast *new);
 t_ast	*lastpipe(t_ast *lst);
-int		lastpipe_index(t_ast *lst);
 void	tklst_addback(t_token **lst, t_token *new);
 
 //Execution - Executing
@@ -112,7 +112,9 @@ void	execute(t_minish *ms);
 void	error(char *str, int status);
 bool	is_redir_or_pipe(char *cmd);
 bool	is_redirection(char *cmd);
-bool	need2be_parent(char *command, char *arg);
+bool	need2be_parent(char *command, char *arg, t_minish *ms);
+bool	is_builtin(char *command);
+char	**join_cmd_arg(char	*cmd, char **args);
 //Execution - Pipeline
 void	pipeline_matrix(t_minish *ms);
 void	close_in_out(int index, t_minish *ms);
@@ -122,8 +124,9 @@ void	pipe_data_flow(int cmd_index, t_minish *ms, char **fullcmd);
 void	exec_if_exists(char **arg, t_minish *ms);
 //Execution - Path
 char	*get_executable_path(char *cmd, t_minish *ms);
-//Execution - Redirection
+//Execution - Redirection + aux
 void	execute_redir(const char *type, char *filename, t_minish *ms);
+void	read_until_delimiter(const char *delimiter, t_minish *ms);
 
 //Commands
 void	exit_bash(char **exit_args, t_minish *ms);

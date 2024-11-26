@@ -1,14 +1,14 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   ft_str_repl_seg.c                                  :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-// /*   Updated: 2024/10/19 18:12:22 by joao-rib         ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_str_repl_seg.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
+/*   Updated: 2024/11/05 11:49:21 by joao-rib         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 
@@ -29,12 +29,8 @@ static char	*replace_short(const char *str, char *old, char *new, size_t len)
 	{
 		if (i == b)
 		{
-			b = ft_strlen(new);
-			while (j < b)
-			{
-				str2[i + j] = new[j];
-				j++;
-			}
+			j = ft_strlen(new);
+			ft_memcpy(&str2[i], new, j);
 			b = ft_strlen(old);
 			i += b;
 			j = b - j;
@@ -62,12 +58,8 @@ static char	*replace_long(const char *str, char *old, char *new, size_t len)
 	{
 		if (i == b)
 		{
-			b = ft_strlen(new);
-			while (j < b)
-			{
-				str2[i + j] = new[j];
-				j++;
-			}
+			j = ft_strlen(new);
+			ft_memcpy(&str2[i], new, j);
 			b = ft_strlen(old);
 			i += b;
 			j -= b;

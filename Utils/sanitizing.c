@@ -6,22 +6,20 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 15:23:31 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:53:27 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	sanitize_envp(t_minish *ms)
+void	sanitize_path(t_minish *ms)
 {
 	char	*buff_path;
 
 	ft_free_matrix(ms->path);
-	ft_free_matrix(ms->env_list);
 	buff_path = get_env("PATH", ms->env_tmp);
 	if (buff_path)
 		ms->path = ft_split(buff_path, ':');
-	ms->env_list = ft_matrix_dup(ms->env_tmp);
 	free(buff_path);
 }
 
@@ -67,7 +65,7 @@ static void	cmd_clear(t_ast **lst)
 void	sanitize_ms(t_minish *ms, bool sair)
 {
 	if (ms->pipes)
-		ft_free_intmatrix(ms->pipes, (size_t)cmdlst_size(ms->cmd_list, false));
+		ft_free_intmatrix(ms->pipes, (size_t)cmdlst_size(ms->cmd_list, false) - 1);
 	if (ms->cmd_list)
 		cmd_clear(&(ms->cmd_list));
 	if (ms->tk_list)
@@ -76,14 +74,17 @@ void	sanitize_ms(t_minish *ms, bool sair)
 	ms->cmd_list = NULL;
 	ms->tk_list = NULL;
 	ms->aux_merge = false;
+	ms->dont_execve = false;
 	if (sair)
 	{
 		if (ms->cwd)
 			free(ms->cwd);
 		if (ms->env_list)
 			ft_free_matrix(ms->env_list);
-		close(ms->stdin_backup);
-		close(ms->stdout_backup);
+		if (ms->env_list)
+			ft_free_matrix(ms->env_tmp);
+		if (ms->path)
+			ft_free_matrix(ms->path);
 		exit(get_exit_status());
 	}
 }

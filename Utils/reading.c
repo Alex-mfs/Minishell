@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 15:39:06 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/25 10:49:05 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool	assign_var(t_minish *ms)
 			|| str[ft_strlen(str) - 1] == '=')
 		{
 			error("minishell: bad assignment \n", 1);
-			return (false);
+			return (true);
 		}
 		while (str[++i])
 		{
@@ -39,71 +39,18 @@ static bool	assign_var(t_minish *ms)
 	return (false);
 }
 
-void	print_token_list(t_minish *ms)//ALEX
-{
-    t_token *curr = ms->tk_list;
-    while (curr)
-    {
-        printf("Token: %s, Tipo: %d\n", curr->token, curr->type);
-        curr = curr->next;
-    }
-}//ALEX
-
 static void	compute(t_minish *ms, char *input)
 {
-	t_token	*buff; //PARA TESTES
-	t_ast	*buff2; //PARA TESTES
-	int		i; //PARA TESTES
-	int		j; //PARA TESTES
-
-	if (!validate_quotes(input)) //WIP Implementar exit_status
+	if (!validate_quotes(input))
 		return ;
-	get_tokens(ms, input); //WIP Verificar que "|<" funciona...
-	//print_token_list(ms); //ALEX
-	//TESTE TOKEN //JOAO
-	buff = ms->tk_list;
-	i = 0;
-	while (buff)
-	{
-		printf("Token %d: %s [Type %d] [Merge:%d]\n", i, buff->token, buff->type, buff->to_merge);
-		buff = buff->next;
-		i++;
-	}
-	printf("\n");
-	//END TESTE TOKEN //JOAO
-	if (!validate_tokens(ms)) //WIP Implementar exit_status
+	get_tokens(ms, input);
+	if (!validate_tokens(ms))
 		return ;
 	expand(ms);
 	parse(ms);
-	//TESTE CMD //JOAO
-	buff2 = ms->cmd_list;
-	i = 0;
-	while (buff2)
-	{
-		printf("Node %d: cmd=%s\n", i, buff2->cmd);
-		j = 0;
-		while (buff2->args[j])
-		{
-			printf("\tArg %d: %s\n", j, buff2->args[j]);
-			j++;
-		}
-		if (buff2->left)
-			printf("\t\tRedirect %d: %s %s\n", i, buff2->left->cmd, buff2->left->args[0]);
-		if (buff2->right)
-			printf("\t\tRedirect %d: %s %s\n", i, buff2->right->cmd, buff2->right->args[0]);
-		buff2 = buff2->next;
-		i++;
-	}
-	printf("\n");
-	//END TESTE CMD //JOAO
-	//printf("chegou aqui.\n"); //ALEX
 	if (!assign_var(ms))
-	{
-		printf("TestAA\n\n"); //JOAO
 		execute(ms);
-		printf("TestBB\n"); //JOAO
-	}
-	sanitize_envp(ms);
+	sanitize_path(ms);
 	unlink("heredoc_tmp");
 }
 
@@ -115,7 +62,8 @@ static char	*maintain_prompt(char *cwd)
 	prompt = ft_strdup("\033[1m""\033[34m""Curr.Directory:""\033[0m""\033[34m");
 	if (!prompt)
 		return (NULL);
-	suffix = ft_strdup("\033[0m""\n""\033[4m""\033[97m""Input minishell:""\033[0m");
+	suffix = ft_strdup("\033[0m""\n""\033[4m""\033[97m" \
+			"Input minishell:""\033[0m");
 	if (!suffix)
 	{
 		free(prompt);
@@ -141,6 +89,7 @@ void	read_inputs(t_minish *ms)
 	{
 		prompt = maintain_prompt(ms->cwd);
 		input = readline(prompt);
+		free(prompt);
 		if (!input)
 		{
 			ft_error_msg("Input allocation error.\nExiting minishell\n");
@@ -150,7 +99,6 @@ void	read_inputs(t_minish *ms)
 		add_history(input);
 		compute(ms, input);
 		free(input);
-		free(prompt);
 		sanitize_ms(ms, false);
 	}
 	rl_clear_history();

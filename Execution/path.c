@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:39:57 by alfreire          #+#    #+#             */
-/*   Updated: 2024/10/28 10:55:07 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/20 10:25:20 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,9 @@ char	*get_executable_path(char *cmd, t_minish *ms)
 {
 	char	*path;
 
-	//printf("get_executable_path: buscando caminho para '%s'\n", cmd);
 	if (cmd[0] == '.')
-	{
 		path = (get_relative_path(cmd, ms));
-	}
 	else
-	{
 		path = (get_absolute_path(cmd, ms));
-	}
-	//printf("get_executable_path: caminho encontrado '%s'\n", path);
 	return (path);
 }

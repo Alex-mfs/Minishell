@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaling.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/17 00:27:44 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:50:32 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,8 @@
 
 void	set_signals(void)
 {
-	/*struct sigaction	signal_action;
-
-	signal_action.sa_handler = &handle_interrupt;
-	signal_action.sa_flags = 0;
-	sigemptyset(&signal_action.sa_mask);
-	sigaction(SIGINT, &signal_action, NULL);*/
 	signal(SIGINT, handle_interrupt);
-	signal(SIGQUIT, SIG_IGN); //Ignora sinal de saida?
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	set_signals_heredoc(void)
@@ -37,6 +31,6 @@ void	set_signals_heredoc(void)
 
 void	treat_child_signal(void)
 {
-	signal(SIGQUIT, handle_child_quit); //lida com o uso de ctrl + \ durante um processo child, testar sleep 10 e ctrl '\'
+	signal(SIGQUIT, handle_child_quit);
 	signal(SIGINT, handle_child_interrupt);
 }

@@ -78,6 +78,7 @@ void	handle_assignment(t_minish *ms, char *arg)
 		remove_from_tmp(ms, key);
 	free(key);
 	add_or_update_env(&ms->env_list, arg);
+	add_or_update_env(&ms->env_tmp, arg);
 }
 
 void	ft_export(char **exp_args, t_minish *ms)

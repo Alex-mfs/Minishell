@@ -19,11 +19,11 @@ bool	is_valid(char *word)
 	j = 1;
 	while (word[j])
 	{
-		if (word[j] != 'n')
-			return (false);
+		if (word[j] == 'n')
+			return (true);
 		j++;
 	}
-	return (true);
+	return (false);
 }
 
 void	echo(char **words)
@@ -35,9 +35,9 @@ void	echo(char **words)
 	only_n = true;
 	while (words[i] && words[i][0] == '-')
 	{
-		if (!is_valid(words[i]))
-			break ;
-		only_n = true;
+		if (is_valid(words[i]))
+			only_n = false;
+		i++;
 	}
 	while (words[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/28 19:22:06 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/25 12:30:54 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,16 @@ int	main(int argc, char **argv, char **envp)
 	init_ms(&ms, envp);
 	set_signals();
 	read_inputs(&ms);
-	ft_free_matrix(ms.env_list); //WIP Isto faz-se no sanitize?
-	ft_free_matrix(ms.env_tmp); //WIP Isto faz-se no sanitize?
-	ft_free_matrix(ms.path); //WIP Isto faz-se no sanitize?
+	ft_free_matrix(ms.env_list);
+	ft_free_matrix(ms.env_tmp);
+	ft_free_matrix(ms.path);
 	return (g_exit_status);
 }
 
-//WIP validation_error - Qual o exit_status?
-//WIP assign_var - Se houver variável para atribuir valor (ex.: BUFFER_SIZE=40), faz-se. Senão, apenas executar (espera, porque senão?)
-//WIP sanitize_envp - Confirmar que env_list e env_tmp não estão trocadas
+//WIP redirecoes nao abrem/fecham todas
+//WIP export "no argument"
+//WIP memoria aspas """ls -l"""
+//WIP implementar $2
 
-//WIP expanding - Testar heredocs.
-//WIP confirmar os efeitos de readline; gera memoryleaks, mas valgrind pode ignorar, investigar
+//WIP NORMINETTE
+//WIP expanding+merge - Casos malucos //https://mellow-pruner-7c7.notion.site/minishell-0436106d8aba4f2aa7408a9b916adb07
