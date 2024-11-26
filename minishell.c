@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/25 12:30:54 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:47:09 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ int	main(int argc, char **argv, char **envp)
 	return (g_exit_status);
 }
 
-//WIP redirecoes nao abrem/fecham todas
-//WIP export "no argument"
-//WIP memoria aspas """ls -l"""
-//WIP implementar $2
+//WIP Expanding gera problemas de memoria
+//WIP Heredocs sem funcionar
 
 //WIP NORMINETTE
 //WIP expanding+merge - Casos malucos //https://mellow-pruner-7c7.notion.site/minishell-0436106d8aba4f2aa7408a9b916adb07

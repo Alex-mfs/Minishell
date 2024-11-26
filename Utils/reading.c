@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/25 10:49:05 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:43:04 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ static bool	assign_var(t_minish *ms)
 
 static void	compute(t_minish *ms, char *input)
 {
-	if (!validate_quotes(input))
+	if (!validate_quotes(input)) //WIP Implementar exit_status
 		return ;
 	get_tokens(ms, input);
-	if (!validate_tokens(ms))
+	if (!validate_tokens(ms)) //WIP Implementar exit_status
 		return ;
 	expand(ms);
 	parse(ms);
 	if (!assign_var(ms))
 		execute(ms);
-	sanitize_path(ms);
+	sanitize_envp(ms);
 	unlink("heredoc_tmp");
 }
 
