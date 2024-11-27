@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/26 12:34:18 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:15:29 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,8 @@ static void	cmd_clear(t_ast **lst)
 		while (*lst)
 		{
 			buff = (*lst)->next;
-			if ((*lst)->left && (*lst)->index >= 0)
-				cmd_clear(&((*lst)->left));
-			if ((*lst)->right && (*lst)->index >= 0)
-				cmd_clear(&((*lst)->right));
+			if ((*lst)->redirections && (*lst)->index >= 0)
+				cmd_clear(&((*lst)->redirections));
 			if ((*lst)->cmd)
 				free((*lst)->cmd);
 			if ((*lst)->args)

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/20 11:56:04 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/27 11:29:40 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,5 @@ void	read_until_delimiter(const char *delimiter, t_minish *ms)
 		free(line);
 	}
 	close(fd);
-	exit(EXIT_SUCCESS);
+	//exit(EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/26 12:31:32 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:55:04 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,7 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 	cmd = ft_calloc(1, sizeof(t_ast));
 	if (!cmd)
 		return (NULL);
-	cmd->next = NULL;
-	cmd->left = NULL;
-	cmd->right = NULL;
+	ft_bzero(cmd, sizeof(t_ast));
 	while (buff && buff->type != PIPE)
 	{
 		if (buff->type >= REDIR_INPUT_1 && buff->type <= REDIR_OUTPUT_2)
@@ -111,6 +109,8 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 			cmd->args = ft_matrix_add_line(cmd->args, ft_strdup(buff->token));
 		buff = buff->next;
 	}
+	if (!cmd->cmd)
+		cmdlst_addback(&ms->cmd_list, cmd);
 	if (!cmd->args)
 		cmd->args = ft_matrix_add_line(cmd->args, ft_strdup("\0"));
 	return (buff);
