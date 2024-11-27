@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/26 13:01:31 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/27 09:48:12 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,11 @@ int	main(int argc, char **argv, char **envp)
 	return (g_exit_status);
 }
 
-//WIP Expanding gera problemas de memoria
-//WIP Heredocs sem funcionar
+//FIXED Expanding gera problemas de memoria
+//FIXED Heredocs sem funcionar
+
+//WIP > a.txt
+//WIP memory leaks nas redirecoes
 
 //WIP NORMINETTE
 //WIP expanding+merge - Casos malucos //https://mellow-pruner-7c7.notion.site/minishell-0436106d8aba4f2aa7408a9b916adb07

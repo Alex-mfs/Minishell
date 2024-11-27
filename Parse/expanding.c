@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/26 12:31:05 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/27 09:24:34 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ static void	expand_token(t_minish *ms, t_token *tk)
 			value = ft_itoa(get_exit_status());
 		else
 			value = get_env(name, ms->env_tmp);
-		buff = ft_strdup(tk->token);
-		tk->token = ft_str_repl_seg(buff, name, value);
+		buff = ft_str_repl_seg(tk->token, name, value);
+		free(tk->token);
+		tk->token = ft_strdup(buff);
 		free(name);
 		free(value);
 		free(buff);
