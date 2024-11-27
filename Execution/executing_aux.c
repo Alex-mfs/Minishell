@@ -17,6 +17,8 @@ bool	need2be_parent(char *command, char *arg, t_minish *ms)
 	bool	is_parent;
 
 	is_parent = false;
+	if (!command)
+		return (is_parent);
 	if (ms->qtd_pipes > 0)
 	{
 		ms->qtd_pipes--;

@@ -43,8 +43,8 @@ int	main(int argc, char **argv, char **envp)
 //FIXED Expanding gera problemas de memoria
 //FIXED Heredocs sem funcionar
 
-//WIP > a.txt (Parsing)
-//WIP memory leaks nos heredocs
+//WIP > a.txt (verificar memória)
+//WIP memory leaks nos heredocs?
 
 //WIP NORMINETTE
 //WIP expanding+merge - Casos malucos //https://mellow-pruner-7c7.notion.site/minishell-0436106d8aba4f2aa7408a9b916adb07
