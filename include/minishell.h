@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 18:30:38 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:35:24 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_minish
 	int				fd_out;
 	int				qtd_pipes;
 	bool			dont_execve;
+	int				hd;
 }			t_minish;
 
 //Utils - Initialising
@@ -88,17 +89,23 @@ bool	validate_quotes(char *input);
 bool	validate_tokens(t_minish *ms);
 //Utils - Signaling
 void	set_signals(void);
-void	set_signals_heredoc(void);
+// void	set_signals_heredoc(void);
 void	treat_child_signal(void);
+void	sig_ignore(void);
 //Utils - Handling
 void	handle_interrupt(int signum);
 void	handle_child_interrupt(int signal);
 void	handle_child_quit(int signal);
-void	handle_heredoc_interrupt(int signum);
+void	handle_hd_int(int signum, t_minish *ms, char *delimiter, char *hd);
 //Utils - Sanitizing
 void	sanitize_ms(t_minish *ms, bool sair);
 void	sanitize_path(t_minish *ms);
 t_token	*clear_top_token(t_token *node);
+void	cmd_clear(t_ast **lst);
+void	tk_clear(t_token **lst);
+void	sanitize_path(t_minish *ms);
+void	hd_sanitize(t_minish *ms, int e_code);
+void	unlink_here_doc_file(t_minish *ms);
 
 //Parse
 void	get_tokens(t_minish *ms, char *input);
@@ -117,7 +124,7 @@ bool	token_assign(t_token *buff);
 void	execute(t_minish *ms);
 //Execution - Executing_aux
 void	error(char *str, int status);
-void	error_execve(void);
+void	error_execve(t_minish *ms);
 bool	is_redir_or_pipe(char *cmd);
 bool	is_redirection(char *cmd);
 bool	need2be_parent(char *command, char *arg, t_minish *ms);
@@ -135,7 +142,9 @@ void	exec_if_exists(char **arg, t_minish *ms);
 char	*get_executable_path(char *cmd, t_minish *ms);
 //Execution - Redirection + aux
 void	execute_redir(const char *type, char *filename, t_minish *ms);
-void	read_until_delimiter(const char *delimiter, t_minish *ms);
+void	read_until_deli(char *deli, t_minish *ms, char *file, bool fl);
+char	*create_hd_file(int i, bool flag);
+void	unlink_hd_file(t_minish *ms);
 
 //Commands
 void	exit_bash(char **exit_args, t_minish *ms);
@@ -177,7 +186,7 @@ void	add_or_update_env(char ***target_env, const char *assignment);
 # define ANSI_UNDERLINE	"\033[4m"*/
 
 //valgrind
-// --leak-check=full --show-leak-kinds=all --suppressions=suppression_file
+// --leak-check=full --show-leak-kinds=all --suppressions=wip_suppression_file.sh
 // ./minishell
 //
 /*{

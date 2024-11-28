@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 18:26:51 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:50:23 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	sanitize_path(t_minish *ms)
 	free(buff_path);
 }
 
-static void	tk_clear(t_token **lst)
+void	tk_clear(t_token **lst)
 {
 	t_token	*buff;
 
@@ -49,7 +49,7 @@ static void	tk_clear(t_token **lst)
 	}
 }
 
-static void	cmd_clear(t_ast **lst)
+void	cmd_clear(t_ast **lst)
 {
 	t_ast	*buff;
 
@@ -69,6 +69,42 @@ static void	cmd_clear(t_ast **lst)
 		}
 	}
 }
+
+// static void	cmd_clear(t_ast **lst)
+// {
+// 	t_ast	*buff;
+// 	t_ast	*redir;
+// 	t_ast	*next_redir;
+
+// 	if (lst && *lst)
+// 	{
+// 		while (*lst)
+// 		{
+// 			buff = (*lst)->next;
+// 			if ((*lst)->left && (*lst)->index >= 0)
+// 				cmd_clear(&((*lst)->left));
+// 			if ((*lst)->right && (*lst)->index >= 0)
+// 				cmd_clear(&((*lst)->right));
+// 			redir = (*lst)->redirections;
+// 			while (redir)
+// 			{
+// 				next_redir = redir->next;
+// 				if (redir->cmd)
+// 					free(redir->cmd);
+// 				if (redir->args)
+// 					ft_free_matrix(redir->args);
+// 				free(redir);
+// 				redir = next_redir;
+// 			}
+// 			if ((*lst)->cmd)
+// 				free((*lst)->cmd);
+// 			if ((*lst)->args)
+// 				ft_free_matrix((*lst)->args);
+// 			free(*lst);
+// 			*lst = buff;
+// 		}
+// 	}
+// }
 
 void	sanitize_ms(t_minish *ms, bool sair)
 {
@@ -95,5 +131,27 @@ void	sanitize_ms(t_minish *ms, bool sair)
 		if (ms->path)
 			ft_free_matrix(ms->path);
 		exit(get_exit_status());
+	}
+}
+
+void	unlink_hd_file(t_minish *ms)
+{
+	int		i;
+	char	*file_name;
+
+	if (ms->hd == 0)
+		return ;
+	i = ms->hd;
+	while (i > 0)
+	{
+		file_name = create_hd_file(i, false);
+		if (access(file_name, F_OK) == -1)
+		{
+			free(file_name);
+			return ;
+		}
+		unlink(file_name);
+		free(file_name);
+		i--;
 	}
 }

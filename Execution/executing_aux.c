@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:46:55 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 14:26:31 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:42:28 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ bool	need2be_parent(char *command, char *arg, t_minish *ms)
 	bool	is_parent;
 
 	is_parent = false;
+	if (!command)
+		return (is_parent);
 	if (ms->qtd_pipes > 0)
 	{
 		ms->qtd_pipes--;
@@ -51,4 +53,11 @@ void	error(char *str, int status)
 {
 	printf("%s", str);
 	set_exit_status(status);
+}
+
+void	error_execve(t_minish *ms)
+{
+	perror("execve");
+	set_exit_status(1);
+	sanitize_ms(ms, true);
 }

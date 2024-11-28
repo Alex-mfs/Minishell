@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/27 11:29:40 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:51:51 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,15 @@ char	*replace_substring(char *str, char *old, char *new)
 	return (ret);
 }
 
-char	*expand_heredoc(char *line, char **env_list)
+char	*expand_heredoc(char *line, char **env_list, bool fl)
 {
 	char	*result;
 	char	*value;
 	char	*key;
 	char	*tmp;
 
+	if (fl)
+		return (line);
 	result = ft_strdup(line);
 	while (ft_strnstr(result, "$", ft_strlen(result)))
 	{
@@ -75,25 +77,53 @@ char	*expand_heredoc(char *line, char **env_list)
 	return (result);
 }
 
-void	read_until_delimiter(const char *delimiter, t_minish *ms)
+void	write_file(char *here_doc_file, char *buffer)
 {
-	int		fd;
+	int	fd;
+
+	fd = open(here_doc_file, O_WRONLY | O_APPEND);
+	if (fd == -1)
+		return ;
+	if (buffer)
+		write(fd, buffer, ft_strlen(buffer));
+	write(fd, "\n", 1);
+	close(fd);
+}
+
+void	read_until_deli(char *deli, t_minish *ms, char *file, bool fl)
+{
 	char	*line;
 
-	fd = open("heredoc_tmp", O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	//fd = open("heredoc.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	while (1)
 	{
 		line = readline("heredoc > ");
-		if (!line || ft_str_cmp(line, delimiter))
+		if (!line)
+		{
+			ft_putstr_fd("minishell: warning: heredoc delimited by eof\n", 1);
+			//free(deli);
+			//free(file);
+			break ;
+			//sanitize_ms(ms, false);
+			//ft_putstr_fd("dentro do ctr+d\n", 0);
+			//close(fd);
+			//set_exit_status(0);
+			//if (errno == EINTR)
+				//set_exit_status(20);
+			//sanitize_ms(ms, true);
+		}
+		if (ft_str_cmp(line, deli))
 		{
 			free(line);
-			printf("\n");
+			//free(file);
+			//free(deli);
+			set_exit_status(0);
+			sanitize_ms(ms, true);
 			break ;
 		}
-		line = expand_heredoc(line, ms->env_list);
-		ft_putendl_fd(line, fd);
+		line = expand_heredoc(line, ms->env_list, fl);
+		//ft_putendl_fd(line, fd);
+		write_file(file, line);
 		free(line);
 	}
-	close(fd);
-	//exit(EXIT_SUCCESS);
 }

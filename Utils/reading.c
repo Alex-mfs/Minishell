@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 18:52:32 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:52:32 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,26 +60,20 @@ static bool	assign_var(t_minish *ms)
 
 static void	compute(t_minish *ms, char *input)
 {
-	printf("Test0\n");
 	if (!validate_quotes(input))
 		return ;
 	get_tokens(ms, input);
-	printf("Test1\n");
 	if (!validate_tokens(ms))
 		return ;
 	expand(ms);
-	printf("Test2\n");
 	ms->good_assign = assign_var(ms);
 	if (!validate_tokens(ms))
 		return ;
-	printf("Test3\n");
 	parse(ms);
-	printf("Test4\n");
 	if (!ms->good_assign)
 		execute(ms);
-	printf("Test5\n");
 	sanitize_path(ms);
-	unlink("heredoc_tmp");
+	unlink_hd_file(ms);
 }
 
 static char	*maintain_prompt(char *cwd)

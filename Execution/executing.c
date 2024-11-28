@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 19:18:03 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:41:43 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	exec_if_exists(char **arg, t_minish *ms)
 	path = get_executable_path(*arg, ms);
 	if (!path || stat(path, &path_stat) != 0)
 	{
-		ft_free_matrix(arg);
-		printf("minishell: command not found\n");
+		printf("minishell: %s: command not found\n", *arg);
 		set_exit_status(127);
+		ft_free_matrix(arg);
 		sanitize_ms(ms, true);
 	}
 	if (S_ISDIR(path_stat.st_mode))
@@ -33,23 +33,22 @@ void	exec_if_exists(char **arg, t_minish *ms)
 	}
 	execve(path, arg, ms->env_list);
 	error("minishell: permission denied or execution failed\n", 126);
-	exit(126);
+	sanitize_ms(ms, true);
 }
 
 void	do_command(char	*cmd, char **args, t_minish *ms)
 {
 	char	**full_cmd;
 
-	printf("do_command: Executing command '%s', current exit status = %d\n", cmd, get_exit_status());
-	//set_exit_status(0);
+	//printf("do_command: Executing command '%s', current exit status = %d\n", cmd, get_exit_status());
+	set_exit_status(0);
 	if (!is_builtin(cmd))
 	{
 		if (ms->dont_execve)
 			return ;
 		full_cmd = join_cmd_arg(cmd, args);
 		exec_if_exists(full_cmd, ms);
-		perror("execve");
-		exit(EXIT_FAILURE);
+		error_execve(ms);
 	}
 	if (ft_str_cmp(cmd, "pwd"))
 		printf("%s\n", ms->cwd);
@@ -65,15 +64,6 @@ void	do_command(char	*cmd, char **args, t_minish *ms)
 		unset(args, ms);
 	else if (ft_str_cmp(cmd, "cd"))
 		cd(args, ms);
-}
-
-void create_fullcmd_pipe_flow(t_minish *ms, t_ast *node)
-{
-	char	**fullcmd;
-
-	fullcmd = join_cmd_arg(node->cmd, node->args);
-	pipe_data_flow(node->index, ms, fullcmd);
-	ft_free_matrix(fullcmd);
 }
 
 pid_t	child_exec(t_ast *node, t_minish *ms)
@@ -220,48 +210,47 @@ pid_t pipeline_exec(t_ast *node, t_minish *ms)
 	}
 	else if (is_redirection(node->cmd))
 		execute_redir(node->cmd, node->args[0], ms);
+	//printf("pipeline_exec: Exiting, last_child_pid = %d, exit status = %d\n", last_child_pid, get_exit_status());
 	return (last_child_pid);
 }
+
+// void	execute(t_minish *ms)
+// {
+// 	int		status;
+// 	pid_t	last;
+// 	t_ast	*head;
+
+// 	head = lastpipe(ms->cmd_list);
+// 	status = 0x7F;		  dessa forma nao verifica codigo de saida da child
+// 	pipeline_matrix(ms);
+// 	last = pipeline_exec(head, ms);
+// 	last = waitpid(last, &status, 0);
+// 	while (waitpid(0, NULL, 0) > 0)
+// 		continue ;
+// 	if (WIFEXITED(status))
+// 		set_exit_status(WEXITSTATUS(status));
+// 	set_signals();
+// }
 
 void	execute(t_minish *ms)
 {
 	int		status;
 	pid_t	last;
 	t_ast	*head;
-	// int		original_stdin; chat
-	// int		original_stdout;
-	//printf("execute: Entry, exit status = %d\n", get_exit_status());
+
 	head = lastpipe(ms->cmd_list);
 	status = 0x7F;
-	// original_stdin = dup(STDIN_FILENO); chat
-	// original_stdout = dup(STDOUT_FILENO);
 	pipeline_matrix(ms);
 	last = pipeline_exec(head, ms);
 	if (last > 0)
 	{
 		waitpid(last, &status, 0);
-		//printf("execute: After waitpid, status = %d\n", status);
 		while (waitpid(0, NULL, 0) > 0)
 			continue ;
 		if (WIFEXITED(status))
-		{
-			//printf("execute: Child exited with status %d\n", WEXITSTATUS(status));
 			set_exit_status(WEXITSTATUS(status));
-		}
 		else if (WIFSIGNALED(status))
-		{
-			//printf("execute: Child terminated by signal %d\n", WTERMSIG(status));
 			set_exit_status(128 + WTERMSIG(status));
-		}
 	}
-	else
-    {
-		//printf("execute: No child process executed\n");
-    }
-	//printf("execute: Exit, exit status = %d\n", get_exit_status());
 	set_signals();
-	// dup2(original_stdin, STDIN_FILENO); chat
-	// dup2(original_stdout, STDOUT_FILENO);
-	// close(original_stdin);
-	// close(original_stdout);
 }
