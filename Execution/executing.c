@@ -6,31 +6,54 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 21:54:47 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 23:49:04 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+char	*which_error(char *bef, char *mid, char *aft)
+{
+	char	*str;
+	char	*tmp;
+
+	str = ft_strjoin(bef, mid);
+	tmp = str;
+	str = ft_strjoin(tmp, aft);
+	free(tmp);
+	return (str);
+}
+
+void	deal_with_isdir(t_minish *ms, char **arg, char *path)
+{
+	char	*str;
+
+	str = which_error("minishell: ", *arg, ": Is a directory\n");
+	ft_free_matrix(arg);
+	free(path);
+	error(str, 126);
+	free(str);
+	sanitize_ms(ms, true);
+}
+
 void	exec_if_exists(char **arg, t_minish *ms)
 {
 	char		*path;
 	struct stat	path_stat;
+	char		*str;
 
 	path = get_executable_path(*arg, ms);
 	if (!path || stat(path, &path_stat) != 0)
 	{
-		printf("minishell: %s: command not found\n", *arg);
+		str = which_error("", *arg, ": command not found\n");
+		ft_putstr_fd(str, 2);
+		free(str);
 		set_exit_status(127);
 		ft_free_matrix(arg);
 		sanitize_ms(ms, true);
 	}
 	if (S_ISDIR(path_stat.st_mode))
-	{
-		ft_free_matrix(arg);
-		error("minishell: is a directory\n", 126);
-		sanitize_ms(ms, true);
-	}
+		deal_with_isdir(ms, arg, path);
 	execve(path, arg, ms->env_list);
 	error("minishell: permission denied or execution failed\n", 126);
 	sanitize_ms(ms, true);
