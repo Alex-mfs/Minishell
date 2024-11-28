@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 22:03:55 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 22:58:16 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,9 @@ char	*get_executable_path(char *cmd, t_minish *ms);
 //Execution - Redirection + aux
 void	execute_redir(const char *type, char *filename, t_minish *ms);
 void	read_until_deli(char *deli, t_minish *ms, char *file, bool fl);
-char	*create_hd_file(int i, bool flag);
+char	*create_hd_file(t_minish *ms, bool flag);
 void	hd_sanitize(t_minish *ms, int e_code);
+int		do_heredoc(char *delimiter, t_minish *ms);
 
 //Commands
 void	exit_bash(char **exit_args, t_minish *ms);

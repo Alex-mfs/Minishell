@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 21:05:31 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 22:58:49 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	unlink_hd_file(t_minish *ms)
 	i = ms->hd;
 	while (i > 0)
 	{
-		file_name = create_hd_file(i, false);
+		file_name = create_hd_file(ms, false);
 		if (access(file_name, F_OK) == -1)
 		{
 			free(file_name);

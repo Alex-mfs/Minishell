@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 22:03:53 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 22:56:22 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ bool	open_file(char *file)
 	return (true);
 }
 
-char	*create_hd_file(int i, bool flag)
+char	*create_hd_file(t_minish *ms, bool flag)
 {
 	char	*file;
 	char	*nbr;
 	char	*temp;
 
 	file = NULL;
-	nbr = ft_itoa(i);
+	nbr = ft_itoa(ms->hd);
 	temp = ft_strjoin("heredoc", nbr);
 	file = ft_strjoin(temp, ".temp");
 	free(nbr);
@@ -45,6 +45,8 @@ char	*create_hd_file(int i, bool flag)
 			return (NULL);
 		}
 	}
+	if (!file)
+		hd_sanitize(ms, 1);
 	return (file);
 }
 
