@@ -6,11 +6,21 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 18:55:23 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 21:05:27 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+t_token	*clear_top_token(t_token *node)
+{
+	t_token	*tmp;
+
+	tmp = node->next;
+	free(node->token);
+	free(node);
+	return (tmp);
+}
 
 bool	token_assign(t_token *buff)
 {

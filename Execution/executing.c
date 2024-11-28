@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 20:41:43 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 21:03:32 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	do_command(char	*cmd, char **args, t_minish *ms)
 {
 	char	**full_cmd;
 
-	//printf("do_command: Executing command '%s', current exit status = %d\n", cmd, get_exit_status());
 	set_exit_status(0);
 	if (!is_builtin(cmd))
 	{
@@ -165,7 +164,7 @@ bool process_redirections(t_ast *node, t_minish *ms)
     bool redir_error;
     
     redir_error = false;
-    redir_node = node->redirections; // redirecoes de entrada
+    redir_node = node->redirections;
     while (redir_node != NULL)
     {
         if (is_input_redirection(redir_node->cmd))
@@ -210,7 +209,6 @@ pid_t pipeline_exec(t_ast *node, t_minish *ms)
 	}
 	else if (is_redirection(node->cmd))
 		execute_redir(node->cmd, node->args[0], ms);
-	//printf("pipeline_exec: Exiting, last_child_pid = %d, exit status = %d\n", last_child_pid, get_exit_status());
 	return (last_child_pid);
 }
 

@@ -6,21 +6,11 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 20:50:23 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 21:05:31 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-t_token	*clear_top_token(t_token *node)
-{
-	t_token	*tmp;
-
-	tmp = node->next;
-	free(node->token);
-	free(node);
-	return (tmp);
-}
 
 void	sanitize_path(t_minish *ms)
 {
@@ -69,42 +59,6 @@ void	cmd_clear(t_ast **lst)
 		}
 	}
 }
-
-// static void	cmd_clear(t_ast **lst)
-// {
-// 	t_ast	*buff;
-// 	t_ast	*redir;
-// 	t_ast	*next_redir;
-
-// 	if (lst && *lst)
-// 	{
-// 		while (*lst)
-// 		{
-// 			buff = (*lst)->next;
-// 			if ((*lst)->left && (*lst)->index >= 0)
-// 				cmd_clear(&((*lst)->left));
-// 			if ((*lst)->right && (*lst)->index >= 0)
-// 				cmd_clear(&((*lst)->right));
-// 			redir = (*lst)->redirections;
-// 			while (redir)
-// 			{
-// 				next_redir = redir->next;
-// 				if (redir->cmd)
-// 					free(redir->cmd);
-// 				if (redir->args)
-// 					ft_free_matrix(redir->args);
-// 				free(redir);
-// 				redir = next_redir;
-// 			}
-// 			if ((*lst)->cmd)
-// 				free((*lst)->cmd);
-// 			if ((*lst)->args)
-// 				ft_free_matrix((*lst)->args);
-// 			free(*lst);
-// 			*lst = buff;
-// 		}
-// 	}
-// }
 
 void	sanitize_ms(t_minish *ms, bool sair)
 {
