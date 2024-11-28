@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_listing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/06 15:42:16 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/28 10:17:22 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,6 @@ void	cmdlst_addback(t_ast **lst, t_ast *new)
 			*lst = new;
 		}
 	}
+	if (!(*lst)->cmd)
+		(*lst)->cmd = ft_strdup("");
 }

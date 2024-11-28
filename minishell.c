@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/27 12:21:30 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 10:22:53 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	main(int argc, char **argv, char **envp)
 
 //FIXED Expanding gera problemas de memoria
 //FIXED Heredocs sem funcionar
+//FIXED > a.txt muito bem implementado
 
-//WIP > a.txt (verificar memória)
 //WIP memory leaks nos heredocs?
 
 //WIP NORMINETTE
