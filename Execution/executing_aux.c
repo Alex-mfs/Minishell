@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:46:55 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 20:42:28 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 21:59:28 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ bool	is_redir_or_pipe(char *cmd)
 
 void	error(char *str, int status)
 {
-	printf("%s", str);
+	ft_putstr_fd(str, 2);
 	set_exit_status(status);
 }
 

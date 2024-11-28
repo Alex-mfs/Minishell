@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 20:56:33 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 21:45:57 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ int	main(int argc, char **argv, char **envp)
 	return (g_exit_status);
 }
 
-//WIP Heredocs criam linhas extra
+//FIXED Heredocs criam linhas extra
+
 //WIP Print nos ficheiros. Meter putstr_fd no error()
 //WIP Terminar implementacao de emptyquotes
 
 //WIP NORMINETTE
-//WIP expanding+merge - Casos malucos //https://mellow-pruner-7c7.notion.site/minishell-0436106d8aba4f2aa7408a9b916adb07
+//https://mellow-pruner-7c7.notion.site/
+//minishell-0436106d8aba4f2aa7408a9b916adb07

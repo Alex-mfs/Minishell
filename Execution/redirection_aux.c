@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_aux.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 20:48:20 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/28 21:34:24 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,35 +94,24 @@ void	read_until_deli(char *deli, t_minish *ms, char *file, bool fl)
 {
 	char	*line;
 
-	//fd = open("heredoc.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	while (1)
 	{
 		line = readline("heredoc > ");
 		if (!line)
 		{
 			ft_putstr_fd("minishell: warning: heredoc delimited by eof\n", 1);
-			//free(deli);
 			free(file);
 			break ;
-			//sanitize_ms(ms, false);
-			//ft_putstr_fd("dentro do ctr+d\n", 0);
-			//close(fd);
-			//set_exit_status(0);
-			//if (errno == EINTR)
-				//set_exit_status(20);
-			//sanitize_ms(ms, true);
 		}
 		if (ft_str_cmp(line, deli))
 		{
 			free(line);
 			free(file);
-			//free(deli);
 			set_exit_status(0);
 			sanitize_ms(ms, true);
 			break ;
 		}
 		line = expand_heredoc(line, ms->env_list, fl);
-		//ft_putendl_fd(line, fd);
 		write_file(file, line);
 		free(line);
 	}

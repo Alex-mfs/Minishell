@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 21:03:32 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 21:54:47 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,8 @@ pid_t	child_exec(t_ast *node, t_minish *ms)
 {
 	pid_t	pid;
 
-	printf("Test child exec, cmd=%s, bool=%d\n", node->cmd, (int)node->empty_quotes);
 	treat_child_signal();
 	pid = fork();
-	printf("Test child exec, cmd=%s, bool=%d\n", node->cmd, (int)node->empty_quotes);
 	if (pid == -1)
 	{
 		perror("minishell: Error while creating child process");
@@ -87,7 +85,6 @@ pid_t	child_exec(t_ast *node, t_minish *ms)
 		else
 			pipe_data_flow(node->index, ms, NULL);
 		relinking_in_out(ms);
-		printf("Test child exec, cmd=%s, bool=%d\n", node->cmd, (int)node->empty_quotes);
 		do_command(node->cmd, node->args, ms);
 		sanitize_ms(ms, true);
 	}
@@ -95,97 +92,7 @@ pid_t	child_exec(t_ast *node, t_minish *ms)
 	return (pid);
 }
 
-// pid_t	pipeline_exec(t_ast	*node, t_minish *ms)
-// {
-// 	pid_t	last_child_pid;
-// 	t_ast	*redir_node;
-
-// 	last_child_pid = 0;
-// 	if (!node)
-// 		return (last_child_pid);
-// 	ms->dont_execve = false;
-// 	last_child_pid = pipeline_exec(node->left, ms);
-// 	last_child_pid = pipeline_exec(node->right, ms);
-// 	if (!is_redir_or_pipe(node->cmd))
-// 	{
-// 		redir_node = node->redirections;
-// 		while (redir_node)
-// 		{
-// 			execute_redir(redir_node->cmd, redir_node->args[0], ms);
-// 			redir_node = redir_node->next;		
-// 		}
-// 		if (need2be_parent(node->cmd, node->args[0], ms))
-// 			do_command(node->cmd, node->args, ms);
-// 		else
-// 			last_child_pid = child_exec(node, ms);
-// 	}
-// 	else if (is_redirection(node->cmd))
-// 		execute_redir(node->cmd, node->args[0], ms);
-// 	return (last_child_pid);
-// }
-
-bool is_input_redirection(const char *type)
-{
-    return (ft_str_cmp(type, "<") || ft_str_cmp(type, "<<"));
-}
-
-bool is_output_redirection(const char *type)
-{
-    return (ft_str_cmp(type, ">") || ft_str_cmp(type, ">>"));
-}
-
-bool process_out_redirections(t_ast *node, t_minish *ms)
-{
-	t_ast *redir_node;
-	bool redir_error;
-
-	redir_error = false;
-	redir_node = node->redirections;
-	while (redir_node != NULL)
-	{
-		if (is_output_redirection(redir_node->cmd))
-		{
-			execute_redir(redir_node->cmd, redir_node->args[0], ms);
-			if (ms->dont_execve)
-			{
-				redir_error = true;
-				break;
-			}
-		}
-		redir_node = redir_node->next;
-	}
-
-	return (redir_error);
-}
-
-bool process_redirections(t_ast *node, t_minish *ms)
-{
-    t_ast *redir_node;
-    bool redir_error;
-    
-    redir_error = false;
-    redir_node = node->redirections;
-    while (redir_node != NULL)
-    {
-        if (is_input_redirection(redir_node->cmd))
-        {
-            execute_redir(redir_node->cmd, redir_node->args[0], ms);
-            if (ms->dont_execve)
-            {
-                redir_error = true;
-                break;
-            }
-        }
-        redir_node = redir_node->next;
-    }
-    if (redir_error)
-        return (redir_error);
-	else
-		redir_error = process_out_redirections(node, ms);
-    return (redir_error);
-}
-
-pid_t pipeline_exec(t_ast *node, t_minish *ms)
+pid_t	pipeline_exec(t_ast *node, t_minish *ms)
 {
 	pid_t	last_child_pid;
 	bool	redir_error;
@@ -193,7 +100,7 @@ pid_t pipeline_exec(t_ast *node, t_minish *ms)
 	last_child_pid = 0;
 	redir_error = false;
 	if (node == NULL)
-		return last_child_pid;
+		return (last_child_pid);
 	ms->dont_execve = false;
 	last_child_pid = pipeline_exec(node->left, ms);
 	last_child_pid = pipeline_exec(node->right, ms);
@@ -211,24 +118,6 @@ pid_t pipeline_exec(t_ast *node, t_minish *ms)
 		execute_redir(node->cmd, node->args[0], ms);
 	return (last_child_pid);
 }
-
-// void	execute(t_minish *ms)
-// {
-// 	int		status;
-// 	pid_t	last;
-// 	t_ast	*head;
-
-// 	head = lastpipe(ms->cmd_list);
-// 	status = 0x7F;		  dessa forma nao verifica codigo de saida da child
-// 	pipeline_matrix(ms);
-// 	last = pipeline_exec(head, ms);
-// 	last = waitpid(last, &status, 0);
-// 	while (waitpid(0, NULL, 0) > 0)
-// 		continue ;
-// 	if (WIFEXITED(status))
-// 		set_exit_status(WEXITSTATUS(status));
-// 	set_signals();
-// }
 
 void	execute(t_minish *ms)
 {

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 21:10:12 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 22:03:55 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ void	sanitize_ms(t_minish *ms, bool sair);
 void	sanitize_path(t_minish *ms);
 void	cmd_clear(t_ast **lst);
 void	tk_clear(t_token **lst);
-void	hd_sanitize(t_minish *ms, int e_code);
 void	unlink_hd_file(t_minish *ms);
 
 //Parse
@@ -126,6 +125,7 @@ void	error(char *str, int status);
 void	error_execve(t_minish *ms);
 bool	is_redir_or_pipe(char *cmd);
 bool	is_redirection(char *cmd);
+bool	process_redirections(t_ast *node, t_minish *ms);
 bool	need2be_parent(char *command, char *arg, t_minish *ms);
 bool	is_builtin(char *command);
 char	**join_cmd_arg(char	*cmd, char **args);
@@ -142,6 +142,7 @@ char	*get_executable_path(char *cmd, t_minish *ms);
 void	execute_redir(const char *type, char *filename, t_minish *ms);
 void	read_until_deli(char *deli, t_minish *ms, char *file, bool fl);
 char	*create_hd_file(int i, bool flag);
+void	hd_sanitize(t_minish *ms, int e_code);
 
 //Commands
 void	exit_bash(char **exit_args, t_minish *ms);
