@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:44:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 20:43:04 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 22:48:41 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	pipe_data_flow(int cmd_index, t_minish *ms, char **fullcmd)
 	if (cmd_index < cmd_num - 1 && ms->fd_out == STDOUT_FILENO)
 	{
 		if (fullcmd && !get_executable_path(*fullcmd, ms))
-			error("minishell: Command not found\n", 127);
+			error("minishell: command not found\n", 127);
 		ms->fd_out = ms->pipes[cmd_index][1];
 	}
 }
