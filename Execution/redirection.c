@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 20:45:03 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:52:44 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	hd_sanitize(t_minish *ms, int e_code)
 			ft_free_matrix(ms->env_tmp);
 	if (ms->path)
 		ft_free_matrix(ms->path);
-	free(ms);
+	//free(ms);
 	rl_clear_history();
 	exit(e_code);
 }
@@ -110,7 +110,6 @@ int	heredoc(char *delimiter, t_minish *ms, bool flag)
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
 		set_exit_status(130);
-		//write(1, "aqui1\n", 6);
 		free(hd_file);
 		return (-1);
 	}
@@ -130,7 +129,7 @@ int	heredoc(char *delimiter, t_minish *ms, bool flag)
         return -1;
     }
     free(hd_file); // Free the hd_file string
-    return fd; 
+    return (fd); 
 	//return (ms->hd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 19:20:33 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:16:55 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	handle_hd_int(int signum, t_minish *ms, char *delimiter, char *hd)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
-        rl_replace_line("", 0);
-		rl_redisplay();
+        //rl_replace_line("", 0);
+		//rl_redisplay();
 		unlink_hd_file(ms_tmp);
 		//free(del_tmp);
 		//free(hd_tmp);
