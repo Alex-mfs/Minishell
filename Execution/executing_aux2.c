@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing_aux2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/26 12:50:02 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/26 20:18:01 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,4 @@ char	**join_cmd_arg(char	*cmd, char **args)
 	}
 	full_cmd[i + 1] = NULL;
 	return (full_cmd);
-}
-
-void	create_fullcmd_pipe_flow(t_minish *ms, t_ast *node)
-{
-	char	**fullcmd;
-
-	fullcmd = join_cmd_arg(node->cmd, node->args);
-	pipe_data_flow(node->index, ms, fullcmd);
-	ft_free_matrix(fullcmd);
 }
