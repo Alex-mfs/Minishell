@@ -1,0 +1,16 @@
+.vscode/
+*obj/
+*.o
+*.a
+*.pdf
+dev*/
+*wip*
+README.md
+README.c
+a.out
+minishell
+minishell_bonus
+*.DS_Store*
+*.txt
+.nfs*
+readline.supp
