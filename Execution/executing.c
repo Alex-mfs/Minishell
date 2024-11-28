@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 12:55:39 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 19:18:03 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	do_command(char	*cmd, char **args, t_minish *ms)
 {
 	char	**full_cmd;
 
-	//printf("do_command: Executing command '%s', current exit status = %d\n", cmd, get_exit_status());
+	printf("do_command: Executing command '%s', current exit status = %d\n", cmd, get_exit_status());
 	//set_exit_status(0);
 	if (!is_builtin(cmd))
 	{
@@ -80,8 +80,10 @@ pid_t	child_exec(t_ast *node, t_minish *ms)
 {
 	pid_t	pid;
 
+	printf("Test child exec, cmd=%s, bool=%d\n", node->cmd, (int)node->empty_quotes);
 	treat_child_signal();
 	pid = fork();
+	printf("Test child exec, cmd=%s, bool=%d\n", node->cmd, (int)node->empty_quotes);
 	if (pid == -1)
 	{
 		perror("minishell: Error while creating child process");
@@ -96,6 +98,7 @@ pid_t	child_exec(t_ast *node, t_minish *ms)
 		else
 			pipe_data_flow(node->index, ms, NULL);
 		relinking_in_out(ms);
+		printf("Test child exec, cmd=%s, bool=%d\n", node->cmd, (int)node->empty_quotes);
 		do_command(node->cmd, node->args, ms);
 		sanitize_ms(ms, true);
 	}
@@ -217,7 +220,6 @@ pid_t pipeline_exec(t_ast *node, t_minish *ms)
 	}
 	else if (is_redirection(node->cmd))
 		execute_redir(node->cmd, node->args[0], ms);
-	//printf("pipeline_exec: Exiting, last_child_pid = %d, exit status = %d\n", last_child_pid, get_exit_status());
 	return (last_child_pid);
 }
 

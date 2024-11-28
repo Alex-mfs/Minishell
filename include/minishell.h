@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/27 12:24:21 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:30:38 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_token
 	char			*token;
 	t_lexer			type;
 	bool			to_merge;
+	bool			empty_quotes;
 	struct s_token	*next;
 }			t_token;
 
@@ -50,6 +51,7 @@ typedef struct s_ast
 	int				index;
 	char			*cmd;
 	char			**args;
+	bool			empty_quotes;
 	struct s_ast	*left;
 	struct s_ast	*right;
 	struct s_ast	*next;
@@ -65,6 +67,8 @@ typedef struct s_minish
 	char			*cwd;
 	struct s_token	*tk_list;
 	bool			aux_merge;
+	bool			empty_command;
+	bool			good_assign;
 	t_ast			*current_node;
 	struct s_ast	*cmd_list;
 	int				fd_in;
@@ -94,6 +98,7 @@ void	handle_heredoc_interrupt(int signum);
 //Utils - Sanitizing
 void	sanitize_ms(t_minish *ms, bool sair);
 void	sanitize_path(t_minish *ms);
+t_token	*clear_top_token(t_token *node);
 
 //Parse
 void	get_tokens(t_minish *ms, char *input);
@@ -106,6 +111,7 @@ t_ast	*cmdlst_last(t_ast *lst);
 void	cmdlst_addback(t_ast **lst, t_ast *new);
 t_ast	*lastpipe(t_ast *lst);
 void	tklst_addback(t_token **lst, t_token *new);
+bool	token_assign(t_token *buff);
 
 //Execution - Executing
 void	execute(t_minish *ms);

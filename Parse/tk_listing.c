@@ -6,11 +6,22 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/24 11:43:41 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:55:23 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+bool	token_assign(t_token *buff)
+{
+	while (buff && buff->token)
+	{
+		if (!ft_strchr(buff->token, '='))
+			return (false);
+		buff = buff->next;
+	}
+	return (true);
+}
 
 static t_token	*tklst_last(t_token *lst)
 {

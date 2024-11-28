@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/27 12:55:04 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:31:37 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 		else if (!cmd->cmd)
 		{
 			cmd->cmd = ft_strdup(buff->token);
+			cmd->empty_quotes = buff->empty_quotes;
 			cmdlst_addback(&ms->cmd_list, cmd);
 		}
 		else

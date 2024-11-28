@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/27 09:24:34 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:36:50 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ void	expand(t_minish *ms)
 	{
 		if (curr->type == DOUBLE_QUOTES || curr->type == OTHER)
 			expand_token(ms, curr);
+		if (!curr->token[0]
+			&& (curr->type == DOUBLE_QUOTES || curr->type == SINGLE_QUOTES))
+			curr->empty_quotes = true;
 		curr = curr->next;
 	}
 	merge_tokens(ms);

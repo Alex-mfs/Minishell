@@ -6,51 +6,78 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/26 12:33:22 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:52:32 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static bool	assign_var(t_minish *ms)
+static bool	invalid_assignment(t_token *buff)
 {
-	int		i;
-	char	*str;
-
-	i = -1;
-	if (ms->tk_list->token && ms->tk_list->token[0])
+	while (buff && buff->token && buff->token[0])
 	{
-		str = ms->tk_list->token;
-		if (str[0] == '=' || str[ft_strlen(str) - 1] == '=')
+		if (!ft_strchr(buff->token, '='))
+			break ;
+		if (ft_isdigit(buff->token[0]) || buff->token[0] == '=')
 		{
-			error("minishell: bad assignment\n", 1);
+			printf("minishell: %s ", buff->token);
+			error("is not a valid variable identifier\n", 127);
 			return (true);
 		}
-		if (ft_isdigit(str[0]))
-			return (false);
-		while (str[++i])
-		{
-			if (str[i] == '=')
-			{
-				add_or_update_env(&ms->env_tmp, str);
-				return (true);
-			}
-		}
+		buff = buff->next;
 	}
 	return (false);
 }
 
+static bool	assign_var(t_minish *ms)
+{
+	t_token	*buff;
+	bool	all_assign;
+
+	buff = ms->tk_list;
+	if (invalid_assignment(buff))
+		return (true);
+	all_assign = token_assign(buff);
+	buff = ms->tk_list;
+	while (buff && buff->token && buff->token[0])
+	{
+		if (all_assign)
+		{
+			add_or_update_env(&ms->env_tmp, buff->token);
+			buff = buff->next;
+		}
+		else if (!all_assign && !ft_strchr(buff->token, '='))
+			break ;
+		else if (!all_assign && ft_strchr(buff->token, '=')
+			&& (buff->type < SINGLE_QUOTES || buff->type > DOUBLE_QUOTES))
+		{
+			ms->tk_list = clear_top_token(buff);
+			buff = ms->tk_list;
+		}
+	}
+	return (all_assign);
+}
+
 static void	compute(t_minish *ms, char *input)
 {
+	printf("Test0\n");
 	if (!validate_quotes(input))
 		return ;
 	get_tokens(ms, input);
+	printf("Test1\n");
 	if (!validate_tokens(ms))
 		return ;
 	expand(ms);
+	printf("Test2\n");
+	ms->good_assign = assign_var(ms);
+	if (!validate_tokens(ms))
+		return ;
+	printf("Test3\n");
 	parse(ms);
-	if (!assign_var(ms))
+	printf("Test4\n");
+	if (!ms->good_assign)
 		execute(ms);
+	printf("Test5\n");
 	sanitize_path(ms);
 	unlink("heredoc_tmp");
 }

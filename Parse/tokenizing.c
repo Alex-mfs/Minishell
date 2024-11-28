@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/26 12:32:15 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:28:49 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static int	save_token(t_minish *ms, char *symbol, t_lexer type, bool merge)
 	token->type = type;
 	token->next = NULL;
 	token->to_merge = merge;
+	token->empty_quotes = false;
 	if (!merge)
 		ms->aux_merge = false;
 	tklst_addback(&ms->tk_list, token);

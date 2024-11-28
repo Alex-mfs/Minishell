@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/05 11:49:21 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:06:50 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ char	*ft_str_repl_seg(const char *str, char *old, char *new)
 	n = ft_strlen(new);
 	if (!old || o > len || !ft_strnstr(str, old, len))
 		return (NULL);
-	if (n > o)
+	if (n == 0 && len - o == 0)
+		str2 = ft_strdup("");
+	else if (n > o)
 		str2 = replace_long(str, old, new, len);
 	else
 		str2 = replace_short(str, old, new, len);
