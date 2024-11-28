@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:18:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 14:24:11 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:34:13 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ void	ft_export(char **exp_args, t_minish *ms)
 	while (exp_args[i] && exp_args[i][0])
 	{
 		if (ft_isdigit(exp_args[i][0]))
-			error("minishell: not a valid variable identifier\n", 1);
+		{
+			printf("minishell: %s ", exp_args[i]);
+			error("is not a valid variable identifier\n", 1);
+		}
 		else if (ft_strchr(exp_args[i], '='))
 			handle_assignment(ms, exp_args[i]);
 		else
