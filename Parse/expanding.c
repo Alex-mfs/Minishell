@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 20:46:16 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/29 01:20:32 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,24 @@ static void	expand_token(t_minish *ms, t_token *tk)
 void	expand(t_minish *ms)
 {
 	t_token	*curr;
+	bool	dont_expand;
 
 	curr = ms->tk_list;
+	dont_expand = false;
 	while (curr)
 	{
-		if (curr->type == DOUBLE_QUOTES || curr->type == OTHER)
-			expand_token(ms, curr);
-		if (!curr->token[0]
-			&& (curr->type == DOUBLE_QUOTES || curr->type == SINGLE_QUOTES))
-			curr->empty_quotes = true;
+		if (dont_expand)
+			dont_expand = false;
+		else
+		{
+			if (curr->type == DOUBLE_QUOTES || curr->type == OTHER)
+				expand_token(ms, curr);
+			if (!curr->token[0]
+				&& (curr->type == DOUBLE_QUOTES || curr->type == SINGLE_QUOTES))
+				curr->empty_quotes = true;
+		}
+		if (curr->type == REDIR_INPUT_2)
+			dont_expand = true;
 		curr = curr->next;
 	}
 	merge_tokens(ms);
