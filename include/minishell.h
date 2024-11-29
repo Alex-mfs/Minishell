@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 22:58:16 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/29 01:33:18 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,9 +123,11 @@ void	execute(t_minish *ms);
 //Execution - Executing_aux
 void	error(char *str, int status);
 void	error_execve(t_minish *ms);
+char	*which_error(char *bef, char *mid, char *aft);
 bool	is_redir_or_pipe(char *cmd);
 bool	is_redirection(char *cmd);
 bool	process_redirections(t_ast *node, t_minish *ms);
+void	deal_with_isdir(t_minish *ms, char **arg, char *path);
 bool	need2be_parent(char *command, char *arg, t_minish *ms);
 bool	is_builtin(char *command);
 char	**join_cmd_arg(char	*cmd, char **args);

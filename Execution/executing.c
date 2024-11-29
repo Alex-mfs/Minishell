@@ -6,35 +6,11 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 23:49:04 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/29 01:33:04 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-char	*which_error(char *bef, char *mid, char *aft)
-{
-	char	*str;
-	char	*tmp;
-
-	str = ft_strjoin(bef, mid);
-	tmp = str;
-	str = ft_strjoin(tmp, aft);
-	free(tmp);
-	return (str);
-}
-
-void	deal_with_isdir(t_minish *ms, char **arg, char *path)
-{
-	char	*str;
-
-	str = which_error("minishell: ", *arg, ": Is a directory\n");
-	ft_free_matrix(arg);
-	free(path);
-	error(str, 126);
-	free(str);
-	sanitize_ms(ms, true);
-}
 
 void	exec_if_exists(char **arg, t_minish *ms)
 {
@@ -59,33 +35,33 @@ void	exec_if_exists(char **arg, t_minish *ms)
 	sanitize_ms(ms, true);
 }
 
-void	do_command(char	*cmd, char **args, t_minish *ms)
+void	do_command(t_ast *node, t_minish *ms)
 {
 	char	**full_cmd;
 
 	set_exit_status(0);
-	if (!is_builtin(cmd))
+	if (!is_builtin(node->cmd))
 	{
 		if (ms->dont_execve)
 			return ;
-		full_cmd = join_cmd_arg(cmd, args);
+		full_cmd = join_cmd_arg(node->cmd, node->args);
 		exec_if_exists(full_cmd, ms);
 		error_execve(ms);
 	}
-	if (ft_str_cmp(cmd, "pwd"))
+	if (ft_str_cmp(node->cmd, "pwd"))
 		printf("%s\n", ms->cwd);
-	else if (ft_str_cmp(cmd, "echo"))
-		echo(args);
-	else if (ft_str_cmp(cmd, "exit"))
-		exit_bash(args, ms);
-	else if (ft_str_cmp(cmd, "env"))
-		env(args, ms->env_list);
-	else if (ft_str_cmp(cmd, "export"))
-		ft_export(args, ms);
-	else if (ft_str_cmp(cmd, "unset"))
-		unset(args, ms);
-	else if (ft_str_cmp(cmd, "cd"))
-		cd(args, ms);
+	else if (ft_str_cmp(node->cmd, "echo"))
+		echo(node->args);
+	else if (ft_str_cmp(node->cmd, "exit"))
+		exit_bash(node->args, ms);
+	else if (ft_str_cmp(node->cmd, "env"))
+		env(node->args, ms->env_list);
+	else if (ft_str_cmp(node->cmd, "export"))
+		ft_export(node->args, ms);
+	else if (ft_str_cmp(node->cmd, "unset"))
+		unset(node->args, ms);
+	else if (ft_str_cmp(node->cmd, "cd"))
+		cd(node->args, ms);
 }
 
 pid_t	child_exec(t_ast *node, t_minish *ms)
@@ -108,7 +84,7 @@ pid_t	child_exec(t_ast *node, t_minish *ms)
 		else
 			pipe_data_flow(node->index, ms, NULL);
 		relinking_in_out(ms);
-		do_command(node->cmd, node->args, ms);
+		do_command(node, ms);
 		sanitize_ms(ms, true);
 	}
 	close_in_out(node->index, ms);
@@ -133,7 +109,7 @@ pid_t	pipeline_exec(t_ast *node, t_minish *ms)
 		if (redir_error || ms->dont_execve)
 			return (last_child_pid);
 		if (need2be_parent(node->cmd, node->args[0], ms))
-			do_command(node->cmd, node->args, ms);
+			do_command(node, ms);
 		else
 			last_child_pid = child_exec(node, ms);
 	}

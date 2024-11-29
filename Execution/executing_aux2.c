@@ -6,11 +6,35 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 21:54:44 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/29 00:18:08 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+char	*which_error(char *bef, char *mid, char *aft)
+{
+	char	*str;
+	char	*tmp;
+
+	str = ft_strjoin(bef, mid);
+	tmp = str;
+	str = ft_strjoin(tmp, aft);
+	free(tmp);
+	return (str);
+}
+
+void	deal_with_isdir(t_minish *ms, char **arg, char *path)
+{
+	char	*str;
+
+	str = which_error("minishell: ", *arg, ": Is a directory\n");
+	ft_free_matrix(arg);
+	free(path);
+	error(str, 126);
+	free(str);
+	sanitize_ms(ms, true);
+}
 
 bool	is_builtin(char *command)
 {

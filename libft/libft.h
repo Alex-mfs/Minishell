@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/10/28 19:04:48 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/29 01:35:50 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ char	*ft_str_repl_chr(char *str, char old, char new, size_t times);
 char	*ft_str_repl_seg(const char *str, char *old, char *new);
 char	**ft_matrix_dup(char **src);
 char	**ft_matrix_add_line(char **src, char *newline);
+char	**ft_mat_add_safe_line(char **src, char *newline);
 void	ft_striteri(char *str, void (*f)(unsigned int, char *));
 char	*ft_strmapi(const char *str, char (*f)(unsigned int, char));
 char	**ft_split(const char *s, char c);

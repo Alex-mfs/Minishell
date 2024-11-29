@@ -3,40 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   com_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:20:41 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 14:36:22 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/29 00:13:06 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-bool	is_valid(char *word)
+static bool	valid_flag(char *word)
 {
 	int	j;
 
 	j = 1;
 	while (word[j])
 	{
-		if (word[j] == 'n')
-			return (true);
+		if (word[j] != 'n')
+			return (false);
 		j++;
 	}
-	return (false);
+	return (true);
 }
 
 void	echo(char **words)
 {
 	int		i;
-	bool	only_n;
+	bool	has_n;
 
 	i = 0;
-	only_n = true;
+	has_n = false;
 	while (words[i] && words[i][0] == '-')
 	{
-		if (is_valid(words[i]))
-			only_n = false;
+		if (!valid_flag(words[i]))
+			break ;
+		has_n = true;
 		i++;
 	}
 	while (words[i])
@@ -46,6 +47,6 @@ void	echo(char **words)
 		if (words[i])
 			printf(" ");
 	}
-	if (only_n)
+	if (!has_n)
 		printf("\n");
 }
