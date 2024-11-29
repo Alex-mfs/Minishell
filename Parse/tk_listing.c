@@ -12,6 +12,30 @@
 
 #include "../include/minishell.h"
 
+void	merge_tokens(t_minish *ms)
+{
+	t_token	*curr;
+	t_token	*next;
+
+	curr = ms->tk_list;
+	while (curr)
+	{
+		next = curr->next;
+		if (!next)
+			break ;
+		if (!curr->to_merge && next->to_merge)
+		{
+			curr->token = ft_strbuild(curr->token, next->token);
+			curr->next = next->next;
+			curr->type = OTHER;
+			free(next->token);
+			free(next);
+		}
+		else
+			curr = curr->next;
+	}
+}
+
 t_token	*clear_top_token(t_token *node)
 {
 	t_token	*tmp;
