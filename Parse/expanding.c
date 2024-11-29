@@ -12,28 +12,39 @@
 
 #include "../include/minishell.h"
 
-static void	merge_tokens(t_minish *ms)
+static int	next_pos(const char *str, size_t i, char c)
 {
-	t_token	*curr;
-	t_token	*next;
+	size_t	len;
 
-	curr = ms->tk_list;
-	while (curr)
+	if (!str)
+		return (-1);
+	len = ft_strlen(str);
+	while (i <= len || (unsigned char)c == '\0')
 	{
-		next = curr->next;
-		if (!next)
-			break ;
-		if (!curr->to_merge && next->to_merge)
-		{
-			curr->token = ft_strbuild(curr->token, next->token);
-			curr->next = next->next;
-			curr->type = OTHER;
-			free(next->token);
-			free(next);
-		}
-		else
-			curr = curr->next;
+		if (str[i] == c)
+			return ((int)i);
+		i++;
 	}
+	return (-1);
+}
+
+static char	*ft_strchr_nodelim(const char *str, int c)
+{
+	size_t	i;
+	size_t	len;
+
+	i = 0;
+	if (!str)
+		return (0);
+	len = ft_strlen(str);
+	while (i <= len || (unsigned char)c == '\0')
+	{
+		if (str[i] == (unsigned char)c && str[i + 1]
+			&& (ft_isalnum(str[i + 1]) || str[i + 1] == '_'))
+			return (&((char *)str)[i]);
+		i++;
+	}
+	return (0);
 }
 
 static char	*find_name(char *token)
@@ -42,6 +53,9 @@ static char	*find_name(char *token)
 	int	end;
 
 	pos = ft_strchr_pos(token, '$');
+	while (token[pos + 1]
+		&& !(ft_isalnum(token[pos + 1]) || token[pos + 1] == '_'))
+		pos = next_pos(token, (size_t)(pos + 1), '$');
 	end = pos + 1;
 	if (token[end] == '?')
 		return (ft_strdup("$?"));
@@ -58,7 +72,7 @@ static void	expand_token(t_minish *ms, t_token *tk)
 	char	*value;
 	char	*buff;
 
-	while (ft_strchr(tk->token, '$'))
+	while (ft_strchr_nodelim(tk->token, '$'))
 	{
 		name = find_name(tk->token);
 		if (ft_str_cmp(name, "$?"))

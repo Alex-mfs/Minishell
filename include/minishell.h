@@ -117,6 +117,7 @@ t_ast	*lastpipe(t_ast *lst);
 void	tklst_addback(t_token **lst, t_token *new);
 t_token	*clear_top_token(t_token *node);
 bool	token_assign(t_token *buff);
+void	merge_tokens(t_minish *ms);
 
 //Execution - Executing
 void	execute(t_minish *ms);
