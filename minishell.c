@@ -40,8 +40,9 @@ int	main(int argc, char **argv, char **envp)
 	return (g_exit_status);
 }
 
-//WIP echo $
+//FIXED echo $
 
+//ABORTED? variável $_
 //ABORTED Terminar implementacao de emptyquotes
 
 //WIP NORMINETTE
