@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validating.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 14:35:48 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/30 14:00:12 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,6 @@ bool	validate_quotes(char *input)
 	return (true);
 }
 
-static bool	tk_red_pip(t_token *tk)
-{
-	if (tk->type >= REDIR_INPUT_1 && tk->type <= PIPE)
-		return (true);
-	return (false);
-}
-
 bool	validate_tokens(t_minish *ms)
 {
 	t_token	*curr;
@@ -71,7 +64,7 @@ bool	validate_tokens(t_minish *ms)
 	while (curr)
 	{
 		if ((curr->type >= REDIR_INPUT_1 && curr->type <= REDIR_OUTPUT_2)
-			&& (!curr->next || tk_red_pip(curr->next)))
+			&& (!curr->next || is_tk_redpip(curr->next)))
 			return (validation_error("Input syntax near redirection"));
 		if (curr->type == PIPE
 			&& (!curr->next || curr->next->type == PIPE))

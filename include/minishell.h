@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/29 01:33:18 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/30 14:23:58 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	unlink_hd_file(t_minish *ms);
 void	get_tokens(t_minish *ms, char *input);
 void	expand(t_minish *ms);
 void	parse(t_minish *ms);
+void	empty_cmd(t_minish *ms, t_ast *node);
 //Parse - Listing
 int		cmdlst_size(t_ast *lst, bool total);
 t_ast	*cmdlst_penult(t_ast *lst);
@@ -118,6 +119,10 @@ void	tklst_addback(t_token **lst, t_token *new);
 t_token	*clear_top_token(t_token *node);
 bool	token_assign(t_token *buff);
 void	merge_tokens(t_minish *ms);
+//Parse - Checking
+bool	is_tk_redpip(t_token *tk);
+bool	is_tk_quote(t_token	*tk);
+bool	is_tk_merge(t_token	*tk);
 
 //Execution - Executing
 void	execute(t_minish *ms);

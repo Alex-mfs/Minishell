@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 20:52:32 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/30 15:22:23 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	read_inputs(t_minish *ms)
 		free(prompt);
 		if (!input)
 		{
-			error("Input allocation error.\nExiting minishell\n", 1);
+			error("exit\n", get_exit_status());
 			sanitize_ms(ms, true);
 			break ;
 		}

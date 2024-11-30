@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/30 10:27:42 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/30 12:05:30 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,7 @@ static void	expand_token(t_minish *ms, t_token *tk)
 		free(value);
 		free(buff);
 	}
-	if (ft_str_cmp(tk->token, "$") && tk->next
-		&& (tk->next->type == DOUBLE_QUOTES || tk->next->type == SINGLE_QUOTES))
+	if (ft_str_cmp(tk->token, "$") && tk->next && is_tk_quote(tk->next))
 		ft_bzero(tk->token, 1);
 }
 
@@ -100,14 +99,15 @@ void	expand(t_minish *ms)
 	dont_expand = false;
 	while (curr)
 	{
-		if (dont_expand)
+		if (dont_expand && is_tk_merge(curr))
+			;
+		else if (dont_expand)
 			dont_expand = false;
 		else
 		{
 			if (curr->type == DOUBLE_QUOTES || curr->type == OTHER)
 				expand_token(ms, curr);
-			if (!curr->token[0]
-				&& (curr->type == DOUBLE_QUOTES || curr->type == SINGLE_QUOTES))
+			if (!curr->token[0] && is_tk_quote(curr))
 				curr->empty_quotes = true;
 		}
 		if (curr->type == REDIR_INPUT_2)
