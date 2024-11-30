@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/29 01:20:32 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/30 10:27:42 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*ft_strchr_nodelim(const char *str, int c)
 	while (i <= len || (unsigned char)c == '\0')
 	{
 		if (str[i] == (unsigned char)c && str[i + 1]
-			&& (ft_isalnum(str[i + 1]) || str[i + 1] == '_' || str[i + 1] == '?'))
+			&& (ft_isalnum(str[i + 1]) || ft_strchr("_?", str[i + 1])))
 			return (&((char *)str)[i]);
 		i++;
 	}
@@ -54,7 +54,7 @@ static char	*find_name(char *token)
 
 	pos = ft_strchr_pos(token, '$');
 	while (token[pos + 1]
-		&& !(ft_isalnum(token[pos + 1]) || token[pos + 1] == '_' || token[pos + 1] == '?'))
+		&& !(ft_isalnum(token[pos + 1]) || ft_strchr("_?", token[pos + 1])))
 		pos = next_pos(token, (size_t)(pos + 1), '$');
 	end = pos + 1;
 	if (token[end] == '?')
@@ -86,6 +86,9 @@ static void	expand_token(t_minish *ms, t_token *tk)
 		free(value);
 		free(buff);
 	}
+	if (ft_str_cmp(tk->token, "$") && tk->next
+		&& (tk->next->type == DOUBLE_QUOTES || tk->next->type == SINGLE_QUOTES))
+		ft_bzero(tk->token, 1);
 }
 
 void	expand(t_minish *ms)
