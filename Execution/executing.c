@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/30 12:45:52 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/30 16:13:26 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ pid_t	pipeline_exec(t_ast *node, t_minish *ms)
 		return (last_child_pid);
 	last_child_pid = pipeline_exec(node->left, ms);
 	if (ms->dont_execve)
-		return(last_child_pid);
+		return (last_child_pid);
 	last_child_pid = pipeline_exec(node->right, ms);
 	if (!is_redir_or_pipe(node->cmd))
 	{

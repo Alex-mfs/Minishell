@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/30 14:46:31 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/30 16:15:49 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static char	**free_all(char **tab, int w)
 
 static char	**free_before_return(char **src, char **dest)
 {
-		free_all(src, 0);
-		return (dest);
+	free_all(src, 0);
+	return (dest);
 }
 
 static int	countlines(char **src)
@@ -55,7 +55,7 @@ char	**ft_matrix_del_line_top(char **src)
 		return (free_all(src, 0));
 	dest[w - 1] = 0;
 	if (w < 2)
-		return(free_before_return(src, dest));
+		return (free_before_return(src, dest));
 	w -= 2;
 	while (w >= 0)
 	{

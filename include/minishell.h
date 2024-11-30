@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/30 14:23:58 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/30 16:24:56 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		get_exit_status(void);
 void	read_inputs(t_minish *ms);
 //Utils - Validating
 bool	validate_quotes(char *input);
-bool	validate_tokens(t_minish *ms);
+bool	validate_tokens(t_minish *ms, bool merged);
 //Utils - Signaling
 void	set_signals(void);
 // void	set_signals_heredoc(void);
@@ -121,6 +121,7 @@ bool	token_assign(t_token *buff);
 void	merge_tokens(t_minish *ms);
 //Parse - Checking
 bool	is_tk_redpip(t_token *tk);
+bool	is_tk_miniredir(t_token *tk);
 bool	is_tk_quote(t_token	*tk);
 bool	is_tk_merge(t_token	*tk);
 
@@ -149,7 +150,7 @@ char	*get_executable_path(char *cmd, t_minish *ms);
 //Execution - Redirection + aux
 void	execute_redir(const char *type, char *filename, t_minish *ms);
 void	read_until_deli(char *deli, t_minish *ms, char *file, bool fl);
-char	*create_hd_file(t_minish *ms, bool flag);
+char	*create_hd_file(t_minish *ms, bool flag, int i);
 void	hd_sanitize(t_minish *ms, int e_code);
 int		do_heredoc(char *delimiter, t_minish *ms);
 

@@ -6,11 +6,19 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/30 14:00:05 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/30 16:14:47 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+bool	is_tk_miniredir(t_token *tk)
+{
+	if (tk->type == REDIR_INPUT_1 || tk->type == REDIR_OUTPUT_1
+		|| tk->type == REDIR_OUTPUT_2)
+		return (true);
+	return (false);
+}
 
 bool	is_tk_redpip(t_token *tk)
 {

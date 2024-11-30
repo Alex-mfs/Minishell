@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 22:59:46 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/30 16:24:12 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	heredoc(char *delimiter, t_minish *ms, bool flag)
 	char	*hd_file;
 
 	sig_ignore();
-	hd_file = create_hd_file(ms, true);
+	hd_file = create_hd_file(ms, true, ms->hd);
 	pid = fork();
 	if (pid == -1)
 		return (pid_error(hd_file));
