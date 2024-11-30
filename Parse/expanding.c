@@ -40,7 +40,7 @@ static char	*ft_strchr_nodelim(const char *str, int c)
 	while (i <= len || (unsigned char)c == '\0')
 	{
 		if (str[i] == (unsigned char)c && str[i + 1]
-			&& (ft_isalnum(str[i + 1]) || str[i + 1] == '_'))
+			&& (ft_isalnum(str[i + 1]) || str[i + 1] == '_' || str[i + 1] == '?'))
 			return (&((char *)str)[i]);
 		i++;
 	}
@@ -54,7 +54,7 @@ static char	*find_name(char *token)
 
 	pos = ft_strchr_pos(token, '$');
 	while (token[pos + 1]
-		&& !(ft_isalnum(token[pos + 1]) || token[pos + 1] == '_'))
+		&& !(ft_isalnum(token[pos + 1]) || token[pos + 1] == '_' || token[pos + 1] == '?'))
 		pos = next_pos(token, (size_t)(pos + 1), '$');
 	end = pos + 1;
 	if (token[end] == '?')
