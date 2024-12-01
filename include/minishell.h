@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/30 16:24:56 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:12:19 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	create_fullcmd_pipe_flow(t_minish *ms, t_ast *node);
 void	pipeline_matrix(t_minish *ms);
 void	close_in_out(int index, t_minish *ms);
 void	relinking_in_out(t_minish *ms);
-void	pipe_data_flow(int cmd_index, t_minish *ms, char **fullcmd);
+void	pipe_data_flow(int cmd_index, t_minish *ms);
 void	exec_if_exists(char **arg, t_minish *ms);
 //Execution - Path
 char	*get_executable_path(char *cmd, t_minish *ms);

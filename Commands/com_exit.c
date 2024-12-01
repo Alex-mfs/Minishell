@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   com_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:19:22 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 14:36:17 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/01 12:16:39 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,13 @@ void	exit_bash(char **exit_args, t_minish *ms)
 	while (exit_args[arg_num] && exit_args[arg_num][0])
 		arg_num++;
 	if (arg_num > 1)
-	{
-		error("exit: too many arguments\n", 1);
-		return ;
-	}
+		return (error("exit: too many arguments\n", 1));
 	if (arg_num == 1)
 	{
 		num = validate_and_convert_arg(exit_args[0], ms);
 		num = calculate_exit_code(num);
 		set_exit_status(num);
 	}
-	if (arg_num == 0)
-		set_exit_status(0);
 	printf("exit\n");
 	sanitize_ms(ms, true);
 }

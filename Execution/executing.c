@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/30 16:13:26 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:46:13 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	exec_if_exists(char **arg, t_minish *ms)
 	char		*path;
 	struct stat	path_stat;
 	char		*str;
+	//char buf[1024]; //JOAO
 
 	path = get_executable_path(*arg, ms);
 	if (!path || stat(path, &path_stat) != 0)
@@ -30,6 +31,13 @@ void	exec_if_exists(char **arg, t_minish *ms)
 	}
 	if (S_ISDIR(path_stat.st_mode))
 		deal_with_isdir(ms, arg, path);
+	/*//JOAO
+	printf("PID=%d, Reading from fd_in\n", getpid());
+	while (read(STDIN_FILENO, buf, sizeof(buf)) > 0) {
+	    write(STDOUT_FILENO, buf, sizeof(buf));
+	}
+	printf("PID=%d, EOF detected\n", getpid());
+	//JOAO*/
 	execve(path, arg, ms->env_list);
 	error("minishell: permission denied or execution failed\n", 126);
 	sanitize_ms(ms, true);
@@ -39,7 +47,7 @@ void	do_command(t_ast *node, t_minish *ms)
 {
 	char	**full_cmd;
 
-	set_exit_status(0);
+	//set_exit_status(0); //Tem que se implementar noutro sitio
 	if (!is_builtin(node->cmd))
 	{
 		if (ms->dont_execve)
@@ -69,6 +77,12 @@ pid_t	child_exec(t_ast *node, t_minish *ms)
 	pid_t	pid;
 
 	treat_child_signal();
+	/*//JOAO
+	for (int i = 0; i < 1024; i++) {
+    	if (fcntl(i, F_GETFD) != -1) {
+        	printf("PID=%d, Open FD: %d\n", getpid(), i);
+	    }
+	}// JOAO*/
 	pid = fork();
 	if (pid == -1)
 	{
@@ -79,10 +93,7 @@ pid_t	child_exec(t_ast *node, t_minish *ms)
 	{
 		if (ms->fd_in == -1 || ms->fd_out == -1)
 			sanitize_ms(ms, true);
-		if (!is_builtin(node->cmd))
-			create_fullcmd_pipe_flow(ms, node);
-		else
-			pipe_data_flow(node->index, ms, NULL);
+		pipe_data_flow(node->index, ms);
 		relinking_in_out(ms);
 		do_command(node, ms);
 		sanitize_ms(ms, true);
@@ -114,8 +125,6 @@ pid_t	pipeline_exec(t_ast *node, t_minish *ms)
 		else
 			last_child_pid = child_exec(node, ms);
 	}
-	else if (is_redirection(node->cmd))
-		execute_redir(node->cmd, node->args[0], ms);
 	return (last_child_pid);
 }
 

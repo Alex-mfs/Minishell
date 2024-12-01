@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:46:55 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 21:59:28 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/01 12:10:54 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ bool	need2be_parent(char *command, char *arg, t_minish *ms)
 	is_parent = false;
 	if (!command)
 		return (is_parent);
-	if (ms->qtd_pipes > 0)
-	{
-		ms->qtd_pipes--;
+	if (lastpipe(ms->cmd_list)->index < 0)
 		return (false);
-	}
+	/*if (ms->qtd_pipes > 0)
+	{
+		ms->qtd_pipes--; //Isto nao eh o que se deve fazer
+		return (false);
+	}*/
 	if (ft_str_cmp(command, "cd") == true)
 		is_parent = true;
 	else if (ft_str_cmp(command, "exit") == true)

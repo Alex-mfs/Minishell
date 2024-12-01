@@ -6,13 +6,13 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:44:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/30 19:36:16 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:46:23 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	pipe_data_flow(int cmd_index, t_minish *ms, char **fullcmd)
+void	pipe_data_flow(int cmd_index, t_minish *ms)
 {
 	int	cmd_num;
 
@@ -22,13 +22,7 @@ void	pipe_data_flow(int cmd_index, t_minish *ms, char **fullcmd)
 	if (cmd_index > 0 && ms->fd_in == STDIN_FILENO)
 		ms->fd_in = ms->pipes[cmd_index - 1][0];
 	if (cmd_index < cmd_num - 1 && ms->fd_out == STDOUT_FILENO)
-	{
-		//if (fullcmd && !get_executable_path(*fullcmd, ms))
-		//	error("minishell: command not found\n", 127);
-		if (fullcmd)
-			;
 		ms->fd_out = ms->pipes[cmd_index][1];
-	}
 }
 
 void	relinking_in_out(t_minish *ms)
@@ -42,14 +36,18 @@ void	relinking_in_out(t_minish *ms)
 		}
 		close(ms->fd_in);
 	}
+	//printf("fd_out=%d, std_out=%d\n", ms->fd_out, STDOUT_FILENO);
 	if (ms->fd_out != STDOUT_FILENO)
 	{
+		//ft_putstr_fd("TestOut1\n", 2);
 		if (dup2(ms->fd_out, STDOUT_FILENO) == -1)
 		{
 			error("error: dup2 fd_out\n", 1);
 			sanitize_ms(ms, true);
 		}
+		//ft_putstr_fd("TestOut2\n", 2);
 		close(ms->fd_out);
+		//ft_putstr_fd("TestOut3\n", 2);
 	}
 }
 

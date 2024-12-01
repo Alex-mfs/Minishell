@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 22:59:18 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/01 13:36:32 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static void	report_error(char *filename, t_minish *ms)
 {
-	ms->dont_execve = true;
+	//ms->dont_execve = true;
+	if (ms->dont_execve)
+		;
 	if (get_exit_status() != 130)
 	{
 		if (errno != 0)
