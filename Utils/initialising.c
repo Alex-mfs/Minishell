@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/30 12:29:57 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/01 10:58:23 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,5 @@ void	init_ms(t_minish *ms, char **envp)
 	else
 		ms->path = NULL;
 	ms->aux_merge = false;
+	ms->dont_execve = false;
 }

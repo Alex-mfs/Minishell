@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:44:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/30 12:15:00 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/30 19:36:16 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ void	pipe_data_flow(int cmd_index, t_minish *ms, char **fullcmd)
 		ms->fd_in = ms->pipes[cmd_index - 1][0];
 	if (cmd_index < cmd_num - 1 && ms->fd_out == STDOUT_FILENO)
 	{
-		if (fullcmd && !get_executable_path(*fullcmd, ms))
-			error("minishell: command not found\n", 127);
+		//if (fullcmd && !get_executable_path(*fullcmd, ms))
+		//	error("minishell: command not found\n", 127);
+		if (fullcmd)
+			;
 		ms->fd_out = ms->pipes[cmd_index][1];
 	}
 }
