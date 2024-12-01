@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:19:22 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/01 12:16:39 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/01 23:04:01 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ long long	calculate_exit_code(long long num)
 	return (num);
 }
 
-void	exit_bash(char **exit_args, t_minish *ms)
+void	exit_bash(char **exit_args, t_minish *ms, int tmp)
 {
 	size_t		arg_num;
 	long long	num;
@@ -85,6 +85,9 @@ void	exit_bash(char **exit_args, t_minish *ms)
 		num = calculate_exit_code(num);
 		set_exit_status(num);
 	}
-	printf("exit\n");
+	if (arg_num == 0)
+		set_exit_status(tmp);
+	if (lastpipe(ms->cmd_list)->index == 0)
+		printf("exit\n");
 	sanitize_ms(ms, true);
 }

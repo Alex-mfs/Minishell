@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/01 17:12:19 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/01 23:04:55 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,13 +138,12 @@ void	deal_with_isdir(t_minish *ms, char **arg, char *path);
 bool	need2be_parent(char *command, char *arg, t_minish *ms);
 bool	is_builtin(char *command);
 char	**join_cmd_arg(char	*cmd, char **args);
-void	create_fullcmd_pipe_flow(t_minish *ms, t_ast *node);
 //Execution - Pipeline
 void	pipeline_matrix(t_minish *ms);
 void	close_in_out(int index, t_minish *ms);
 void	relinking_in_out(t_minish *ms);
 void	pipe_data_flow(int cmd_index, t_minish *ms);
-void	exec_if_exists(char **arg, t_minish *ms);
+void	exec_if_exists(char **arg, t_minish *ms, t_ast *node);
 //Execution - Path
 char	*get_executable_path(char *cmd, t_minish *ms);
 //Execution - Redirection + aux
@@ -155,7 +154,7 @@ void	hd_sanitize(t_minish *ms, int e_code);
 int		do_heredoc(char *delimiter, t_minish *ms);
 
 //Commands
-void	exit_bash(char **exit_args, t_minish *ms);
+void	exit_bash(char **exit_args, t_minish *ms, int tmp);
 void	ft_export(char **exp_args, t_minish *ms);
 void	env(char **env_arg, char **env_list);
 char	*get_env(const char *key, char **env_list);

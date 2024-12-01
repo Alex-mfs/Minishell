@@ -6,17 +6,18 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/12/01 17:46:13 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/01 23:05:23 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	exec_if_exists(char **arg, t_minish *ms)
+void	exec_if_exists(char **arg, t_minish *ms, t_ast *node)
 {
 	char		*path;
 	struct stat	path_stat;
 	char		*str;
+	//char		**tmp;
 	//char buf[1024]; //JOAO
 
 	path = get_executable_path(*arg, ms);
@@ -38,6 +39,17 @@ void	exec_if_exists(char **arg, t_minish *ms)
 	}
 	printf("PID=%d, EOF detected\n", getpid());
 	//JOAO*/
+	/*i = 0;
+	while (i < 2)
+	{
+		ft_putnbr_fd(ms->pipes[i][0], 2);
+		ft_putnbr_fd(ms->pipes[i][1], 2);
+		i++;
+	}*/
+	//tmp = ft_matrix_dup(ms->env_list);
+	//if (ft_str_cmp(arg[0], "cat") && (!arg[1] || !arg[1][0]) && node->next && node->next->index < 0)
+	//	close(ms->pipes[node->index][0]);
+	node->empty_quotes = false;
 	execve(path, arg, ms->env_list);
 	error("minishell: permission denied or execution failed\n", 126);
 	sanitize_ms(ms, true);
@@ -46,14 +58,16 @@ void	exec_if_exists(char **arg, t_minish *ms)
 void	do_command(t_ast *node, t_minish *ms)
 {
 	char	**full_cmd;
+	int		tmp;
 
-	//set_exit_status(0); //Tem que se implementar noutro sitio
+	tmp = get_exit_status();
+	set_exit_status(0);
 	if (!is_builtin(node->cmd))
 	{
 		if (ms->dont_execve)
 			return ;
 		full_cmd = join_cmd_arg(node->cmd, node->args);
-		exec_if_exists(full_cmd, ms);
+		exec_if_exists(full_cmd, ms, node);
 		error_execve(ms);
 	}
 	if (ft_str_cmp(node->cmd, "pwd"))
@@ -61,7 +75,7 @@ void	do_command(t_ast *node, t_minish *ms)
 	else if (ft_str_cmp(node->cmd, "echo"))
 		echo(node->args);
 	else if (ft_str_cmp(node->cmd, "exit"))
-		exit_bash(node->args, ms);
+		exit_bash(node->args, ms, tmp);
 	else if (ft_str_cmp(node->cmd, "env"))
 		env(node->args, ms->env_list);
 	else if (ft_str_cmp(node->cmd, "export"))
@@ -99,6 +113,7 @@ pid_t	child_exec(t_ast *node, t_minish *ms)
 		sanitize_ms(ms, true);
 	}
 	close_in_out(node->index, ms);
+	waitpid(pid, NULL, 0);
 	return (pid);
 }
 

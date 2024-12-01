@@ -1,7 +1,9 @@
 .vscode/
 *obj/
+*dep/
 *.o
 *.a
+*.d
 *.pdf
 dev*/
 *wip*
