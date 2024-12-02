@@ -31,11 +31,11 @@ $(OBJ): $(MAIN) $(SRC)
 -include $(DEPS)
 
 clean:
-	@$(RM) $(OBJ) $(BONUS_OBJ) obj obj_bonus
+	@$(RM) $(OBJ) $(DEPS) obj dep
 	@make clean -C $(SRC_LFT) -s
 
 fclean:
-	@$(RM) $(OBJ) $(BONUS_OBJ) $(NAME) $(BONUS_NAME) obj obj_bonus
+	@$(RM) $(OBJ) $(DEPS) $(NAME) $(BONUS_NAME) obj dep
 	@make fclean -C $(SRC_LFT) -s
 #	@$(RM) libft
 
