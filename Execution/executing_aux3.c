@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 21:54:42 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:06:44 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ bool	process_redirections(t_ast *node, t_minish *ms)
 	{
 		if (is_input_redirection(redir_node->cmd))
 		{
-			execute_redir(redir_node->cmd, redir_node->args[0], ms);
-			if (ms->dont_execve)
+			redir_error = execute_redir(redir_node->cmd, redir_node->args[0], ms);
+			if (ms->dont_execve || redir_error)
 			{
 				redir_error = true;
 				break ;

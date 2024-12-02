@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/01 23:04:55 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:05:57 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void	exec_if_exists(char **arg, t_minish *ms, t_ast *node);
 //Execution - Path
 char	*get_executable_path(char *cmd, t_minish *ms);
 //Execution - Redirection + aux
-void	execute_redir(const char *type, char *filename, t_minish *ms);
+bool	execute_redir(const char *type, char *filename, t_minish *ms);
 void	read_until_deli(char *deli, t_minish *ms, char *file, bool fl);
 char	*create_hd_file(t_minish *ms, bool flag, int i);
 void	hd_sanitize(t_minish *ms, int e_code);

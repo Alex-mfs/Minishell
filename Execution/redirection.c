@@ -6,13 +6,13 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/01 13:36:32 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:07:09 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	report_error(char *filename, t_minish *ms)
+static bool	report_error(char *filename, t_minish *ms)
 {
 	//ms->dont_execve = true;
 	if (ms->dont_execve)
@@ -25,7 +25,7 @@ static void	report_error(char *filename, t_minish *ms)
 			error(filename, 2);
 		set_exit_status(1);
 	}
-	return ;
+	return (true);
 }
 
 static int	exec_redir_in(t_minish *ms, const char *type, char *filename)
@@ -43,7 +43,7 @@ static int	exec_redir_in(t_minish *ms, const char *type, char *filename)
 	return (fd);
 }
 
-void	execute_redir(const char *type, char *filename, t_minish *ms)
+bool	execute_redir(const char *type, char *filename, t_minish *ms)
 {
 	int	fd;
 
@@ -64,10 +64,11 @@ void	execute_redir(const char *type, char *filename, t_minish *ms)
 		if (fd == -1)
 		{
 			ms->dont_execve = true;
-			return ;
+			return (true);
 		}
 		if (ms->fd_in != STDIN_FILENO)
 			close(ms->fd_in);
 		ms->fd_in = fd;
 	}
+	return (false);
 }

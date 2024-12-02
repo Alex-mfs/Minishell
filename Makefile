@@ -34,6 +34,8 @@ clean:
 	@$(RM) $(OBJ) $(DEPS) obj dep
 	@make clean -C $(SRC_LFT) -s
 
+#va : re
+#	valgrind -q --suppressions=./wip_suppressions --show-leak-kinds=all --track-fds=yes --leak-check=full ./$(NAME)
 fclean:
 	@$(RM) $(OBJ) $(DEPS) $(NAME) $(BONUS_NAME) obj dep
 	@make fclean -C $(SRC_LFT) -s

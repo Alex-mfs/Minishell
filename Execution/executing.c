@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/12/02 09:08:48 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:40:25 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	exec_if_exists(char **arg, t_minish *ms, t_ast *node)
 	//if (ft_str_cmp(arg[0], "cat") && (!arg[1] || !arg[1][0]) && node->next && node->next->index < 0)
 	//	close(ms->pipes[node->index][0]);
 	node->empty_quotes = false;
+	//if (node->index == cmdlst_last(ms->cmd_list)->index)
+	//	close_in_out(node->index, ms);
 	execve(path, arg, ms->env_list);
 	error("minishell: permission denied or execution failed\n", 126);
 	sanitize_ms(ms, true);
@@ -155,6 +157,13 @@ void	execute(t_minish *ms)
 	last = pipeline_exec(head, ms);
 	if (last > 0)
 	{
+		/*head = ms->cmd_list;
+		while (head != NULL)
+		{
+			if (head->index >= 0)
+				close_in_out(head->index, ms);
+			head = head->next;
+		}*/
 		waitpid(last, &status, 0);
 		while (waitpid(0, NULL, 0) > 0)
 			continue ;
