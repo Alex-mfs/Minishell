@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_aux3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/30 16:24:12 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/02 21:59:50 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static int	heredoc(char *delimiter, t_minish *ms, bool flag)
 		signal(SIGINT, (void *)handle_hd_int);
 		signal(SIGTERM, (void *)handle_hd_int);
 		read_until_deli(delimiter, ms, hd_file, flag);
+		close_all_pipes(ms);
 		hd_sanitize(ms, 0);
 	}
 	waitpid(pid, &status, 0);
