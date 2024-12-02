@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/12/02 21:18:01 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/02 21:28:54 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ void	execute(t_minish *ms)
 	status = 0x7F;
 	pipeline_matrix(ms);
 	last = pipeline_exec(head, ms);
+	close_all_pipes(ms);
 	if (last > 0)
 	{
 		/*head = ms->cmd_list;
