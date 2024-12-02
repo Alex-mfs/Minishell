@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/12/01 23:05:23 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:08:48 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ pid_t	child_exec(t_ast *node, t_minish *ms)
 		sanitize_ms(ms, true);
 	}
 	close_in_out(node->index, ms);
-	waitpid(pid, NULL, 0);
+	//waitpid(pid, NULL, 0);
 	return (pid);
 }
 
