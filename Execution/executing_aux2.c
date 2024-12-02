@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing_aux2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/29 00:18:08 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/02 21:08:22 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	deal_with_isdir(t_minish *ms, char **arg, char *path)
 
 bool	is_builtin(char *command)
 {
+	if (command == NULL)
+        return (false);
 	return (!ft_strncmp(command, "exit", ft_strlen(command)) || \
 	!ft_strncmp(command, "pwd", ft_strlen(command)) || \
 	!ft_strncmp(command, "env", ft_strlen(command)) || \
@@ -53,6 +55,8 @@ char	**join_cmd_arg(char	*cmd, char **args)
 	int		args_count;
 	char	**full_cmd;
 
+	if (!cmd)
+		return (NULL);
 	args_count = 0;
 	while (args[args_count] && args[args_count][0])
 		args_count++;
@@ -68,13 +72,4 @@ char	**join_cmd_arg(char	*cmd, char **args)
 	}
 	full_cmd[i + 1] = NULL;
 	return (full_cmd);
-}
-
-void	create_fullcmd_pipe_flow(t_minish *ms, t_ast *node)
-{
-	char	**fullcmd;
-
-	fullcmd = join_cmd_arg(node->cmd, node->args);
-	pipe_data_flow(node->index, ms, fullcmd);
-	ft_free_matrix(fullcmd);
 }

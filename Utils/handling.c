@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 21:32:28 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/30 16:43:04 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	handle_child_quit(int signal)
 {
 	if (signal != SIGQUIT)
 		return ;
-	ft_putstr_fd("Quit: 3\n", 2);
 	set_exit_status(130);
 }
 

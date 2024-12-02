@@ -40,9 +40,10 @@ int	main(int argc, char **argv, char **envp)
 	return (g_exit_status);
 }
 
-//WIP echo $
+//FIXED echo $
 
-//ABORTED Terminar implementacao de emptyquotes
+//DROPPED? variável $_
+//DROPPED Terminar implementacao de emptyquotes
 
 //WIP NORMINETTE
 //https://mellow-pruner-7c7.notion.site/

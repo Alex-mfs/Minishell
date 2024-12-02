@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/29 01:35:14 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/11/30 14:50:02 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ static t_token	*parse_command(t_minish *ms, t_token *buff)
 			cmd->args = ft_mat_add_safe_line(cmd->args, ft_strdup(buff->token));
 		buff = buff->next;
 	}
-	if (!cmd->cmd)
-		cmdlst_addback(&ms->cmd_list, cmd);
+	if (!cmd->cmd || (cmd->cmd && !cmd->cmd[0]))
+		empty_cmd(ms, cmd);
 	if (!cmd->args)
 		cmd->args = ft_matrix_add_line(cmd->args, ft_strdup("\0"));
 	return (buff);

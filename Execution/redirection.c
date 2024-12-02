@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 22:59:18 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/02 19:40:22 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void	report_error(char *filename, t_minish *ms)
+static bool	report_error(char *filename, t_minish *ms)
 {
-	ms->dont_execve = true;
+	//ms->dont_execve = true;
+	if (ms->dont_execve)
+		;
 	if (get_exit_status() != 130)
 	{
 		if (errno != 0)
@@ -23,7 +25,7 @@ static void	report_error(char *filename, t_minish *ms)
 			error(filename, 2);
 		set_exit_status(1);
 	}
-	return ;
+	return (true);
 }
 
 static int	exec_redir_in(t_minish *ms, const char *type, char *filename)
@@ -41,7 +43,7 @@ static int	exec_redir_in(t_minish *ms, const char *type, char *filename)
 	return (fd);
 }
 
-void	execute_redir(const char *type, char *filename, t_minish *ms)
+bool	execute_redir(const char *type, char *filename, t_minish *ms)
 {
 	int	fd;
 
@@ -51,7 +53,9 @@ void	execute_redir(const char *type, char *filename, t_minish *ms)
 	{
 		fd = open(filename, O_RDONLY);
 		if (fd == -1)
+		{
 			return (report_error(filename, ms));
+		}
 		if (ms->fd_in != STDIN_FILENO)
 			close(ms->fd_in);
 		ms->fd_in = fd;
@@ -62,10 +66,11 @@ void	execute_redir(const char *type, char *filename, t_minish *ms)
 		if (fd == -1)
 		{
 			ms->dont_execve = true;
-			return ;
+			return (true);
 		}
 		if (ms->fd_in != STDIN_FILENO)
 			close(ms->fd_in);
 		ms->fd_in = fd;
 	}
+	return (false);
 }

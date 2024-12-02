@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   validating.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 14:35:48 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/11/30 16:17:13 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static bool	validation_syntax(t_token *curr)
+{
+	if (curr->type == OTHER)
+		printf("minishell: ambiguous redirect\n");
+	else if (is_tk_quote(curr))
+		printf("minishell: No such file or directory\n");
+	set_exit_status(1);
+	return (false);
+}
 
 static bool	validation_error(char *msg)
 {
@@ -54,14 +64,7 @@ bool	validate_quotes(char *input)
 	return (true);
 }
 
-static bool	tk_red_pip(t_token *tk)
-{
-	if (tk->type >= REDIR_INPUT_1 && tk->type <= PIPE)
-		return (true);
-	return (false);
-}
-
-bool	validate_tokens(t_minish *ms)
+bool	validate_tokens(t_minish *ms, bool merged)
 {
 	t_token	*curr;
 
@@ -71,8 +74,10 @@ bool	validate_tokens(t_minish *ms)
 	while (curr)
 	{
 		if ((curr->type >= REDIR_INPUT_1 && curr->type <= REDIR_OUTPUT_2)
-			&& (!curr->next || tk_red_pip(curr->next)))
+			&& (!curr->next || is_tk_redpip(curr->next)))
 			return (validation_error("Input syntax near redirection"));
+		if (merged && is_tk_miniredir(curr) && !curr->next->token[0])
+			return (validation_syntax(curr->next));
 		if (curr->type == PIPE
 			&& (!curr->next || curr->next->type == PIPE))
 			return (validation_error("Unclosed pipe"));

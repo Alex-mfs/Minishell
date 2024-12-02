@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/28 20:48:23 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/01 10:58:23 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	init_ms(t_minish *ms, char **envp)
 	add_or_update_env(&ms->env_tmp, shlvl);
 	free(shlvl);
 	ms->cmd_list = NULL;
+	ms->pipes = NULL;
 	ms->cwd = getcwd(NULL, 4096);
 	ms->fd_in = 0;
 	ms->fd_out = 1;
@@ -49,4 +50,5 @@ void	init_ms(t_minish *ms, char **envp)
 	else
 		ms->path = NULL;
 	ms->aux_merge = false;
+	ms->dont_execve = false;
 }

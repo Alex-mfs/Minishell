@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/29 18:12:47 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/02 20:52:58 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		get_exit_status(void);
 void	read_inputs(t_minish *ms);
 //Utils - Validating
 bool	validate_quotes(char *input);
-bool	validate_tokens(t_minish *ms);
+bool	validate_tokens(t_minish *ms, bool merged);
 //Utils - Signaling
 void	set_signals(void);
 // void	set_signals_heredoc(void);
@@ -108,8 +108,7 @@ void	unlink_hd_file(t_minish *ms);
 void	get_tokens(t_minish *ms, char *input);
 void	expand(t_minish *ms);
 void	parse(t_minish *ms);
-int		save_token(t_minish *ms, char *symbol, t_lexer type, bool merge);
-int 	save_ansi_c_string(t_minish *ms, char *input);
+void	empty_cmd(t_minish *ms, t_ast *node);
 //Parse - Listing
 int		cmdlst_size(t_ast *lst, bool total);
 t_ast	*cmdlst_penult(t_ast *lst);
@@ -120,6 +119,11 @@ void	tklst_addback(t_token **lst, t_token *new);
 t_token	*clear_top_token(t_token *node);
 bool	token_assign(t_token *buff);
 void	merge_tokens(t_minish *ms);
+//Parse - Checking
+bool	is_tk_redpip(t_token *tk);
+bool	is_tk_miniredir(t_token *tk);
+bool	is_tk_quote(t_token	*tk);
+bool	is_tk_merge(t_token	*tk);
 
 //Execution - Executing
 void	execute(t_minish *ms);
@@ -134,24 +138,24 @@ void	deal_with_isdir(t_minish *ms, char **arg, char *path);
 bool	need2be_parent(char *command, char *arg, t_minish *ms);
 bool	is_builtin(char *command);
 char	**join_cmd_arg(char	*cmd, char **args);
-void	create_fullcmd_pipe_flow(t_minish *ms, t_ast *node);
 //Execution - Pipeline
+void	close_all_pipes(t_minish *ms);
 void	pipeline_matrix(t_minish *ms);
 void	close_in_out(int index, t_minish *ms);
 void	relinking_in_out(t_minish *ms);
-void	pipe_data_flow(int cmd_index, t_minish *ms, char **fullcmd);
-void	exec_if_exists(char **arg, t_minish *ms);
+void	pipe_data_flow(int cmd_index, t_minish *ms);
+void	exec_if_exists(char **arg, t_minish *ms, t_ast *node);
 //Execution - Path
 char	*get_executable_path(char *cmd, t_minish *ms);
 //Execution - Redirection + aux
-void	execute_redir(const char *type, char *filename, t_minish *ms);
+bool	execute_redir(const char *type, char *filename, t_minish *ms);
 void	read_until_deli(char *deli, t_minish *ms, char *file, bool fl);
-char	*create_hd_file(t_minish *ms, bool flag);
+char	*create_hd_file(t_minish *ms, bool flag, int i);
 void	hd_sanitize(t_minish *ms, int e_code);
 int		do_heredoc(char *delimiter, t_minish *ms);
 
 //Commands
-void	exit_bash(char **exit_args, t_minish *ms);
+void	exit_bash(char **exit_args, t_minish *ms, int tmp);
 void	ft_export(char **exp_args, t_minish *ms);
 void	env(char **env_arg, char **env_list);
 char	*get_env(const char *key, char **env_list);
