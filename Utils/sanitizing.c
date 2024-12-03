@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/12/03 00:45:33 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:26:37 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,7 @@ void	sanitize_ms(t_minish *ms, bool sair)
 		cmd_clear(&(ms->cmd_list));
 	if (ms->tk_list)
 		tk_clear(&(ms->tk_list));
-	ms->pipes = NULL;
-	ms->cmd_list = NULL;
-	ms->tk_list = NULL;
-	ms->aux_merge = false;
-	ms->dont_execve = false;
+	reset_values(ms);
 	if (sair)
 	{
 		if (ms->cwd)

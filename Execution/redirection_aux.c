@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/03 01:13:49 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:14:02 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ void	read_until_deli(char *deli, t_minish *ms, char *file, bool fl)
 		if (!line)
 		{
 			ctrld_eof(ms, file);
-            sanitize_ms(ms, true);
-            break;
+			sanitize_ms(ms, true);
+			break ;
 		}
 		if (ft_str_cmp(line, deli))
 		{

@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/03 01:14:40 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/03 13:40:03 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct s_minish
 	struct s_ast	*cmd_list;
 	int				fd_in;
 	int				fd_out;
-	int				qtd_pipes;
 	bool			dont_execve;
 	int				hd;
 }			t_minish;
@@ -103,6 +102,7 @@ void	sanitize_path(t_minish *ms);
 void	cmd_clear(t_ast **lst);
 void	tk_clear(t_token **lst);
 void	unlink_hd_file(t_minish *ms);
+void	reset_values(t_minish *ms);
 
 //Parse
 void	get_tokens(t_minish *ms, char *input);
@@ -132,11 +132,11 @@ void	error(char *str, int status);
 void	error_execve(t_minish *ms);
 char	*which_error(char *bef, char *mid, char *aft);
 bool	is_redir_or_pipe(char *cmd);
-bool	is_redirection(char *cmd);
 bool	process_redirections(t_ast *node, t_minish *ms);
 void	deal_with_isdir(t_minish *ms, char **arg, char *path);
 bool	need2be_parent(char *command, char *arg, t_minish *ms);
 bool	is_builtin(char *command);
+void	pick_function(t_ast *node, t_minish *ms, int tmp);
 char	**join_cmd_arg(char	*cmd, char **args);
 //Execution - Pipeline
 void	close_all_pipes(t_minish *ms);
@@ -144,7 +144,7 @@ void	pipeline_matrix(t_minish *ms);
 void	close_in_out(int index, t_minish *ms);
 void	relinking_in_out(t_minish *ms);
 void	pipe_data_flow(int cmd_index, t_minish *ms);
-void	exec_if_exists(char **arg, t_minish *ms, t_ast *node);
+void	exec_if_exists(char **arg, t_minish *ms);
 //Execution - Path
 char	*get_executable_path(char *cmd, t_minish *ms);
 //Execution - Redirection + aux
@@ -164,6 +164,8 @@ void	echo(char **words);
 void	unset(char **vars, t_minish *ms);
 void	cd(char **tokens, t_minish *ms);
 //Commands - Export_aux
+void	print_sorted_export(char **sorted_env);
+void	sort_env(char **env);
 int		ft_strlen_sep(const char *s, char *seps);
 char	*extract_key(const char *assignment);
 void	copy_env_except_key(char **src, char **dest, const char *key, int len);

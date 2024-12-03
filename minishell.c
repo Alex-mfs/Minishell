@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:52:25 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/29 01:37:22 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:41:48 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	if (!*envp)
+		return (0);
 	ft_bzero(&ms, sizeof(t_minish));
 	init_ms(&ms, envp);
 	set_signals();
@@ -39,12 +41,3 @@ int	main(int argc, char **argv, char **envp)
 	ft_free_matrix(ms.path);
 	return (g_exit_status);
 }
-
-//FIXED echo $
-
-//DROPPED? variável $_
-//DROPPED Terminar implementacao de emptyquotes
-
-//WIP NORMINETTE
-//https://mellow-pruner-7c7.notion.site/
-//minishell-0436106d8aba4f2aa7408a9b916adb07
