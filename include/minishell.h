@@ -73,7 +73,6 @@ typedef struct s_minish
 	struct s_ast	*cmd_list;
 	int				fd_in;
 	int				fd_out;
-	int				qtd_pipes;
 	bool			dont_execve;
 	int				hd;
 }			t_minish;

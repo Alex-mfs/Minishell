@@ -21,11 +21,6 @@ bool	need2be_parent(char *command, char *arg, t_minish *ms)
 		return (is_parent);
 	if (lastpipe(ms->cmd_list)->index < 0)
 		return (false);
-	/*if (ms->qtd_pipes > 0)
-	{
-		ms->qtd_pipes--; //Isto nao eh o que se deve fazer
-		return (false);
-	}*/
 	if (ft_str_cmp(command, "cd") == true)
 		is_parent = true;
 	else if (ft_str_cmp(command, "exit") == true)

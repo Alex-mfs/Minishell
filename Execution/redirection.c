@@ -12,11 +12,8 @@
 
 #include "../include/minishell.h"
 
-static bool	report_error(char *filename, t_minish *ms)
+static bool	report_error(char *filename)
 {
-	//ms->dont_execve = true;
-	if (ms->dont_execve)
-		;
 	if (get_exit_status() != 130)
 	{
 		if (errno != 0)
@@ -37,7 +34,7 @@ static int	exec_redir_in(t_minish *ms, const char *type, char *filename)
 	else
 		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fd == -1)
-		report_error(filename, ms);
+		report_error(filename);
 	if (ms->fd_out != STDOUT_FILENO)
 		close(ms->fd_out);
 	return (fd);
@@ -54,7 +51,7 @@ bool	execute_redir(const char *type, char *filename, t_minish *ms)
 		fd = open(filename, O_RDONLY);
 		if (fd == -1)
 		{
-			return (report_error(filename, ms));
+			return (report_error(filename));
 		}
 		if (ms->fd_in != STDIN_FILENO)
 			close(ms->fd_in);
