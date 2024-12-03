@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/30 16:43:04 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/03 22:51:32 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	handle_child_quit(int signal)
 {
 	if (signal != SIGQUIT)
 		return ;
-	set_exit_status(130);
+	write(1, "Quit (core dumped)\n", 19);
+	set_exit_status(131);
 }
 
 void	handle_child_interrupt(int signal)
