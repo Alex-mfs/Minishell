@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/02 21:08:22 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:12:08 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	deal_with_isdir(t_minish *ms, char **arg, char *path)
 bool	is_builtin(char *command)
 {
 	if (command == NULL)
-        return (false);
+		return (false);
 	return (!ft_strncmp(command, "exit", ft_strlen(command)) || \
 	!ft_strncmp(command, "pwd", ft_strlen(command)) || \
 	!ft_strncmp(command, "env", ft_strlen(command)) || \

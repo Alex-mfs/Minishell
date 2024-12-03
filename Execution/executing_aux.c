@@ -6,11 +6,29 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:46:55 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/02 21:14:56 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:32:09 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	pick_function(t_ast *node, t_minish *ms, int tmp)
+{
+	if (ft_str_cmp(node->cmd, "pwd"))
+		printf("%s\n", ms->cwd);
+	else if (ft_str_cmp(node->cmd, "echo"))
+		echo(node->args);
+	else if (ft_str_cmp(node->cmd, "exit"))
+		exit_bash(node->args, ms, tmp);
+	else if (ft_str_cmp(node->cmd, "env"))
+		env(node->args, ms->env_list);
+	else if (ft_str_cmp(node->cmd, "export"))
+		ft_export(node->args, ms);
+	else if (ft_str_cmp(node->cmd, "unset"))
+		unset(node->args, ms);
+	else if (ft_str_cmp(node->cmd, "cd"))
+		cd(node->args, ms);
+}
 
 bool	need2be_parent(char *command, char *arg, t_minish *ms)
 {
@@ -32,16 +50,10 @@ bool	need2be_parent(char *command, char *arg, t_minish *ms)
 	return (is_parent);
 }
 
-bool	is_redirection(char *cmd)
-{
-	if (ft_strchr(cmd, '<') || ft_strchr(cmd, '>'))
-		return (true);
-	return (false);
-}
-
 bool	is_redir_or_pipe(char *cmd)
 {
-	if (ft_strchr(cmd, '|') || is_redirection(cmd))
+	if (ft_strchr(cmd, '|')
+		|| ft_strchr(cmd, '<') || ft_strchr(cmd, '>'))
 		return (true);
 	return (false);
 }

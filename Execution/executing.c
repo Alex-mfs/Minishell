@@ -6,13 +6,13 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/12/02 21:28:54 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:38:33 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	exec_if_exists(char **arg, t_minish *ms, t_ast *node)
+void	exec_if_exists(char **arg, t_minish *ms)
 {
 	char		*path;
 	struct stat	path_stat;
@@ -53,23 +53,10 @@ void	do_command(t_ast *node, t_minish *ms)
 		if (ms->dont_execve)
 			return ;
 		full_cmd = join_cmd_arg(node->cmd, node->args);
-		exec_if_exists(full_cmd, ms, node);
+		exec_if_exists(full_cmd, ms);
 		error_execve(ms);
 	}
-	if (ft_str_cmp(node->cmd, "pwd"))
-		printf("%s\n", ms->cwd);
-	else if (ft_str_cmp(node->cmd, "echo"))
-		echo(node->args);
-	else if (ft_str_cmp(node->cmd, "exit"))
-		exit_bash(node->args, ms, tmp);
-	else if (ft_str_cmp(node->cmd, "env"))
-		env(node->args, ms->env_list);
-	else if (ft_str_cmp(node->cmd, "export"))
-		ft_export(node->args, ms);
-	else if (ft_str_cmp(node->cmd, "unset"))
-		unset(node->args, ms);
-	else if (ft_str_cmp(node->cmd, "cd"))
-		cd(node->args, ms);
+	pick_function(node, ms, tmp);
 }
 
 pid_t	child_exec(t_ast *node, t_minish *ms)

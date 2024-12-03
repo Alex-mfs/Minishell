@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   sanitizing_aux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antfonse <antfonse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 20:42:45 by antfonse          #+#    #+#             */
-/*   Updated: 2024/04/22 20:42:48 by antfonse         ###   ########.fr       */
+/*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
+/*   Updated: 2024/12/03 11:26:56 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// Adds a new node to the end of a chained list
-#include "libft.h"
+#include "../include/minishell.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	reset_values(t_minish *ms)
 {
-	t_list	*lst2;
-
-	if (new != NULL)
-	{
-		lst2 = ft_lstlast(*lst);
-		if (lst2 == NULL)
-			*lst = new;
-		else
-			lst2->next = new;
-	}
+	ms->pipes = NULL;
+	ms->cmd_list = NULL;
+	ms->tk_list = NULL;
+	ms->aux_merge = false;
+	ms->dont_execve = false;
 }
