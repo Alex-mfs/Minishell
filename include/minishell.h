@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/03 11:38:40 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/03 13:40:03 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,8 @@ void	echo(char **words);
 void	unset(char **vars, t_minish *ms);
 void	cd(char **tokens, t_minish *ms);
 //Commands - Export_aux
+void	print_sorted_export(char **sorted_env);
+void	sort_env(char **env);
 int		ft_strlen_sep(const char *s, char *seps);
 char	*extract_key(const char *assignment);
 void	copy_env_except_key(char **src, char **dest, const char *key, int len);

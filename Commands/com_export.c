@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   com_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:18:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 20:37:40 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/03 13:58:11 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,24 @@
 void	print_export(t_minish *ms)
 {
 	int		i;
-	char	*equals_sign;
+	char	**sorted_env;
 
 	i = 0;
 	while (ms->env_list[i])
+		i++;
+	sorted_env = malloc(sizeof(char *) * (i + 1));
+	if (!sorted_env)
+		return ;
+	i = 0;
+	while (ms->env_list[i])
 	{
-		equals_sign = ft_strchr(ms->env_list[i], '=');
-		if (equals_sign)
-			printf("declare -x %s\n", ms->env_list[i]);
-		else
-			printf("declare -x %s=\"\"\n", ms->env_list[i]);
+		sorted_env[i] = ms->env_list[i];
 		i++;
 	}
+	sorted_env[i] = NULL;
+	sort_env(sorted_env);
+	print_sorted_export(sorted_env);
+	free(sorted_env);
 }
 
 void	add_or_update_env(char ***target_env, const char *assignment)
