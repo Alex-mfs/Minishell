@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sanitizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/30 16:24:34 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/03 00:45:33 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,12 @@ void	cmd_clear(t_ast **lst)
 void	sanitize_ms(t_minish *ms, bool sair)
 {
 	if (ms->pipes)
+	{
+		close_all_pipes(ms);
 		ft_free_intmatrix(ms->pipes,
 			(size_t)cmdlst_size(ms->cmd_list, false) - 1);
+		ms->pipes = NULL;
+	}
 	if (ms->cmd_list)
 		cmd_clear(&(ms->cmd_list));
 	if (ms->tk_list)

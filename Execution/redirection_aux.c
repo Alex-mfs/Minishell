@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_aux.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 21:34:24 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/03 01:13:49 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ void	read_until_deli(char *deli, t_minish *ms, char *file, bool fl)
 		line = readline("heredoc > ");
 		if (!line)
 		{
-			ft_putstr_fd("minishell: warning: heredoc delimited by eof\n", 1);
-			free(file);
-			break ;
+			ctrld_eof(ms, file);
+            sanitize_ms(ms, true);
+            break;
 		}
 		if (ft_str_cmp(line, deli))
 		{

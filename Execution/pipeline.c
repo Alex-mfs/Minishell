@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:44:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/02 19:34:14 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/03 01:19:07 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	close_all_pipes(t_minish *ms)
     int i;
 	i = 0;
 
+	if (!ms->pipes)
+		return ;
     while (i < cmdlst_size(ms->cmd_list, false) - 1)
     {
         close(ms->pipes[i][0]);
@@ -117,9 +119,16 @@ void	pipeline_matrix(t_minish *ms)
 	{
 		ms->pipes[i] = ft_calloc(2, sizeof(int));
 		if (!ms->pipes[i])
-			return ;
-		pipe(ms->pipes[i]);
-		//printf("%i, %i\n", ms->pipes[i][0], ms->pipes[i][1]);
+			break ;
+		if (pipe(ms->pipes[i]) == -1)
+			break ;
 		i++;
 	}
+	if (i < (cmdlst_size(ms->cmd_list, false) - 1))
+    {
+        while (--i >= 0)
+            free(ms->pipes[i]);
+        free(ms->pipes);
+        ms->pipes = NULL;
+    }
 }

@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/02 20:52:58 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/03 01:14:40 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ void	read_until_deli(char *deli, t_minish *ms, char *file, bool fl);
 char	*create_hd_file(t_minish *ms, bool flag, int i);
 void	hd_sanitize(t_minish *ms, int e_code);
 int		do_heredoc(char *delimiter, t_minish *ms);
+void	ctrld_eof(t_minish *ms, char *file);
 
 //Commands
 void	exit_bash(char **exit_args, t_minish *ms, int tmp);

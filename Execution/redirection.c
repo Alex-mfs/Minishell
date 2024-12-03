@@ -6,11 +6,32 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:56:02 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/02 19:40:22 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/03 01:14:03 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	ctrld_eof(t_minish *ms, char *file)
+{
+	ft_putstr_fd("minishell: warning: heredoc delimited by eof\n", 1);
+	close_all_pipes(ms);
+	if (file)
+		free(file);
+	if (ms->pipes)
+	{
+		int i = 0;
+		while (i < cmdlst_size(ms->cmd_list, false) - 1)
+		{
+			if (ms->pipes[i])
+				free(ms->pipes[i]);
+			i++;
+		}
+		free(ms->pipes);
+		ms->pipes = NULL;
+	}
+	return;
+}
 
 static bool	report_error(char *filename, t_minish *ms)
 {
