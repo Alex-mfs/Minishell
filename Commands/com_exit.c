@@ -19,7 +19,7 @@ char	*skip_whitespace(char *str)
 	return (str);
 }
 
-long long	ft_atoll(char *str)
+long long	ft_atoll(char *str, t_minish *ms)
 {
 	unsigned long long	num;
 	int					sign;
@@ -33,30 +33,16 @@ long long	ft_atoll(char *str)
 			sign = -1;
 		str++;
 	}
-	if (*str < '0' || *str > '9')
-		return (255);
 	while (*str >= '0' && *str <= '9')
-	{
 		num = num * 10 + (*str++ - '0');
-		if ((sign > 0 && num > (unsigned long long)LLONG_MAX) || \
-			(sign < 0 && num > (unsigned long long)-(LLONG_MIN)))
-			return (255);
-	}
 	if (*str)
-		return (255);
-	return ((long long)(num * sign));
-}
-
-long long	validate_and_convert_arg(char *arg, t_minish *ms)
-{
-	long long	num;
-
-	num = ft_atoll(arg);
-	if (num == 255)
-	{
-		error("exit: numeric argument required\n", 255);
-		sanitize_ms(ms, true);
-	}
+		error("exit: numeric argument required\n", 2);
+	else if ((sign > 0 && num > (unsigned long long)LLONG_MAX) || \
+		(sign < 0 && num > (unsigned long long)-(LLONG_MIN)))
+		error("exit: numeric argument required\n", num);
+	else
+		return ((long long)(num * sign));
+	sanitize_ms(ms, true);
 	return (num);
 }
 
@@ -77,16 +63,14 @@ void	exit_bash(char **exit_args, t_minish *ms, int tmp)
 	num = 0;
 	while (exit_args[arg_num] && exit_args[arg_num][0])
 		arg_num++;
+	if (arg_num == 0)
+		set_exit_status(tmp);
+	else
+		num = ft_atoll(exit_args[0], ms);
 	if (arg_num > 1)
 		return (error("exit: too many arguments\n", 1));
 	if (arg_num == 1)
-	{
-		num = validate_and_convert_arg(exit_args[0], ms);
-		num = calculate_exit_code(num);
-		set_exit_status(num);
-	}
-	if (arg_num == 0)
-		set_exit_status(tmp);
+		set_exit_status(calculate_exit_code(num));
 	if (lastpipe(ms->cmd_list)->index == 0)
 		printf("exit\n");
 	sanitize_ms(ms, true);

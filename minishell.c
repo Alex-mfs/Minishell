@@ -30,6 +30,8 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	if (!*envp)
+		return (0);
 	ft_bzero(&ms, sizeof(t_minish));
 	init_ms(&ms, envp);
 	set_signals();
