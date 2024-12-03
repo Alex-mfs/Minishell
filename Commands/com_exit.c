@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   com_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:19:22 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/01 23:04:01 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/03 21:50:41 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,10 @@ void	exit_bash(char **exit_args, t_minish *ms, int tmp)
 		set_exit_status(calculate_exit_code(num));
 	if (lastpipe(ms->cmd_list)->index == 0)
 		printf("exit\n");
+	if (ms->fd_in > STDIN_FILENO)
+		close(ms->fd_in);
+	if (ms->fd_out > STDOUT_FILENO)
+		close(ms->fd_out);
+	unlink_hd_file(ms);
 	sanitize_ms(ms, true);
 }
