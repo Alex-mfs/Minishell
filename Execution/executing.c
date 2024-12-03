@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/12/02 11:40:25 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/02 21:28:54 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ void	exec_if_exists(char **arg, t_minish *ms, t_ast *node)
 	//char		**tmp;
 	//char buf[1024]; //JOAO
 
+	if (arg == NULL || *arg == NULL)
+	{
+		set_exit_status(127);
+		sanitize_ms(ms, true);
+		return ;
+	}
 	path = get_executable_path(*arg, ms);
 	if (!path || stat(path, &path_stat) != 0)
 	{
@@ -66,6 +72,7 @@ void	do_command(t_ast *node, t_minish *ms)
 	set_exit_status(0);
 	if (!is_builtin(node->cmd))
 	{
+		//ft_putstr_fd("aaaaaaaaaa\n", 2);
 		if (ms->dont_execve)
 			return ;
 		full_cmd = join_cmd_arg(node->cmd, node->args);
@@ -108,7 +115,10 @@ pid_t	child_exec(t_ast *node, t_minish *ms)
 	if (pid == 0)
 	{
 		if (ms->fd_in == -1 || ms->fd_out == -1)
+		{
+			//close_all_pipes(ms);
 			sanitize_ms(ms, true);
+		}
 		pipe_data_flow(node->index, ms);
 		relinking_in_out(ms);
 		do_command(node, ms);
@@ -155,6 +165,7 @@ void	execute(t_minish *ms)
 	status = 0x7F;
 	pipeline_matrix(ms);
 	last = pipeline_exec(head, ms);
+	close_all_pipes(ms);
 	if (last > 0)
 	{
 		/*head = ms->cmd_list;
