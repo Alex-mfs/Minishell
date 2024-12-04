@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   com_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 18:07:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 20:32:26 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/04 00:49:46 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,5 @@ void	cd(char **tokens, t_minish *ms)
 		change_dir(ft_strdup(tokens[0]), ms);
 	else
 		error("minishell: cd: not a directory\n", 1);
+	unlink_hd_file(ms);
 }
