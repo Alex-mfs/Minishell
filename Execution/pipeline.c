@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:44:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/03 11:39:37 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/04 00:24:52 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	relinking_in_out(t_minish *ms)
 	{
 		if (dup2(ms->fd_in, STDIN_FILENO) == -1)
 		{
-			error("errror: dup2 fd_in\n", 1);
+			error("error: dup2 fd_in\n", 1);
 			sanitize_ms(ms, true);
 		}
 	}

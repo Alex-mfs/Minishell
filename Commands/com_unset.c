@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   com_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:54:07 by alfreire          #+#    #+#             */
-/*   Updated: 2024/11/28 20:37:58 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/04 00:50:00 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,5 @@ void	unset(char **vars, t_minish *ms)
 		remove_var_from_env(&ms->env_tmp, vars[i]);
 		i++;
 	}
+	unlink_hd_file(ms);
 }
