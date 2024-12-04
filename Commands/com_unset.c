@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:54:07 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/04 00:50:00 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/04 09:36:03 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	unset(char **vars, t_minish *ms)
 		return ;
 	while (vars[i])
 	{
+		if (!find_env_in_tmp(ms, vars[i]))
+			break ;
 		remove_var_from_env(&ms->env_list, vars[i]);
 		remove_var_from_env(&ms->env_tmp, vars[i]);
 		i++;

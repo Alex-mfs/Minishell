@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:45:30 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/03 13:40:03 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:54:14 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	handle_interrupt(int signum);
 void	handle_child_interrupt(int signal);
 void	handle_child_quit(int signal);
 void	handle_hd_int(int signum, t_minish *ms, char *delimiter, char *hd);
+bool	valid_export(char *str);
 //Utils - Sanitizing
 void	sanitize_ms(t_minish *ms, bool sair);
 void	sanitize_path(t_minish *ms);
@@ -109,6 +110,7 @@ void	get_tokens(t_minish *ms, char *input);
 void	expand(t_minish *ms);
 void	parse(t_minish *ms);
 void	empty_cmd(t_minish *ms, t_ast *node);
+char	*find_name(char *token);
 //Parse - Listing
 int		cmdlst_size(t_ast *lst, bool total);
 t_ast	*cmdlst_penult(t_ast *lst);

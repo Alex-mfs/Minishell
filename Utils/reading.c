@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/11/30 16:19:10 by joao-rib         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:57:31 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ static bool	invalid_assignment(t_token *buff)
 	{
 		if (!ft_strchr(buff->token, '='))
 			break ;
-		if (ft_isdigit(buff->token[0]) || buff->token[0] == '=')
+		if (ft_isdigit(buff->token[0]) || buff->token[0] == '='
+			|| valid_export(buff->token))
 		{
 			printf("minishell: %s ", buff->token);
 			error("is not a valid variable identifier\n", 127);

@@ -6,7 +6,7 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:18:12 by alfreire          #+#    #+#             */
-/*   Updated: 2024/12/04 00:49:52 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:58:05 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ void	print_export(t_minish *ms)
 	char	**sorted_env;
 
 	i = 0;
-	while (ms->env_list[i])
+	while (ms->env_tmp[i])
 		i++;
 	sorted_env = malloc(sizeof(char *) * (i + 1));
 	if (!sorted_env)
 		return ;
 	i = 0;
-	while (ms->env_list[i])
+	while (ms->env_tmp[i])
 	{
-		sorted_env[i] = ms->env_list[i];
+		sorted_env[i] = ms->env_tmp[i];
 		i++;
 	}
 	sorted_env[i] = NULL;
@@ -52,28 +52,29 @@ void	add_or_update_env(char ***target_env, const char *assignment)
 void	handle_no_assignment(t_minish *ms, char *arg)
 {
 	char	*new_assign;
-	char	*env_value_tmp;
-	size_t	assign_len;
-	int		index;
+	char	*buff;
 
-	env_value_tmp = NULL;
-	index = find_env_index(ms->env_tmp, arg);
-	if (index != -1)
-		env_value_tmp = ft_strchr(ms->env_tmp[index], '=');
+	if (find_env_index(ms->env_tmp, arg) != -1
+		&& find_env_index(ms->env_list, arg) != -1)
+		return ;
+	else if (find_env_index(ms->env_tmp, arg) != -1
+		&& find_env_index(ms->env_list, arg) == -1)
+	{
+		new_assign = ft_strjoin(arg, "=");
+		buff = get_env(arg, ms->env_tmp);
+		new_assign = ft_strbuild(new_assign, buff);
+		add_or_update_env(&ms->env_list, new_assign);
+		free(buff);
+		free(new_assign);
+	}
 	else
-		return ;
-	assign_len = ft_strlen(arg) + 2;
-	if (env_value_tmp)
-		assign_len += ft_strlen(env_value_tmp + 1);
-	new_assign = malloc(assign_len);
-	if (!new_assign)
-		return ;
-	ft_strlcpy(new_assign, arg, ft_strlen(arg) + 1);
-	ft_strlcat(new_assign, "=", ft_strlen(arg) + 2);
-	if (env_value_tmp)
-		ft_strlcat(new_assign, env_value_tmp + 1, assign_len);
-	add_or_update_env(&ms->env_list, new_assign);
-	free(new_assign);
+	{
+		new_assign = ft_strjoin(arg, "=");
+		if (!new_assign)
+			return ;
+		add_or_update_env(&ms->env_tmp, new_assign);
+		free(new_assign);
+	}
 }
 
 void	handle_assignment(t_minish *ms, char *arg)
@@ -90,17 +91,19 @@ void	handle_assignment(t_minish *ms, char *arg)
 
 void	ft_export(char **exp_args, t_minish *ms)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	if (!exp_args[0] || !exp_args[0][0])
 		print_export(ms);
 	while (exp_args[i] && exp_args[i][0])
 	{
-		if (ft_isdigit(exp_args[i][0]) || exp_args[i][0] == '=')
+		if (ft_isdigit(exp_args[i][0]) || exp_args[i][0] == '='
+			|| valid_export(exp_args[i]))
 		{
 			printf("minishell: %s ", exp_args[i]);
 			error("is not a valid variable identifier\n", 1);
+			return (unlink_hd_file(ms));
 		}
 		else if (ft_strchr(exp_args[i], '='))
 			handle_assignment(ms, exp_args[i]);

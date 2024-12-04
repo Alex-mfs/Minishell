@@ -6,11 +6,26 @@
 /*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/12/03 22:51:32 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:54:37 by alfreire         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+bool	valid_export(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '=')
+			i++;
+		else
+			return (true);
+	}
+	return (false);
+}
 
 void	handle_interrupt(int signum)
 {
