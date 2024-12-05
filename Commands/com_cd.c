@@ -24,12 +24,14 @@ void	change_dir(char *path, t_minish *ms)
 	}
 	oldpwd = ft_strjoin("OLDPWD=", ms->cwd);
 	add_or_update_env(&ms->env_list, oldpwd);
+	add_or_update_env(&ms->env_tmp, oldpwd);
 	free(oldpwd);
 	chdir(path);
 	free(ms->cwd);
 	ms->cwd = getcwd(NULL, 4096);
 	newpwd = ft_strjoin("PWD=", ms->cwd);
 	add_or_update_env(&ms->env_list, newpwd);
+	add_or_update_env(&ms->env_tmp, newpwd);
 	free(newpwd);
 	free(path);
 }
