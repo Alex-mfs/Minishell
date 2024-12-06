@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfreire <alfreire@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/12/03 11:38:33 by alfreire         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:15:56 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ pid_t	pipeline_exec(t_ast *node, t_minish *ms)
 	if (ms->dont_execve)
 		return (last_child_pid);
 	last_child_pid = pipeline_exec(node->right, ms);
-	if (!is_redir_or_pipe(node->cmd))
+	if (node->index >= 0)
 	{
 		redir_error = process_redirections(node, ms);
 		if (redir_error || ms->dont_execve)
