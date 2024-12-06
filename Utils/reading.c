@@ -102,6 +102,20 @@ static char	*maintain_prompt(char *cwd)
 	return (prompt);
 }
 
+static bool	empty_string(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdelim(str[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 void	read_inputs(t_minish *ms)
 {
 	char	*prompt;
@@ -118,8 +132,12 @@ void	read_inputs(t_minish *ms)
 			sanitize_ms(ms, true);
 			break ;
 		}
-		if (!input[0])
+		if (!input[0] || empty_string(input))
+		{
+			if (input[0])
+				free(input);
 			continue ;
+		}
 		add_history(input);
 		compute(ms, input);
 		free(input);
